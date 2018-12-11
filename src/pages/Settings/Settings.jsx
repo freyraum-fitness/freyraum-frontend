@@ -116,6 +116,7 @@ class Settings extends SimplePage {
               Passwort ändern
             </Button>
           </Grid>
+          {/*
           <Grid item xs={12} sm={8}>
             <Button
               fullWidth
@@ -125,6 +126,7 @@ class Settings extends SimplePage {
               Account löschen
             </Button>
           </Grid>
+          */}
         </Grid>
       </SimplePage>
     );
