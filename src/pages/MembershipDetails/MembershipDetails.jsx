@@ -19,7 +19,6 @@ import {
   deleteMembership,
   deleteParticipation,
   fetchMembership,
-  hideCreateMembership,
   onMembershipDetailsDataChanged,
   saveMembership,
 } from '../../model/memberships';
