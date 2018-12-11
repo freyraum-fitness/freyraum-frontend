@@ -149,7 +149,7 @@ class Home extends Component {
 
                 <Grid item>
                   <Tooltip title='follow us on Instagram' placement='top'>
-                    <a target='_blank' href='https://facebook.com/freyraum.fitness/'>
+                    <a target='_blank' href='https://www.instagram.com/freyraum.fitness/'>
                       <IconButton style={{color: PRIMARY}}>
                         <Instagram/>
                       </IconButton>
@@ -157,7 +157,7 @@ class Home extends Component {
                   </Tooltip>
 
                   <Tooltip title='find us on facebook' placement='top'>
-                    <a target='_blank' href='https://www.instagram.com/freyraum.fitness/'>
+                    <a target='_blank' href='https://www.facebook.com/freyraum.fitness/'>
                       <IconButton style={{color: PRIMARY}}>
                         <Facebook/>
                       </IconButton>

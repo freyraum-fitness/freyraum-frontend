@@ -34,7 +34,7 @@ def mapBranchToDockerImage(branch) {
 
 def mapBranchToNpm(branch) {
   if (branch == 'master') {
-    return 'build_production'
+    return 'build'
   }
   if (branch == 'develop') {
     return 'build_int'
