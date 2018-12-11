@@ -1,0 +1,9 @@
+config/jest/
+node_modules/
+public/
+.git/
+.gitignore
+LICENSE
+README.md
+Jenkinsfile
+webpack.dev.config
