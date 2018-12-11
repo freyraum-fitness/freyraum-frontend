@@ -22,7 +22,7 @@ def mapBranchToAppName(branch) {
 }
 
 def mapBranchToDockerImage(branch) {
-  def appName = 'freyafitness'
+  def appName = 'freyraum-frontend'
   if (branch == 'master') {
     return appName + ':latest'
   }
