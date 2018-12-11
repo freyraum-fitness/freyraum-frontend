@@ -8,7 +8,6 @@ import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 import withRouter from 'react-router-dom/withRouter';
 import {CSSTransition as OriginalCSSTransition, TransitionGroup} from 'react-transition-group';
-import WeUseCookies from './components/WeUseCookies';
 import Home from './pages/Home';
 import Courses from './pages/Courses';
 import CourseDetails from './pages/CourseDetails';
@@ -98,8 +97,6 @@ class App extends Component {
 
     return (
       <div>
-        <WeUseCookies/>
-
         <Switch location={location}>
           <Redirect from='/index' to='/home'/>
           <Redirect exact from='/' to='/home'/>

@@ -14,8 +14,9 @@ import ExitToApp from '@material-ui/icons/ExitToApp';
 import {openDrawer} from './../../model/drawer';
 import {toLogoPage} from './../../utils/Routing';
 import ConfirmButton from './../ConfirmButton';
+import WeUseCookies from '../WeUseCookies';
+import {logout} from '../../model/logout';
 import './style.less';
-import {logout} from "../../model/logout";
 
 class PageAppBar extends Component {
 
@@ -67,6 +68,7 @@ class PageAppBar extends Component {
     const {additionalActions, hideTitle} = this.props;
     return (
       <AppBar className='page-app-bar' position='sticky'>
+        <WeUseCookies/>
         <Toolbar>
           {this.menuButton()}
           {
