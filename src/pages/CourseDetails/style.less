@@ -1,0 +1,246 @@
+
+.animation-container {
+  position: fixed;
+  overflow: hidden;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: #fafafa;
+  z-index: 1200;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+}
+
+.animation-container.animation-enter, .animation-container.animation-exit {
+  background-color: transparent !important;
+}
+
+.animation-container.animation-enter-active {
+  transition: all 850ms cubic-bezier(0.23, 1, 0.32, 1);
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  overflow: auto;
+  background-color: #fafafa !important;
+}
+
+// ----- TITLE-BACKGROUND ---------------------
+.title-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 154px;
+  overflow: hidden;
+
+  .animation-enter & {
+    top: -154px;
+  }
+  .animation-enter-active & {
+    transition: top 850ms cubic-bezier(0.23, 1, 0.32, 1) !important;
+    top: 0 !important;
+  }
+  .animation-exit & {
+    transition: top 850ms cubic-bezier(0.23, 1, 0.32, 1) !important;
+    top: -154px !important;
+  }
+}
+
+// ----- TOOLBAR ------------------------------
+.toolbar {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 48px;
+  z-index: 100;
+}
+
+// ----- COURSE_TYPE --------------------------
+.course-type, .title-course-type {
+  position: absolute;
+  display: inline-block;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+.course-type {
+  transition: all 850ms cubic-bezier(0.23, 1, 0.32, 1);
+  top: 60px;
+  left: 16px;
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.87);
+  line-height: 1.46429em;
+
+  .animation-enter &, .animation-exit & {
+    opacity: 0 !important;
+  }
+  .animation-enter-active & {
+    opacity: 1 !important;
+  }
+
+  @media (min-width: 600px) {
+    left: calc(8.33333% + 16px);
+
+    .animation-enter-active & {
+      left: calc(8.33333% + 16px) !important;
+    }
+  }
+  @media (min-width: 960px) {
+    left: calc(16.6666% + 16px);
+
+    .animation-enter-active & {
+      left: calc(16.6666% + 16px) !important;
+    }
+  }
+}
+
+.title-course-type {
+  white-space: nowrap;
+  top: 8px;
+  left: -36px;
+  font-size: 7.75rem;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.17);
+
+  @media (min-width: 600px) {
+    left: calc(8.3333% - 36px);
+  }
+  @media (min-width: 960px) {
+    left: calc(16.6666% - 36px);
+  }
+}
+
+// ----- BACK_ICON ----------------------------
+.icon-back {
+  transition: transform 850ms cubic-bezier(0.23, 1, 0.32, 1) 350ms !important;
+  transform: rotate(0deg);
+
+  .animation-enter &, .animation-exit & {
+    transform: rotate(-90deg) !important;
+  }
+  .animation-enter-active & {
+    transform: rotate(0deg) !important;
+  }
+}
+
+// ----- TRAINER ------------------------------
+.trainer {
+  transition: all 850ms cubic-bezier(0.23, 1, 0.32, 1) 250ms;
+  position: absolute;
+  right: 16px;
+  top: 56px;
+  z-index: 50;
+
+  .animation-enter & {
+    top: -150px;
+  }
+  .animation-enter-active & {
+    top: 56px !important;
+  }
+  .animation-exit & {
+    transition: all 850ms cubic-bezier(0.23, 1, 0.32, 1) !important;
+    top: -150px !important;
+  }
+
+  @media (min-width: 600px) {
+    right: calc(8.3333% + 36px);
+
+    .animation-enter & {
+      top: -234px;
+    }
+
+    .animation-exit & {
+      top: -234px !important;
+    }
+  }
+  @media (min-width: 960px) {
+    right: calc(16.6666% + 36px);
+    .animation-enter & {
+      top: -318px;
+    }
+
+    .animation-exit & {
+      top: -318px !important;
+    }
+  }
+}
+
+.trainer-image {
+  width: 84px;
+  height: 84px;
+  border-radius: 2px;
+  overflow: hidden;
+  background-color: white;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+
+  @media (min-width: 600px) {
+    width: 168px;
+    height: 168px;
+  }
+  @media (min-width: 960px) {
+    width: 252px;
+    height: 252px;
+  }
+}
+
+.trainer-name {
+  width: 100%;
+  margin-top: 8px;
+  text-align: center;
+}
+
+// ----- CONTENT ------------------------------
+.content {
+  transition: all 850ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  opacity: 1;
+  position: absolute;
+  top: 0;
+  margin-top: 90px;
+  width: 100%;
+
+  .animation-enter &, .animation-exit & {
+    top: 50px;
+    opacity: 0 !important;
+  }
+  .animation-enter-active & {
+    top: 0;
+    opacity: 1 !important;
+  }
+}
+
+// ----- ATTENDEE -----------------------------
+.attendee {
+  cursor: pointer;
+  opacity: 1;
+  position: relative;
+  top: 0;
+
+  .animation-enter & {
+    opacity: 0 !important;
+    top: 16px;
+  }
+  .animation-enter-active & {
+    opacity: 1 !important;
+    top: 0;
+  }
+}
+
+.attendee_avatar {
+  margin: 0 auto;
+
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.hasChanges {
+  height: 54px !important;
+}
