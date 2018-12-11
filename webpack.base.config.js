@@ -1,3 +1,5 @@
+'use strict';
+const _ = require('lodash');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
