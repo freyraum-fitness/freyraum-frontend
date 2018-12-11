@@ -32,6 +32,16 @@ def mapBranchToDockerImage(branch) {
   return appName + ':snapshot'
 }
 
+def mapBranchToNpm(branch) {
+  if (branch == 'master') {
+    return 'build_production'
+  }
+  if (branch == 'develop') {
+    return 'build_int'
+  }
+  return 'build_tst'
+}
+
 pipeline {
   agent none
   options {
@@ -42,6 +52,7 @@ pipeline {
     APP_NAME = mapBranchToAppName("${BRANCH_NAME}")
     DOCKER_IMAGE = mapBranchToDockerImage("${BRANCH_NAME}")
     BRANCH = "${BRANCH_NAME}"
+    NPM_CMD = mapBranchToNpm("${BRANCH_NAME}")
   }
   stages {
     stage('checkout') {
@@ -74,7 +85,7 @@ pipeline {
         docker { image 'node:9-alpine' }
       }
       steps {
-        sh 'npm run build'
+        sh 'npm run ${NPM_CMD}'
       }
     }
 

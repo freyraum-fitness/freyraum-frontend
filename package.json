@@ -6,6 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --config ./webpack.dev.config.js --mode development",
     "build": "webpack --config ./webpack.config.js",
+    "build_tst": "webpack --config webpack.tst.config.js",
+    "build_int": "webpack --config webpack.int.config.js",
     "test": "jest --coverage --runInBand"
   },
   "repository": {
