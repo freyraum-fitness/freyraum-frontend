@@ -15,7 +15,7 @@ import IconButton from '@material-ui/core/IconButton';
 import {fetchStatistics} from '../../model/statistics';
 import NewsItem from '../../components/news/NewsItem/NewsItem';
 import {comparingMod} from '../../utils/Comparator';
-import MyCourse from '../../components/Course/MyCourse';
+import {MyCourse, AttendCourses} from '../../components/Course';
 import {SignedIn, NotSignedIn} from './../../components/Auth';
 import PullToRefresh from './../../components/PullToRefresh/PullToRefresh';
 import {toLogoPage} from '../../utils/Routing';
@@ -85,7 +85,7 @@ class Home extends Component {
                       slidesToShow={1} slidesToScroll={1}>
                 {
                   myCourses.length === 0
-                    ? <span>'Melde dich hier zu Kursen an'</span>
+                    ? <AttendCourses/>
                     : myCourses.map((course, idx) => <MyCourse key={idx} course={course}/>)
                 }
               </Slider>
