@@ -21,6 +21,7 @@ import Agb from './pages/Agb';
 import Impressum from './pages/Impressum';
 import Memberships from './pages/Memberships';
 import MembershipDetails from './pages/MembershipDetails';
+import NewsDetails from './pages/NewsDetails';
 import init from './model/init.js';
 import {hideNotification} from './model/notification';
 import CustomizedSnackbar from './components/CustomizedSnackbar';
@@ -134,6 +135,7 @@ class App extends Component {
               {/* modals */}
               <Route path='**/m/' component={AccountPage}/>
               <PrivateRoute path='**/course/:id' component={CourseDetails}/>
+              <PrivateRoute path='**/news/:id' component={NewsDetails}/>
               <PrivateRoute path='**/membership/:id' component={MembershipDetails}/>
 
               {/* redirect everything to home */}

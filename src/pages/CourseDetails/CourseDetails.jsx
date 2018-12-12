@@ -78,7 +78,7 @@ class CourseDetails extends Component {
 
   componentWillMount = () => {
     const {match, actions} = this.props;
-    const {showCourseDetails, createCourse, updateUsers} = actions;
+    const {showNewsDetails, createCourse, updateUsers} = actions;
     const id = match.params.id;
     if ('new' === id) {
       this.state.mode = MODE.CREATE;
