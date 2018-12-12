@@ -60,21 +60,26 @@ class MyMembership extends Component {
 
   render() {
     const {membership, membershipTypes} = this.props;
-    const {participationCount, validity, membershipTypeid} = membership;
+    const {participationCount, validity} = membership;
     const {
       key,
       name,
-      description,
       maxParticipations
     } = findById(membershipTypes.data, membership.membershipTypeId) || {};
+
+    const icon = getIcon(maxParticipations, participationCount, key);
 
     return (
       <ListItem
         button
         onClick={() => {}}>
-        <ListItemIcon>
-          {getIcon(maxParticipations, participationCount, key)}
-        </ListItemIcon>
+        {
+          icon
+          ? <ListItemIcon>
+              {icon}
+            </ListItemIcon>
+          : undefined
+        }
         <div style={{flex: '1 1 auto', padding: '0 16px', minWidth: '0'}}>
           <Typography variant='subtitle1'>{name}</Typography>
           <Typography variant='caption'>{geParticipationtText(maxParticipations, participationCount, key)}</Typography>

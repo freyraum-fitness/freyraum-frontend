@@ -24,7 +24,7 @@ class ProfilePicture extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {loading: false, userId: null, picture: null}
+    this.state = {loading: false, userId: null, picture: null};
   }
 
   updatePicture() {
@@ -68,10 +68,13 @@ class ProfilePicture extends Component {
     }
   };
 
-  render() {
-    const {size = 'MINI'} = this.props;
-    const {loading} = this.state;
+  componentDidMount() {
     this.updatePicture();
+  }
+
+  render() {
+    const {loading} = this.state;
+    //this.updatePicture();
     return (
       <div style={{position: 'relative', width: '100%', height: '100%'}}>
         <div style={profileStyles.table}>

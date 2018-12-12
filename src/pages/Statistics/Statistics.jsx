@@ -19,6 +19,11 @@ import moment from 'moment';
 
 class Statistics extends Component {
 
+  constructor(props) {
+    super(props);
+    this.fetchStatistics();
+  }
+
   onRefresh = () => {
     const {user, actions} = this.props;
     if (user && user.id) {
@@ -26,13 +31,21 @@ class Statistics extends Component {
     }
   };
 
-  render() {
-    const {user, statistics, courseTypes, actions} = this.props;
+  fetchStatistics = () => {
+    const {user, statistics, actions} = this.props;
     const {fetchStatistics} = actions;
 
     if (user && user.id && !statistics.pending) {
       fetchStatistics(user.id);
     }
+  };
+
+  componentDidMount() {
+    this.fetchStatistics();
+  }
+
+  render() {
+    const {statistics, courseTypes} = this.props;
 
     const {name = ""} = findById(courseTypes.data, statistics.data.favouriteCourseTypeId) || {};
     const participationsPerMonth = statistics.data.participationsPerMonth;
