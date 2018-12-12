@@ -135,7 +135,7 @@ class App extends Component {
               {/* modals */}
               <Route path='**/m/' component={AccountPage}/>
               <PrivateRoute path='**/course/:id' component={CourseDetails}/>
-              <PrivateRoute path='**/news/:id' component={NewsDetails}/>
+              <Route path='**/news/:id' component={NewsDetails}/>
               <PrivateRoute path='**/membership/:id' component={MembershipDetails}/>
 
               {/* redirect everything to home */}
