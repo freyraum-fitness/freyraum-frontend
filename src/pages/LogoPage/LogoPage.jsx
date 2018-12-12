@@ -13,11 +13,13 @@ class LogoPage extends Component {
 
   render() {
     return (
-      <div className='logo-page-container'>
-        <LogoAppBar withBackButton={this.withBackButton()}/>
-        <main className='logo-page'>
-          {this.page()}
-        </main>
+      <div>
+        <div className='logo-page-container'>
+          <LogoAppBar withBackButton={this.withBackButton()}/>
+          <main className='logo-page'>
+            {this.page()}
+          </main>
+        </div>
       </div>
     );
   }
