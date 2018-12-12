@@ -76,9 +76,9 @@ class CourseDetails extends Component {
     },
   };
 
-  componentWillMount = () => {
+  componentWillMount() {
     const {match, actions} = this.props;
-    const {showNewsDetails, createCourse, updateUsers} = actions;
+    const {showCourseDetails, createCourse, updateUsers} = actions;
     const id = match.params.id;
     if ('new' === id) {
       this.state.mode = MODE.CREATE;
@@ -88,7 +88,7 @@ class CourseDetails extends Component {
       showCourseDetails(id);
     }
     updateUsers();
-  };
+  }
 
   goBack = () => {
     this.props.history.goBack();
