@@ -1,5 +1,6 @@
 'use strict';
 import {Cookies} from 'react-cookie';
+import moment from 'moment';
 const baseURL = __API__;
 
 const cookies = new Cookies();
@@ -43,7 +44,7 @@ const updateTokenData = data =>
     }
     return response.json()
       .then(tokenData => {
-        cookies.set('token_data', tokenData, {path: '/', sameSite: true});
+        cookies.set('token_data', tokenData, {path: '/', sameSite: true, expires: moment().add(2, 'years').toDate()});
         return new Promise(resolve => resolve(tokenData));
       });
   });

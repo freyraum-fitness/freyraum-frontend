@@ -6,6 +6,7 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import moment from 'moment';
 import './style.less';
 
 class WeUseCookies extends Component {
@@ -21,7 +22,7 @@ class WeUseCookies extends Component {
 
   acceptCookies = () => {
     const {cookies} = this.props;
-    cookies.set('accept_cookies', true, {path: '/', sameSite: true});
+    cookies.set('accept_cookies', true, {path: '/', sameSite: true, expires: moment().add(2, 'years').toDate()});
     this.setState({cookiesAccepted: true});
   };
 
