@@ -131,7 +131,7 @@ class Home extends Component {
                     </Typography>
                   </NotSignedIn>
                   <Button fullWidth color='primary' onClick={() => toLogoPage(location, history, '/contact')}>
-                    Kontakformular
+                    Kontaktformular
                   </Button>
                 </Grid>
               </Grid>
