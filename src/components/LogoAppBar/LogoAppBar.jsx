@@ -43,7 +43,7 @@ class LogoAppBar extends Component {
   render() {
     const {children} = this.props;
     return (
-      <AppBar className='fullscreen-appbar'>
+      <AppBar className='fullscreen-appbar' style={{position: 'absolute'}}>
         <Toolbar className='fullscreen-toolbar'>
           <div className='menu-button-container'>
             {this.menuButton()}
