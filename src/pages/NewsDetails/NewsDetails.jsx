@@ -28,7 +28,7 @@ class NewsDetails extends Component {
             </Typography>
           </Toolbar>
         </AppBar>
-        <div className='news-details-img' style={{backgroundImage: 'url(' + __API__ + '/test' + news.pictureId + '.jpg)'}}/>
+        <img src={__API__ + '/test' + news.pictureId + '.jpg'} alt={news.title} width='100%'/>
         <div className='news-details-textarea'>
           <Typography variant='caption'>
             {moment(news.validity.from).format(DATE_FORMAT)}
