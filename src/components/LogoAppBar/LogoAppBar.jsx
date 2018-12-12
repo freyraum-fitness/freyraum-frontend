@@ -41,9 +41,8 @@ class LogoAppBar extends Component {
       </IconButton>;
 
   render() {
-    const {children} = this.props;
     return (
-      <AppBar className='fullscreen-appbar' style={{position: 'absolute'}}>
+      <AppBar className='fullscreen-appbar' position='sticky'>
         <Toolbar className='fullscreen-toolbar'>
           <div className='menu-button-container'>
             {this.menuButton()}
@@ -53,7 +52,6 @@ class LogoAppBar extends Component {
           <div className='grow'/>
           {this.loginButton()}
         </Toolbar>
-        {children}
       </AppBar>
     );
   }

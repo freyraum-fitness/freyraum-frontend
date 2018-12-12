@@ -1,9 +1,16 @@
 
+.logo-page-container {
+  background: linear-gradient(30deg, rgb(0, 176, 219) 40%, rgb(12, 242, 225) 110%);
+  min-height: 100vh;
+}
+
 .logo-page {
-  padding: 0 16px 96px;
-  width: calc(100% - 32px);
-  height: 100%;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  position: relative;
+  top: -64px;
+  padding: 32px 16px 96px 16px;
   -webkit-overflow-scrolling: touch;
+
+  @media (min-width: 600px) {
+    top: 0;
+  }
 }
