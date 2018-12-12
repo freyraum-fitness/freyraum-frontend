@@ -35,15 +35,7 @@ class ProfilePictureDialog extends Component {
     acceptAGB: false
   };
 
-  constructor(props) {
-    super(props);
-    this.handleUpload = this.handleUpload.bind(this);
-    this.handleRequestSave = this.handleRequestSave.bind(this);
-    this.handleRequestClose = this.handleRequestClose.bind(this);
-    this.setAvatarEditorRef = this.setAvatarEditorRef.bind(this);
-  }
-
-  handleUpload(e) {
+  handleUpload = e => {
     const {changeTempProfilePicture} = this.props;
     const reader = new FileReader();
     const file = e.target.files[0];
@@ -56,7 +48,7 @@ class ProfilePictureDialog extends Component {
     };
     this.setState(setPath(['errorText'], undefined, this.state));
     reader.readAsDataURL(file);
-  }
+  };
 
   handleRequestSave = () => {
     const {file} = this.props.temp;
@@ -171,7 +163,7 @@ class ProfilePictureDialog extends Component {
                 padding: '16px auto',
                 textAlign: 'center'
               }}>
-                <Button variant='flat' style={{color: 'white'}}>
+                <Button variant='text' style={{color: 'white'}}>
                   {this.getInput()}
                   Bild wählen
                 </Button>
