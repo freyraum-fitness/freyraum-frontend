@@ -99,7 +99,6 @@ class Profile extends Component {
 
               {this.renderMemberships()}
             </Grid>
-            {/*
             <ProfilePictureDialog
               show={profile.picture.dialog.open}
               temp={profile.picture.temp}
@@ -109,7 +108,6 @@ class Profile extends Component {
               onSave={actions.saveProfilePicture}
               onClose={actions.closeProfilePictureChangeDialog}
             />
-            */}
           </PullToRefresh>
         </SimplePage>
       );
