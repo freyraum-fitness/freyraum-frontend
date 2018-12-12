@@ -3,14 +3,14 @@
 }
 
 .fullscreen-appbar {
-  .animated();
   background: linear-gradient(30deg, #00B0DB 40%, #0CF2E1 110%);
-  z-index: 5000;
+  z-index: 5000 !important;
   width: 100vw;
   height: 100vh;
   box-shadow: none !important;
 
   .animation-enter &, .animation-exit & {
+    .animated();
     height: 56px !important;
     background: linear-gradient(10deg, #00B0DB 40%, #0CF2E1 110%) !important;
 

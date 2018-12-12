@@ -97,30 +97,6 @@ class App extends Component {
 
     return (
       <div>
-        <Switch location={location}>
-          <Redirect from='/index' to='/home'/>
-          <Redirect exact from='/' to='/home'/>
-
-          {/* app pages */}
-          <Route path='/home' component={Home}/>
-          <PrivateRoute path='/statistics' component={Statistics}/>
-          <PrivateRoute path='/courses' component={Courses}/>
-          <PrivateRoute path='/profile' component={Profile}/>
-          <PrivateRoute path='/settings' component={Settings}/>
-          <Route path='/courses-plan' component={CoursesPlan}/>
-          <Route path='/about' component={About}/>
-          <Route path='/agb' component={Agb}/>
-          <Route path='/impressum' component={Impressum}/>
-          {
-            trainerOrAdmin
-              ? <PrivateRoute path='/memberships' component={Memberships}/>
-              : undefined
-          }
-
-          {/* redirect everything to home */}
-          <Redirect from='*' to='/home'/>
-        </Switch>
-
         <TransitionGroup>
           <CSSTransition
             timeout={850}
@@ -130,10 +106,32 @@ class App extends Component {
             unmountOnExit
           >
             <Switch location={location}>
+              <Redirect from='/index' to='/home'/>
+              <Redirect exact from='/' to='/home'/>
+
+              {/* app pages */}
+              <Route exact path='/home' component={Home}/>
+              <PrivateRoute exact path='/statistics' component={Statistics}/>
+              <PrivateRoute exact path='/courses' component={Courses}/>
+              <PrivateRoute exact path='/profile' component={Profile}/>
+              <PrivateRoute exact path='/settings' component={Settings}/>
+              <Route exact path='/courses-plan' component={CoursesPlan}/>
+              <Route exact path='/about' component={About}/>
+              <Route exact path='/agb' component={Agb}/>
+              <Route exact path='/impressum' component={Impressum}/>
+              {
+                trainerOrAdmin
+                  ? <PrivateRoute exact path='/memberships' component={Memberships}/>
+                  : undefined
+              }
+
               {/* modals */}
               <Route path='**/m/' component={AccountPage}/>
               <PrivateRoute path='**/course/:id' component={CourseDetails}/>
               <PrivateRoute path='**/membership/:id' component={MembershipDetails}/>
+
+              {/* redirect everything to home */}
+              <Redirect from='*' to='/home'/>
             </Switch>
           </CSSTransition>
         </TransitionGroup>
