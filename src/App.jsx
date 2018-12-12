@@ -86,6 +86,12 @@ class App extends Component {
     init(dispatch);
   };
 
+  componentDidUpdate(prevProps) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      window.scrollTo(0, 0);
+    }
+  }
+
   render() {
     if (this.props.profilePending && !this.props.currentUser) {
       return <div style={{height: '100vh'}}><LoadingIndicator/></div>;
