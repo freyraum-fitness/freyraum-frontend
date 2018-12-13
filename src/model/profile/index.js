@@ -115,27 +115,6 @@ export const scrollToLogin = router => {
   }
 };
 
-export const showLogin = () =>
-  dispatch => dispatch(actions.showLogin());
-
-export const showRegistration = () =>
-  dispatch => dispatch(actions.showRegistration());
-
-export const login = (loginData, onSuccess) =>
-  dispatch => {
-    dispatch(actions.login.pending());
-    return loginApiCall(loginData)
-      .then(() => {
-        dispatch(actions.login.success());
-        init(dispatch);
-        onSuccess();
-    })
-      .catch(() => dispatch(actions.login.error("Ungültige Kombination aus E-Mail und Passwort")));
-  };
-
-export const loginDataChanged = (id, value) =>
-  dispatch => dispatch(actions.login.dataChanged(id, value));
-
 export const createAccount = (createData) =>
   dispatch => {
     dispatch(actions.createAccount.pending());
