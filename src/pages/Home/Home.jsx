@@ -12,6 +12,9 @@ import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import Card from '@material-ui/core/Card';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
 import {fetchStatistics} from '../../model/statistics';
 import NewsItem from '../../components/news/NewsItem/NewsItem';
 import {comparingMod} from '../../utils/Comparator';
@@ -21,6 +24,7 @@ import PullToRefresh from './../../components/PullToRefresh/PullToRefresh';
 import {toLogoPage} from '../../utils/Routing';
 import {CoursesPlanAgenda, CoursesPlanIntro, CoursesPlanOverview} from '../CoursesPlan';
 import Slider from 'react-slick';
+import ReactPlayer from 'react-player';
 import Instagram from 'mdi-material-ui/Instagram';
 import Facebook from 'mdi-material-ui/Facebook';
 import {PRIMARY} from '../../theme';
@@ -98,9 +102,66 @@ class Home extends Component {
 
           <div className='section'>
             <Typography variant='subtitle1' className='title-h-scroll'>
+              Adventskalender
+            </Typography>
+            <Slider dots swipeToSlide variableWidth infinite={false} arrows={false}
+                    className={'slider variable-width'}
+                    slidesToShow={1} slidesToScroll={1}>
+              <div style={{width: '266px', margin: '8px'}}>
+                <div style={{margin: '8px', position: 'relative'}}>
+                  <Card>
+                    <CardMedia>
+                      <ReactPlayer
+                        url='https://www.youtube.com/watch?v=ysz5S6PUM-U'
+                        config={{
+                          youtube: {
+                            playerVars: {rel: 0}
+                          }
+                        }}
+                        width='100%'
+                        height='100%'/>
+                    </CardMedia>
+                    <CardContent>
+                      <Typography>
+                        12. Dezember
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+
+              <div style={{width: '250px', margin: '8px'}}>
+                <div style={{margin: '8px', position: 'relative'}}>
+                  <Card>
+                    <CardMedia>
+                      <ReactPlayer
+                        url='https://www.youtube.com/watch?v=ysz5S6PUM-U'
+                        config={{
+                          youtube: {
+                            playerVars: {rel: 0}
+                          }
+                        }}
+                        width='100%'
+                        height='100%'/>
+                    </CardMedia>
+                    <CardContent>
+                      <Typography>
+                        12. Dezember
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+
+            </Slider>
+          </div>
+
+          <div className='section'>
+            <Typography variant='subtitle1' className='title-h-scroll'>
               Neuigkeiten
             </Typography>
-            <Slider dots swipeToSlide variableWidth infinite={false} arrows={false} className={'slider variable-width'}
+            <Slider dots swipeToSlide variableWidth infinite={false} arrows={false}
+                    className={'slider variable-width'}
                     slidesToShow={1} slidesToScroll={1}>
               {news.data.map((newsItem, idx) => <NewsItem key={idx} news={newsItem}/>)}
             </Slider>
