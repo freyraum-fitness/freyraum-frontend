@@ -2,7 +2,9 @@
 import {createActions, handleActions} from 'redux-actions';
 import {setPath, assignPath} from '../../utils/RamdaUtils';
 import {
-  changePassword as changePasswordApiCall
+  changePassword as changePasswordApiCall,
+  passwordForgotten as passwordForgottenApiCall,
+  resetPassword as resetPasswordApiCall
 } from '../../service/password';
 import {
   showNotification
@@ -56,7 +58,7 @@ export const actions = createActions({
   }
 });
 
-export const changePassword = (changePasswordData) =>
+export const changePassword = changePasswordData =>
   dispatch => {
     dispatch(actions.password.change.pending());
     return changePasswordApiCall(changePasswordData)
@@ -67,12 +69,33 @@ export const changePassword = (changePasswordData) =>
       .catch(error => dispatch(actions.password.change.error(error)));
   };
 
+export const passwortForgotten = passwordForgottenData =>
+  dispatch => {
+    dispatch(actions.password.forgotten.pending());
+    return passwordForgottenApiCall(passwordForgottenData)
+      .then(answer => {
+        dispatch(actions.password.forgotten.success());
+        dispatch(showNotification(answer.message, 'E-Mail verschickt'));
+      })
+      .catch(error => dispatch(actions.password.forgotten.error(error)));
+  };
+
+export const resetPassword = resetPasswordData =>
+  dispatch => {
+    dispatch(actions.password.reset.pending());
+    return resetPasswordApiCall(resetPasswordData)
+      .then(answer => {
+        dispatch(actions.password.reset.success());
+        dispatch(showNotification(answer.message, 'Passwort geändert'));
+      })
+      .catch(error => dispatch(actions.password.reset.error(error)));
+  };
+
 export const onChangePasswordDataChange = (path, value) =>
     dispatch => dispatch(actions.password.changing(['change' , 'data', ...path], value));
 
 export const onPasswordForgottenDataChange = (path, value) =>
     dispatch => dispatch(actions.password.changing(['forgotten', 'data', ...path], value));
-
 
 export const onResetPasswordDataChange = (path, value) =>
     dispatch => dispatch(actions.password.changing(['reset', 'data', ...path], value));

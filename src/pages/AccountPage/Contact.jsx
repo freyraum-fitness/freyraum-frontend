@@ -77,6 +77,7 @@ class Contact extends Component {
             className='contact-firstname'
             id='firstname'
             label='Vorname'
+            required
             xs={6}
             value={data.firstname}
             validators={[Validators.notEmpty('Bitte gib deinen Vornamen ein')]}
@@ -85,6 +86,7 @@ class Contact extends Component {
             className='contact-lastname'
             id='lastname'
             label='Nachname'
+            required
             xs={6}
             value={data.lastname}
             validators={[Validators.notEmpty('Bitte gib deinen Nachnamen ein')]}
@@ -109,6 +111,7 @@ class Contact extends Component {
             className='contact-subject'
             id='subject'
             label='Betreff'
+            required
             value={data.subject}
             validators={[Validators.notEmpty('Bitte gib einen Betreff an')]}
             onChange={contactDataChanged}/>
@@ -116,12 +119,17 @@ class Contact extends Component {
             className='contact-message'
             id='message'
             label='Nachricht'
+            required
             value={data.message}
             multiline
             validators={[Validators.notEmpty('Bitte trage hier deine Nachricht ein')]}
             onChange={contactDataChanged}/>
-          {errorMessage ? <GridTextControl text={errorMessage} error={true}/> : undefined}
         </ValidationGroup>
+        {
+          errorMessage
+            ? <GridTextControl text={errorMessage} error={true}/>
+            : undefined
+        }
         <GridButtonControl
           className='contact-button'
           pending={pending}
