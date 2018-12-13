@@ -16,11 +16,29 @@ const securityHeaders = {
   'Access-Control-Allow-Origin': '*',
 };
 
+let _tokenData = null;
+const getTokenData = () => {
+  if (!_tokenData) {
+    _tokenData = cookies.get('token_data');
+  }
+  return _tokenData;
+};
+
+const setTokenData = tokenData => {
+  _tokenData = tokenData;
+  cookies.set('token_data', tokenData, {path: '/', sameSite: true, expires: moment().add(2, 'years').toDate()});
+};
+
 const getAccessTokenHeader = () => {
-  const tokenData = cookies.get('token_data');
+  const tokenData = getTokenData();
   if (tokenData && tokenData['access_token']) {
     return {'Authorization': 'Bearer   ' + tokenData['access_token']};
   }
+};
+
+const removeTokenData = () => {
+  _tokenData = null;
+  cookies.remove('tokenData', {path: '/'});
 };
 
 const toEncodedBody = (data) => Object.keys(data)
@@ -44,7 +62,7 @@ const updateTokenData = data =>
     }
     return response.json()
       .then(tokenData => {
-        cookies.set('token_data', tokenData, {path: '/', sameSite: true, expires: moment().add(2, 'years').toDate()});
+        setTokenData(tokenData);
         return new Promise(resolve => resolve(tokenData));
       });
   });
@@ -57,7 +75,7 @@ const updateAccessToken = () => {
   if (updatingAccessToken) {
     return updatingAccessToken;
   }
-  const tokenData = cookies.get('token_data');
+  const tokenData = getTokenData();
   if (tokenData && tokenData['refresh_token']) {
     updatingAccessToken = updateTokenData({
       refresh_token: tokenData['refresh_token'],
@@ -72,7 +90,7 @@ const updateAccessToken = () => {
   }).catch(error => {
     updatingAccessToken = undefined;
     console.info("Could not refresh the oauth token => delete cookie");
-    cookies.remove('tokenData', {path: '/'});
+    removeTokenData();
     return new Promise((resolve, reject) => reject(error))
   });
 };
@@ -81,7 +99,7 @@ const fetchWithToken = (url, params, retry = true) =>
   fetch(url, params)
     .then(async response => {
       // 401 indicates that the access token is expired
-      if (response.status === 401 && retry && !!cookies.get('token_data')) {
+      if (response.status === 401 && retry && !!getTokenData()) {
         return updateAccessToken()
           .then(() => {
             // update headers with new token
