@@ -16,6 +16,30 @@ import {comparingModFunc} from './../../utils/Comparator';
 import {findById} from './../../utils/RamdaUtils';
 import moment from 'moment';
 
+class TopCourse extends Component {
+
+  render() {
+    const {courseType, count} = this.props;
+    return (
+      <Card style={{height: '100%'}}>
+        <CardContent style={{height: 'calc(100% - 32px)'}}>
+          <Grid container alignContent='space-between' style={{height: '100%'}}>
+            <Grid item xs={12}>
+              <Typography align='center' style={{color: courseType.color}}>
+                {courseType.name}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant='caption' align='center'>
+                {count + ' mal teilgenommen'}
+              </Typography>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+    );
+  }
+}
 
 class Statistics extends Component {
 
@@ -44,35 +68,42 @@ class Statistics extends Component {
     this.fetchStatistics();
   }
 
+  renderTop3 = (top3, idx, courseTypes, participationsPerType) => {
+    if (!top3[idx]) {
+      return null;
+    }
+    return (
+      <Grid item xs={4} sm={4}>
+        <TopCourse courseType={findById(courseTypes.data, top3[idx])} count={participationsPerType[top3[idx]]}/>
+      </Grid>
+    );
+  };
+
   render() {
     const {statistics, courseTypes} = this.props;
 
-    const {name = ""} = findById(courseTypes.data, statistics.data.favouriteCourseTypeId) || {};
     const participationsPerMonth = statistics.data.participationsPerMonth;
     const sorted = Object.keys(participationsPerMonth)
       .sort(comparingModFunc(value => value, moment));
+
+    const participationsPerType = statistics.data.participationsPerType;
+    const top3 = Object.keys(participationsPerType)
+      .sort(comparingModFunc(key => participationsPerType[key], v => v, 'DESC'));
+
 
     return (
       <SimplePage>
         <PullToRefresh
           pending={statistics.pending}
           onRefresh={this.onRefresh}>
-          <Grid container spacing={16} justify="center" style={{width: '100%', margin: '0px'}}>
-            <Grid item xs={12} sm={8}>
-              <Card>
-                <CardHeader title='Dein Lieblingskurs'/>
-                <CardContent>
-                  <Typography>
-                    {name}
-                  </Typography>
-                  <Typography variant='caption'>
-                    {'Du hast an diesem Kurs bereits ' + statistics.data.favouriteCourseParticipations + ' mal teilgenommen.'}
-                  </Typography>
-                </CardContent>
-              </Card>
+          <Grid container spacing={16} justify="center" style={{width: '100%', margin: '0px', padding: '16px 0 0'}}>
+            <Grid container spacing={8} item xs={12} sm={10} md={8} alignItems='stretch' style={{padding: '4px'}}>
+              {this.renderTop3(top3, 0, courseTypes, participationsPerType)}
+              {this.renderTop3(top3, 1, courseTypes, participationsPerType)}
+              {this.renderTop3(top3, 2, courseTypes, participationsPerType)}
             </Grid>
 
-            <Grid item xs={12} sm={8}>
+            <Grid item xs={12} sm={10} md={8}>
               <Card>
                 <CardHeader title='Statistiken'/>
                 <CardContent>
