@@ -115,9 +115,13 @@ class Home extends Component {
                         url='https://www.youtube.com/watch?v=ysz5S6PUM-U'
                         config={{
                           youtube: {
-                            playerVars: {rel: 0}
+                            playerVars: {
+                              rel: 0,
+                            }
                           }
                         }}
+                        playsinline
+                        controls
                         width='100%'
                         height='100%'/>
                     </CardMedia>
@@ -138,9 +142,13 @@ class Home extends Component {
                         url='https://www.youtube.com/watch?v=ysz5S6PUM-U'
                         config={{
                           youtube: {
-                            playerVars: {rel: 0}
+                            playerVars: {
+                              rel: 0,
+                            }
                           }
                         }}
+                        playsinline
+                        controls
                         width='100%'
                         height='100%'/>
                     </CardMedia>
