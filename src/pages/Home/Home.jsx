@@ -107,12 +107,12 @@ class Home extends Component {
             <Slider dots swipeToSlide variableWidth infinite={false} arrows={false}
                     className={'slider variable-width'}
                     slidesToShow={1} slidesToScroll={1}>
-              <div style={{width: '266px', margin: '8px'}}>
+              <div style={{width: '300px', margin: '8px'}}>
                 <div style={{margin: '8px', position: 'relative'}}>
                   <Card>
-                    <CardMedia>
+                    <CardMedia src='iframe'>
                       <ReactPlayer
-                        url='https://www.youtube.com/watch?v=ysz5S6PUM-U'
+                        url='https://www.youtube.com/watch?v=jNgP6d9HraI'
                         config={{
                           youtube: {
                             playerVars: {
@@ -123,7 +123,7 @@ class Home extends Component {
                         playsinline
                         controls
                         width='100%'
-                        height='100%'/>
+                        height='200px'/>
                     </CardMedia>
                     <CardContent>
                       <Typography>
@@ -134,12 +134,12 @@ class Home extends Component {
                 </div>
               </div>
 
-              <div style={{width: '250px', margin: '8px'}}>
+              <div style={{width: '300px', margin: '8px'}}>
                 <div style={{margin: '8px', position: 'relative'}}>
                   <Card>
-                    <CardMedia>
+                    <CardMedia src='iframe'>
                       <ReactPlayer
-                        url='https://www.youtube.com/watch?v=ysz5S6PUM-U'
+                        url='https://www.youtube.com/watch?v=jNgP6d9HraI'
                         config={{
                           youtube: {
                             playerVars: {
@@ -150,11 +150,11 @@ class Home extends Component {
                         playsinline
                         controls
                         width='100%'
-                        height='100%'/>
+                        height='200px'/>
                     </CardMedia>
                     <CardContent>
                       <Typography>
-                        12. Dezember
+                        11. Dezember
                       </Typography>
                     </CardContent>
                   </Card>
