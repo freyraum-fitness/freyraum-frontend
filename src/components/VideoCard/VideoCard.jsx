@@ -49,6 +49,9 @@ class VideoCard extends React.Component {
                 }}
                 playing={playing}
                 playsinline
+                onPause={this.pause}
+                onPlay={this.play}
+                onEnded={this.pause}
                 width='100%'
                 height='200px'/>
             </CardMedia>
