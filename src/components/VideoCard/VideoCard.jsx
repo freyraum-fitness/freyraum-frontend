@@ -20,7 +20,12 @@ class VideoCard extends React.Component {
               config={{
                 youtube: {
                   playerVars: {
+                    fs: 1,
                     rel: 0,
+                    playsinline: 0,
+                    showinfo: 0,
+                    controls: 1,
+                    modestbranding: 1,
                   }
                 }
               }}

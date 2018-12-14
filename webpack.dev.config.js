@@ -100,7 +100,7 @@ module.exports = {
   ],
   devServer: {
     contentBase: './dest',
-    https: false,
+    https: true,
     hot: true,
     port: 3333
   }
