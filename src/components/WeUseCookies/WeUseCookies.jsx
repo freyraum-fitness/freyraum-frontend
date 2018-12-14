@@ -22,7 +22,7 @@ class WeUseCookies extends Component {
 
   acceptCookies = () => {
     const {cookies} = this.props;
-    cookies.set('accept_cookies', true, {path: '/', sameSite: true, expires: moment().add(2, 'years').toDate()});
+    cookies.set('accept_cookies', true, {path: '/', secure: true, expires: moment().add(2, 'years').toDate()});
     this.setState({cookiesAccepted: true});
   };
 

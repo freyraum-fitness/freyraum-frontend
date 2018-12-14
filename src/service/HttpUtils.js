@@ -26,7 +26,7 @@ const getTokenData = () => {
 
 const setTokenData = tokenData => {
   _tokenData = tokenData;
-  cookies.set('token_data', tokenData, {path: '/', sameSite: true, expires: moment().add(2, 'years').toDate()});
+  cookies.set('token_data', tokenData, {path: '/', secure: true, expires: moment().add(2, 'years').toDate()});
 };
 
 const getAccessTokenHeader = () => {
@@ -38,7 +38,7 @@ const getAccessTokenHeader = () => {
 
 const removeTokenData = () => {
   _tokenData = null;
-  cookies.remove('tokenData', {path: '/'});
+  cookies.remove('token_data', {path: '/'});
 };
 
 const toEncodedBody = (data) => Object.keys(data)

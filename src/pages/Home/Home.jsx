@@ -12,19 +12,16 @@ import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
 import {fetchStatistics} from '../../model/statistics';
 import NewsItem from '../../components/news/NewsItem/NewsItem';
 import {comparingMod} from '../../utils/Comparator';
-import {MyCourse, AttendCourses} from '../../components/Course';
-import {SignedIn, NotSignedIn} from './../../components/Auth';
+import {AttendCourses, MyCourse} from '../../components/Course';
+import {NotSignedIn, SignedIn} from './../../components/Auth';
 import PullToRefresh from './../../components/PullToRefresh/PullToRefresh';
+import VideoCard from './../../components/VideoCard';
 import {toLogoPage} from '../../utils/Routing';
 import {CoursesPlanAgenda, CoursesPlanIntro, CoursesPlanOverview} from '../CoursesPlan';
 import Slider from 'react-slick';
-import ReactPlayer from 'react-player';
 import Instagram from 'mdi-material-ui/Instagram';
 import Facebook from 'mdi-material-ui/Facebook';
 import {PRIMARY} from '../../theme';
@@ -32,6 +29,24 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './style.less';
 
+export const Workouts = [
+  {
+    title: '12. Dezember',
+    url: 'https://www.youtube.com/watch?v=jNgP6d9HraI'
+  },
+  {
+    title: '11. Dezember',
+    url: 'https://www.youtube.com/watch?v=jNgP6d9HraI'
+  },
+  {
+    title: '10. Dezember',
+    url: 'https://www.youtube.com/watch?v=jNgP6d9HraI'
+  },
+  {
+    title: '9. Dezember',
+    url: 'https://www.youtube.com/watch?v=jNgP6d9HraI'
+  }
+];
 const compareCourseByStartDate = comparingMod('start', moment);
 
 class Home extends Component {
@@ -107,60 +122,7 @@ class Home extends Component {
             <Slider dots swipeToSlide variableWidth infinite={false} arrows={false}
                     className={'slider variable-width'}
                     slidesToShow={1} slidesToScroll={1}>
-              <div style={{width: '300px', margin: '8px'}}>
-                <div style={{margin: '8px', position: 'relative'}}>
-                  <Card>
-                    <CardMedia src='iframe'>
-                      <ReactPlayer
-                        url='https://www.youtube.com/watch?v=jNgP6d9HraI'
-                        config={{
-                          youtube: {
-                            playerVars: {
-                              rel: 0,
-                            }
-                          }
-                        }}
-                        playsinline
-                        controls
-                        width='100%'
-                        height='200px'/>
-                    </CardMedia>
-                    <CardContent>
-                      <Typography>
-                        12. Dezember
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </div>
-              </div>
-
-              <div style={{width: '300px', margin: '8px'}}>
-                <div style={{margin: '8px', position: 'relative'}}>
-                  <Card>
-                    <CardMedia src='iframe'>
-                      <ReactPlayer
-                        url='https://www.youtube.com/watch?v=jNgP6d9HraI'
-                        config={{
-                          youtube: {
-                            playerVars: {
-                              rel: 0,
-                            }
-                          }
-                        }}
-                        playsinline
-                        controls
-                        width='100%'
-                        height='200px'/>
-                    </CardMedia>
-                    <CardContent>
-                      <Typography>
-                        11. Dezember
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </div>
-              </div>
-
+              {Workouts.map((item, idx) => <VideoCard key={idx} title={item.title} url={item.url}/>)}
             </Slider>
           </div>
 
