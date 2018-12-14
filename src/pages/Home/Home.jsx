@@ -115,16 +115,18 @@ class Home extends Component {
             {this.getWelcomeGreetings()}
           </NotSignedIn>
 
-          <div className='section'>
-            <Typography variant='subtitle1' className='title-h-scroll'>
-              Adventskalender
-            </Typography>
-            <Slider dots swipeToSlide variableWidth infinite={false} arrows={false}
-                    className={'slider variable-width'}
-                    slidesToShow={1} slidesToScroll={1}>
-              {Workouts.map((item, idx) => <VideoCard key={idx} title={item.title} url={item.url}/>)}
-            </Slider>
-          </div>
+          <SignedIn>
+            <div className='section'>
+              <Typography variant='subtitle1' className='title-h-scroll'>
+                Adventskalender
+              </Typography>
+              <Slider dots swipeToSlide variableWidth infinite={false} arrows={false}
+                      className={'slider variable-width'}
+                      slidesToShow={1} slidesToScroll={1}>
+                {Workouts.map((item, idx) => <VideoCard key={idx} title={item.title} url={item.url}/>)}
+              </Slider>
+            </div>
+          </SignedIn>
 
           <div className='section'>
             <Typography variant='subtitle1' className='title-h-scroll'>
