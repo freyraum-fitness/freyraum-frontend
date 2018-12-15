@@ -103,18 +103,6 @@ export const setLoginRef = (ref) => {
   }
 };
 
-export const scrollToLogin = router => {
-  return (dispatch, getState) => {
-    const loginRef = getState().profile.loginRef;
-    if (router.history.location.pathname === '/home' && !!loginRef) {
-      loginRef.scrollIntoView({behaviour: 'smooth', block: 'start'});
-    } else {
-      dispatch(actions.shouldScrollToLogin(true));
-      router.history.push('/');
-    }
-  }
-};
-
 export const createAccount = (createData) =>
   dispatch => {
     dispatch(actions.createAccount.pending());

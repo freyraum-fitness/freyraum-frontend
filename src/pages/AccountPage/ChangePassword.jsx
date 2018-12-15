@@ -15,8 +15,9 @@ import {
   changePassword,
   onChangePasswordDataChange
 } from './../../model/password';
+import {exitLogoPage} from './../../utils/Routing';
 
-class ResetPassword extends Component {
+class ChangePassword extends Component {
 
   validateForm = () => {
     const result = this.validationGroup.validate();
@@ -30,8 +31,7 @@ class ResetPassword extends Component {
   doChangePassword = () => {
     if (this.validateForm()) {
       const {password, actions} = this.props;
-      const {changePassword} = actions;
-      return changePassword(password.data);
+      return actions.changePassword(password.data, () => exitLogoPage(location, history));
     }
   };
 
@@ -112,4 +112,4 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps
   )
-)(ResetPassword);
+)(ChangePassword);

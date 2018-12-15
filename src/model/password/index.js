@@ -58,35 +58,38 @@ export const actions = createActions({
   }
 });
 
-export const changePassword = changePasswordData =>
+export const changePassword = (changePasswordData, onSuccess) =>
   dispatch => {
     dispatch(actions.password.change.pending());
     return changePasswordApiCall(changePasswordData)
-      .then(answer => {
+      .then(() => {
         dispatch(actions.password.change.success());
-        dispatch(showNotification(answer.message, 'Passwort geändert'));
+        onSuccess();
+        dispatch(showNotification('Passwort geändert', 'success'));
       })
       .catch(error => dispatch(actions.password.change.error(error)));
   };
 
-export const passwortForgotten = passwordForgottenData =>
+export const passwortForgotten = (passwordForgottenData, onSuccess) =>
   dispatch => {
     dispatch(actions.password.forgotten.pending());
     return passwordForgottenApiCall(passwordForgottenData)
-      .then(answer => {
+      .then(() => {
         dispatch(actions.password.forgotten.success());
-        dispatch(showNotification(answer.message, 'E-Mail verschickt'));
+        onSuccess();
+        dispatch(showNotification('E-Mail verschickt', 'success'));
       })
       .catch(error => dispatch(actions.password.forgotten.error(error)));
   };
 
-export const resetPassword = resetPasswordData =>
+export const resetPassword = (resetPasswordData, onSuccess) =>
   dispatch => {
     dispatch(actions.password.reset.pending());
     return resetPasswordApiCall(resetPasswordData)
-      .then(answer => {
+      .then(() => {
         dispatch(actions.password.reset.success());
-        dispatch(showNotification(answer.message, 'Passwort geändert'));
+        onSuccess();
+        dispatch(showNotification('Passwort zurückgesetzt', 'success'));
       })
       .catch(error => dispatch(actions.password.reset.error(error)));
   };
