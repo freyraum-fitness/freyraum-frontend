@@ -1,5 +1,6 @@
 export {
   GridButtonControl,
+  GridCheckboxControl,
   GridDateControl,
   GridDateTimeControl,
   GridInputControl,

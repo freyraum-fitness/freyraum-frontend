@@ -129,9 +129,9 @@ export class GridPasswordControl extends ValidationControl {
 
   render() {
     const {showPassword, valid, errors} = this.state;
-    const {id, className, label, value, onChange} = this.props;
+    const {id, className, label, required, value, onChange} = this.props;
     return <GridFormControl error={!valid} className={className}>
-      <InputLabel htmlFor={id}>{label}</InputLabel>
+      <InputLabel htmlFor={id} required={required}>{label}</InputLabel>
       <Input
         id={id}
         value={value}

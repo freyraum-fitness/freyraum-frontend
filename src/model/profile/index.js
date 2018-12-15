@@ -10,7 +10,7 @@ import {
 import {updateSettings as updatePreferenceApiCall} from '../../service/settings';
 import {setPath, assignPath, viewPath} from '../../utils/RamdaUtils';
 import init from './../init.js';
-import {showNotification} from "../notification";
+import {showNotification} from '../notification';
 import moment from 'moment';
 
 const initialState = {
@@ -33,12 +33,14 @@ const initialState = {
     errorMessage: undefined
   },
   createAccount: {
+    pending: false,
+    error: '',
     data: {
-      firstname: "",
-      lastname: "",
-      email: "",
-      password: "",
-      matchingPassword: "",
+      firstname: '',
+      lastname: '',
+      email: '',
+      password: '',
+      matchingPassword: '',
       acceptAgb: false
     }
   },
@@ -93,24 +95,14 @@ export const actions = createActions({
   }
 });
 
-export const setLoginRef = (ref) => {
-  return (dispatch, getState) => {
-     dispatch(actions.setLoginRef(ref));
-    if (getState().profile.shouldScrollToLogin) {
-      ref.scrollIntoView({behaviour: 'smooth', block: 'start'});
-      dispatch(actions.shouldScrollToLogin(false));
-    }
-  }
-};
-
-export const createAccount = (createData) =>
+export const createAccount = (createData, onSuccess) =>
   dispatch => {
     dispatch(actions.createAccount.pending());
     return createAccountApiCall(createData)
-      .then(answer => {
+      .then(() => {
         dispatch(actions.createAccount.success());
-        dispatch(showNotification(answer.message, "success"));
-        dispatch(actions.showLogin());
+        onSuccess();
+        dispatch(showNotification('Account erstellt', 'success'));
       })
       .catch(error => dispatch(actions.createAccount.error(error)));
   };

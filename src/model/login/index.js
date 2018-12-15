@@ -32,7 +32,7 @@ export const login = (loginData, onSuccess) =>
         init(dispatch);
         onSuccess();
       })
-      .catch(error => dispatch(actions.login.error(error.message)));//"Ungültige Kombination aus E-Mail und Passwort")));
+      .catch(() => dispatch(actions.login.error("Fehler beim Anmelden. Stimmen E-Mail und Passwort?")));
   };
 
 export const loginDataChanged = (id, value) =>
