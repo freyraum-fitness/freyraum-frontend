@@ -33,7 +33,7 @@ class PageAppBar extends Component {
   };
 
   logo = () => <span className='title-logo'>
-    <img src='/logo.png' width={42}/>
+    <img src='/logo.png' width={36}/>
   </span>;
 
   title = () => <Typography type='title' color='inherit' className='title'>

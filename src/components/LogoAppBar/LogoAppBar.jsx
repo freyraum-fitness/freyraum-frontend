@@ -11,20 +11,24 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import ExitToApp from '@material-ui/icons/ExitToApp';
+import Menu from '@material-ui/icons/Menu';
 import './style.less';
 
 class LogoAppBar extends Component {
 
-  menuButton = () =>
-      <IconButton className='menu'>
-      <img src='/logo.png' width={42} />
-      </IconButton>;
+  menuButton = () => <IconButton className='menu' color='inherit'>
+    <Menu/>
+  </IconButton>;
 
   backButton = () => this.props.withBackButton
     ? <IconButton className='back-button' color='inherit' onClick={this.props.history.goBack}>
         <ArrowBack/>
       </IconButton>
     : undefined;
+
+  logo = () => <span className='title-logo'>
+    <img src='/logo.png' width={36}/>
+  </span>;
 
   title = () =>
     <Typography type='title' color='inherit' className='title'>
@@ -48,6 +52,7 @@ class LogoAppBar extends Component {
             {this.menuButton()}
             {this.backButton()}
           </div>
+          {this.logo()}
           {this.title()}
           <div className='grow'/>
           {this.loginButton()}

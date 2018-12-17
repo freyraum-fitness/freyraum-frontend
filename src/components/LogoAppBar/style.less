@@ -11,10 +11,28 @@
     flex: 1;
   }
 
+  .title-logo {
+    .animated();
+    position: relative;
+    padding-right: 2px;
+    top: -25px;
+    opacity: 0;
+
+    .animation-enter &, .animation-exit & {
+      top: 0 !important;
+      opacity: 1 !important;
+    }
+
+    .animation-enter-active & {
+      top: -25px !important;
+      opacity: 0 !important;
+    }
+  }
+
   .title {
     .animated();
     position: relative;
-    font-size: 24px !important;
+    font-size: 20px !important;
     text-align: center;
     top: -25px;
     opacity: 0;
