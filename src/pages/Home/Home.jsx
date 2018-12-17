@@ -61,17 +61,17 @@ class Home extends Component {
           <Typography variant='h4' gutterBottom>
             Willkommen im FreyRaum
           </Typography>
-          <Typography gutterBottom>
+          <Typography align='justify' style={{hyphens: 'auto'}} gutterBottom>
             Funktionelles Training in familiärer Atmosphäre.
           </Typography>
-          <Typography gutterBottom>
+          <Typography align='justify' style={{hyphens: 'auto'}} gutterBottom>
             Mit der Gründung von FreyRaum entsteht in Toppenstedt ein für die Gegend einzigartiges Konzept.
             Ein Raum, in dem vor allem der Spaß an Bewegung an erster Stelle steht und ein abwechslungsreiches
             Trainingsprogramm wartet.
             Jedes Mal anders, jedes Mal neu!
           </Typography>
-          <Typography gutterBottom>
-            Neben dem breiten Kursprogramm, können Mitglieder auch zum eigenständigen bzw. freien Training
+          <Typography align='justify' style={{hyphens: 'auto'}} gutterBottom>
+            Neben dem breiten Kursprogramm können Mitglieder auch zum eigenständigen bzw. freien Training
             vorbei kommen.
           </Typography>
         </Grid>
