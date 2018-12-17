@@ -95,7 +95,7 @@ class Home extends Component {
       <SimplePage>
         <PullToRefresh pending={profile.pending}>
           <SignedIn>
-            <div className='section'>
+            <section className='section'>
               <Typography variant='subtitle1' className='title-h-scroll'>
                 Meine nächsten Kurse
               </Typography>
@@ -108,7 +108,7 @@ class Home extends Component {
                     : myCourses.map((course, idx) => <MyCourse key={idx} course={course}/>)
                 }
               </Slider>
-            </div>
+            </section>
           </SignedIn>
 
           <NotSignedIn>
@@ -116,7 +116,7 @@ class Home extends Component {
           </NotSignedIn>
 
           <SignedIn>
-            <div className='section'>
+            <section className='section'>
               <Typography variant='subtitle1' className='title-h-scroll'>
                 Adventskalender
               </Typography>
@@ -125,10 +125,10 @@ class Home extends Component {
                       slidesToShow={1} slidesToScroll={1}>
                 {Workouts.map((item, idx) => <VideoCard key={idx} title={item.title} url={item.url}/>)}
               </Slider>
-            </div>
+            </section>
           </SignedIn>
 
-          <div className='section'>
+          <section className='section'>
             <Typography variant='subtitle1' className='title-h-scroll'>
               Neuigkeiten
             </Typography>
@@ -137,19 +137,19 @@ class Home extends Component {
                     slidesToShow={1} slidesToScroll={1}>
               {news.data.map((newsItem, idx) => <NewsItem key={idx} news={newsItem}/>)}
             </Slider>
-          </div>
+          </section>
 
           <NotSignedIn>
-            <div className='section'>
+            <section className='section'>
               <Grid container spacing={0} justify='center' style={{width: '100%', margin: '0px'}}>
                 <CoursesPlanIntro currentUser={currentUser} location={location} history={history}/>
                 <CoursesPlanOverview/>
                 <CoursesPlanAgenda/>
               </Grid>
-            </div>
+            </section>
           </NotSignedIn>
 
-          <div className='section' style={{backgroundColor: '#fafafa'}}>
+          <section className='section' style={{backgroundColor: '#fafafa'}}>
             <Grid container spacing={0} justify='center' style={{width: '100%', margin: '0px'}}>
               <Grid item container xs={12} sm={10} md={8} className='home-textarea' justify='center'>
                 <Grid item xs={12}>
@@ -169,9 +169,9 @@ class Home extends Component {
                 </Grid>
               </Grid>
             </Grid>
-          </div>
+          </section>
 
-          <div className='section' style={{backgroundColor: '#fafafa'}}>
+          <section className='section' style={{backgroundColor: '#fafafa'}}>
             <Grid container spacing={0} justify='center' style={{width: '100%', margin: '0px'}}>
               <Grid item container xs={12} sm={10} md={8} className='home-textarea' justify='center'>
                 <Grid item xs={12}>
@@ -207,7 +207,7 @@ class Home extends Component {
                 </Grid>
               </Grid>
             </Grid>
-          </div>
+          </section>
         </PullToRefresh>
       </SimplePage>
     );
