@@ -20,17 +20,17 @@ class About extends SimplePage {
             <Typography variant='h4' gutterBottom>
               Hallo, das bin ich
             </Typography>
-            <Typography align='justify' style={{hyphens: 'auto'}} gutterBottom>
+            <Typography align='justify' style={{hyphens: 'auto', wordWrap: 'break-word', overflowWrap: 'break-word'}} gutterBottom>
               Mein Name ist Freya Heine und ich verwirkliche mit der Eröffnung von FreyRaum meinen ganz persönlichen
               Traum vom eigenen, sehr persönlichen Studio in Toppenstedt.
             </Typography>
-            <Typography align='justify' style={{hyphens: 'auto'}} gutterBottom>
+            <Typography align='justify' style={{hyphens: 'auto', wordWrap: 'break-word', overflowWrap: 'break-word'}} gutterBottom>
               Durch mein Studium zur Fitnessökonomin mit Weiterbildungen im medizinischen Fitnesstraining, TRX
               Training, Functional Training und mehreren Jahren Berufserfahrung, in verschiedenen Fitnessstudios,
               ist
               es 2018 Zeit an der Zeit mein eigenes Kapitel zu beginnen.
             </Typography>
-            <Typography align='justify' style={{hyphens: 'auto'}} gutterBottom>
+            <Typography align='justify' style={{hyphens: 'auto', wordWrap: 'break-word', overflowWrap: 'break-word'}} gutterBottom>
               Meine Leidenschaft zum Sport, als auch die Freude dabei, Euch sportlich nach vorne zu bringen, lassen
               mein Herz höherschlagen.
             </Typography>
@@ -50,12 +50,12 @@ class About extends SimplePage {
               Wo ist der FreyRaum?
             </Typography>
 
-            <Typography align='justify' style={{hyphens: 'auto'}} gutterBottom>
+            <Typography align='justify' style={{hyphens: 'auto', wordWrap: 'break-word', overflowWrap: 'break-word'}} gutterBottom>
               FreyRaum findest du in der Tangendorfer Straße 2a in 21442 Toppenstedt. Ein Großteil der Kurse findet
               seit August 2018 im ehemaligen „Blumenstübchen“ von Toppenstedt statt.
               Parkplätze sind direkt vor der Tür vorhanden.
             </Typography>
-            <Typography align='justify' style={{hyphens: 'auto'}} gutterBottom>
+            <Typography align='justify' style={{hyphens: 'auto', wordWrap: 'break-word', overflowWrap: 'break-word'}} gutterBottom>
               Während der Sommersaison kann es vereinzelt vorkommen, dass Kurse in „die Scheune“ verlegt werden.
               Diese
               befindet sich in der Hauptstraße 15 und war bis vor kurzem noch unser Hauptquartier.

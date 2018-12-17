@@ -110,14 +110,14 @@ export const CoursesPlanIntro = ({currentUser, location, history}) => (
       Unser Kursplan
     </Typography>
 
-    <Typography align='justify' style={{hyphens: 'auto'}} gutterBottom>
+    <Typography align='justify' style={{hyphens: 'auto', wordWrap: 'break-word', overflowWrap: 'break-word'}} gutterBottom>
       In jedem Kurs werden 10 - 30 verschiedene Übungen trainiert. Das Konzept wird jedes Mal individuell
       und neu für den Tag entwickelt.
       Wichtig ist hierbei vor allem das Einbeziehen von funktionellen Übungen, die alltagsnah trainiert
       werden. Dabei werden auch Eigenschaften wie Koordination, Gleichgewicht, Beweglichkeit, Kraft und
       Schnelligkeit einbezogen und je nach Trainingsstand verbessert.
     </Typography>
-    <Typography align='justify' style={{hyphens: 'auto'}} gutterBottom>
+    <Typography align='justify' style={{hyphens: 'auto', wordWrap: 'break-word', overflowWrap: 'break-word'}} gutterBottom>
       Das hier ist der allgemeinen Kursplan.
       {currentUser
         ? <span> Für alle aktuellen Kurse der nächsten Tage klicke <Button color='primary'
