@@ -94,7 +94,12 @@ class Drawer extends Component {
             }}/>
           </SignedIn>
           <NotSignedIn>
-            <MenuLink to='/login' label='Login' icon={<IconSignIn/>} onClick={() => {toLogoPage(location, history, '/login'); closeDrawer()}}/>
+            <ListItem button onClick={() => {toLogoPage(location, history, '/login'); closeDrawer()}}>
+              <ListItemIcon>
+                <IconSignIn/>
+              </ListItemIcon>
+              <ListItemText primary='Login'/>
+            </ListItem>
           </NotSignedIn>
         </List>
         {/* space to enable login/logout link on small devices (bug on ios) */}
