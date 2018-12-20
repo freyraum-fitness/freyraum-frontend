@@ -64,7 +64,7 @@ class Drawer extends Component {
           <MenuLink to='/' label='Home' icon={<IconHome/>} onClick={closeDrawer}/>
           <SignedIn>
           <MenuLink to='/statistics' label='Statistiken und PR' icon={<IconLineChart/>} onClick={closeDrawer}/>
-          <MenuLink to='/courses' label='Alle Kurse' icon={<IconCalendar/>} onClick={closeDrawer}/>
+          <MenuLink to='/courses' label='Kurse' icon={<IconCalendar/>} onClick={closeDrawer}/>
           <SignedIn hasAnyRole={['TRAINER', 'ADMIN']}>
             <MenuLink to='/memberships' label='Mitgliedschaften' icon={<IconUserGroup/>} onClick={closeDrawer}/>
           </SignedIn>
@@ -75,7 +75,7 @@ class Drawer extends Component {
         <Divider/>
         <List>
           <MenuLink to='/about' label='Über Freya + FreyRaum' icon={<IconInfo/>} onClick={closeDrawer}/>
-          <MenuLink to='/courses-plan' label='Kurse im FreyRaum' icon={<IconCalendar/>} onClick={closeDrawer}/>
+          <MenuLink to='/courses-plan' label='Allgemeiner Kursplan' icon={<IconCalendar/>} onClick={closeDrawer}/>
           <MenuLink to='/agb' label='AGB' icon={<IconDocument/>} onClick={closeDrawer}/>
           <MenuLink to='/impressum' label='Impressum' icon={<IconInfo/>} onClick={closeDrawer}/>
         </List>

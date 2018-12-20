@@ -14,70 +14,92 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Tooltip from '@material-ui/core/Tooltip';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import {toLogoPage} from './../../utils/Routing';
 import './style.less';
+import {findBy} from "../../utils/RamdaUtils";
 
 const data = [
   {
-    time: '07:00-07:45',
-    mo: 'KRAFT & TECHNIK',
-    mi: 'FUN.BASE'
+    time: {primary: '07:00-07:45'},
+    mo: {primary: 'KRAFT & TECHNIK'},
+    di: {},
+    mi: {primary: 'FUN.BASE'},
+    do: {},
+    fr: {},
+    so: {},
   },
   {
-    time: '09:00-10:00',
-    mo: 'FUN.POWER',
-    di: 'FUN.BASE',
-    mi: 'FUN.POWER',
-    fr: 'FUN.POWER'
+    time: {primary: '09:00-10:00'},
+    mo: {primary: 'FUN.POWER'},
+    di: {primary: 'FUN.BASE'},
+    mi: {primary: 'FUN.POWER'},
+    do: {},
+    fr: {primary: 'FUN.POWER'},
+    so: {},
   },
   {
-    time: '10:00-11:00',
-    mo: 'TRX FIT MOMS',
-    di: 'BEST AGER CLASS (65+)',
-    mi: 'FUN.BASE',
-    do: 'FUN.BASE',
+    time: {primary: '10:00-11:00'},
+    mo: {primary: 'FIT MOMS'},
+    di: {primary: 'BEST AGERS(65+)'},
+    mi: {primary: 'FUN.BASE'},
+    do: {primary: 'FUN.BASE'},
+    fr: {},
+    so: {},
   },
   {
-    time: '11:00-11:45',
-    di: 'FUN.POWER',
-    mi: 'TRX FIT MOMS',
-    fr: 'TRX FIT MOMS',
-    so: <span><Typography variant='caption' style={{color: 'lightgrey'}}>11:00-12:00</Typography>FUN.TEAM</span>,
+    time: {primary: '11:00-11:45'},
+    mo: {},
+    di: {primary: 'FUN.POWER'},
+    mi: {primary: 'FIT MOMS'},
+    do: {},
+    fr: {primary: 'FIT MOMS'},
+    so: {primary: 'FUN.TEAM', secondary: '11:00-12:00'},
   },
   {
-    time: '16:30-17:30',
-    do: 'KRAFT & TECHNIK',
-    fr: 'KRAFT & TECHNIK'
+    time: {primary: '16:30-17:30'},
+    mo: {},
+    di: {},
+    mi: {},
+    do: {primary: 'KRAFT & TECHNIK'},
+    fr: {primary: 'KRAFT & TECHNIK'},
+    so: {},
   },
   {
-    time: '17:30-18:30',
-    mo: 'FUN.POWER',
-    di: 'FUN.POWER',
-    mi: 'FUN.POWER',
-    do: 'FUN.BASE',
-    fr: 'FUN.TEAM'
+    time: {primary: '17:30-18:30'},
+    mo: {primary: 'FUN.POWER'},
+    di: {primary: 'FUN.POWER'},
+    mi: {primary: 'FUN.POWER'},
+    do: {primary: 'FUN.BASE'},
+    fr: {primary: 'FUN.TEAM'},
+    so: {},
   },
   {
-    time: '18:30-19:30',
-    mo: 'FUN.BASE',
-    di: 'FUN.BASE',
-    mi: 'FUN.BASE',
-    do: 'FUN.POWER',
-    so: 'FUN.TEAM'
+    time: {primary: '18:30-19:30'},
+    mo: {primary: 'FUN.BASE'},
+    di: {primary: 'FUN.BASE'},
+    mi: {primary: 'FUN.BASE'},
+    do: {primary: 'FUN.POWER'},
+    fr: {},
+    so: {primary: 'FUN.TEAM'},
   },
   {
-    time: '19:30-20:30',
-    mo: 'FUN.BASE',
-    di: 'FUN.BASE',
-    mi: 'FUN.TEAM',
-    do: 'MÄNNER ABEND',
+    time: {primary: '19:30-20:30'},
+    mo: {primary: 'FUN.BASE'},
+    di: {primary: 'FUN.BASE'},
+    mi: {primary: 'FUN.TEAM'},
+    do: {primary: 'MÄNNERABEND'},
+    fr: {},
+    so: {},
   },
   {
-    time: '20:30-21:30',
-    mo: 'FUN.POWER',
-    di: 'FUN.POWER',
-    mi: 'FUN.POWER',
+    time: {primary: '20:30-21:30'},
+    mo: {primary: 'FUN.POWER'},
+    di: {primary: 'FUN.POWER'},
+    mi: {primary: 'FUN.POWER'},
+    do: {},
+    fr: {},
+    so: {},
   }
 ];
 
@@ -86,23 +108,53 @@ const types = {
   'FUN.POWER': 'Das volle Programm. Immer neue Herausforderungen. Schweißtreibend!',
   'FUN.TEAM': 'Teamwork. Wir nutzen die Grundübungen und arbeiten uns gemeinsam ans Ziel.',
   'KRAFT & TECHNIK': 'Man lernt nie aus. Techniktraining und Gewichte steigern.',
-  'TRX FIT MOMS': 'Mutter & Kind Zeit. Nach der Rückbildungsgymnastik mit dem Kind gemeinsam fit werden.',
-  'MÄNNER ABEND': 'Krafttraining. Technik erlernen und gemeinsam Gewichte bewegen.',
-  'BEST AGER CLASS (65+)': 'Da geht noch was. Funktionelles Training, egal in welchem Alter.',
+  'FIT MOMS': 'Mutter & Kind Zeit. Nach der Rückbildungsgymnastik mit dem Kind gemeinsam fit werden.',
+  'MÄNNERABEND': 'Krafttraining. Technik erlernen und gemeinsam Gewichte bewegen.',
+  'BEST AGERS(65+)': 'Da geht noch was. Funktionelles Training, egal in welchem Alter.',
 };
 
-const Cell = ({children, numeric, disableTooltip}) =>
-  <Tooltip title={types[children] || ''}
-           disableHoverListener={!children || disableTooltip}
-           disableFocusListener={!children || disableTooltip}
-           disableTouchListener={!children || disableTooltip}>
-    <TableCell
-      numeric={numeric}
-      className='courses-plan-cell'
-    >
-      {children}
-    </TableCell>
-  </Tooltip>;
+const mapStateToProps = state => ({
+  currentUser: state.profile.user,
+  courseTypes: state.courseTypes,
+});
+
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators({
+    // no actions needed for now
+  }, dispatch),
+  dispatch
+});
+
+class _Cell extends React.Component {
+
+  render() {
+    const {selected, onClick, children, numeric, courseTypes} = this.props;
+    let color = undefined;
+    if (selected && !!children) {
+      const courseType = findBy('name', courseTypes.data, children.primary) || {};
+      color = courseType.color;
+    }
+
+    return (
+      <TableCell
+        numeric={numeric}
+        className='courses-plan-cell'
+        style={{color: color, cursor: 'grab'}}
+        onClick={onClick}
+        onMouseEnter={onClick}
+      >
+        <Typography variant='caption'>
+          {children.secondary}
+        </Typography>
+        {children.primary}
+      </TableCell>
+    );
+  }
+}
+
+const Cell = compose(
+  connect(mapStateToProps, mapDispatchToProps)
+)(_Cell);
 
 export const CoursesPlanIntro = ({currentUser, location, history}) => (
   <Grid item xs={12} sm={10} md={8} className='courses-plan-textarea'>
@@ -110,14 +162,14 @@ export const CoursesPlanIntro = ({currentUser, location, history}) => (
       Unser Kursplan
     </Typography>
 
-    <Typography align='justify' style={{hyphens: 'auto', wordWrap: 'break-word', overflowWrap: 'break-word'}} gutterBottom>
+    <Typography gutterBottom>
       In jedem Kurs werden 10 - 30 verschiedene Übungen trainiert. Das Konzept wird jedes Mal individuell
       und neu für den Tag entwickelt.
       Wichtig ist hierbei vor allem das Einbeziehen von funktionellen Übungen, die alltagsnah trainiert
       werden. Dabei werden auch Eigenschaften wie Koordination, Gleichgewicht, Beweglichkeit, Kraft und
       Schnelligkeit einbezogen und je nach Trainingsstand verbessert.
     </Typography>
-    <Typography align='justify' style={{hyphens: 'auto', wordWrap: 'break-word', overflowWrap: 'break-word'}} gutterBottom>
+    <Typography gutterBottom>
       Das hier ist der allgemeinen Kursplan.
       {currentUser
         ? <span> Für alle aktuellen Kurse der nächsten Tage klicke <Button color='primary'
@@ -129,57 +181,84 @@ export const CoursesPlanIntro = ({currentUser, location, history}) => (
   </Grid>
 );
 
-export const CoursesPlanOverview = () => (
-  <Grid item xs={12}>
-    <Paper>
-      <div style={{overflowX: 'auto'}}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <Cell disableTooltip>Zeit</Cell>
-              <Cell disableTooltip numeric>Montag</Cell>
-              <Cell disableTooltip numeric>Dienstag</Cell>
-              <Cell disableTooltip numeric>Mittwoch</Cell>
-              <Cell disableTooltip numeric>Donnerstag</Cell>
-              <Cell disableTooltip numeric>Freitag</Cell>
-              <Cell disableTooltip numeric>Sonntag</Cell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((n, idx) => {
-              return (
-                <TableRow key={idx} className={idx % 2 === 0 ? 'odd' : undefined}>
-                  <Cell component="th" scope="row">
-                    {n.time}
-                  </Cell>
-                  <Cell numeric>{n.mo}</Cell>
-                  <Cell numeric>{n.di}</Cell>
-                  <Cell numeric>{n.mi}</Cell>
-                  <Cell numeric>{n.do}</Cell>
-                  <Cell numeric>{n.fr}</Cell>
-                  <Cell numeric>{n.so}</Cell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </div>
-    </Paper>
-  </Grid>
-);
+export class CoursesPlanOverview extends React.Component {
 
-export const CoursesPlanAgenda = () => (
-  <Grid item xs={12} sm={10} md={8} className='courses-plan-textarea'>
-    {
-      Object.keys(types).map((key, idx) => {
-        return <div key={idx}>
-          <Typography variant='subtitle1' style={{marginTop: '8px'}}>{key}</Typography>
-          <Typography gutterBottom>{types[key]}</Typography>
-        </div>
-      })
-    }
-  </Grid>
-);
+  state = {
+    selected: ''
+  };
+
+  select = name => {
+    this.setState({selected: name});
+  };
+
+  render() {
+    const {selected} = this.state;
+    return (
+      <Grid item xs={12}>
+        <ClickAwayListener onClickAway={() => this.select(undefined)}>
+          <Paper>
+            <div style={{overflowX: 'auto'}}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <Cell>{{primary: 'Zeit'}}</Cell>
+                    <Cell numeric>{{primary: 'Montag'}}</Cell>
+                    <Cell numeric>{{primary: 'Dienstag'}}</Cell>
+                    <Cell numeric>{{primary: 'Mittwoch'}}</Cell>
+                    <Cell numeric>{{primary: 'Donnerstag'}}</Cell>
+                    <Cell numeric>{{primary: 'Freitag'}}</Cell>
+                    <Cell numeric>{{primary: 'Sonntag'}}</Cell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data.map((n, idx) => {
+                    return (
+                      <TableRow key={idx} className={idx % 2 === 0 ? 'odd' : undefined}>
+                        <Cell component="th" scope="row">
+                          {n.time}
+                        </Cell>
+                        <Cell numeric selected={selected === n.mo.primary} onClick={() => this.select(n.mo.primary)}>{n.mo}</Cell>
+                        <Cell numeric selected={selected === n.di.primary} onClick={() => this.select(n.di.primary)}>{n.di}</Cell>
+                        <Cell numeric selected={selected === n.mi.primary} onClick={() => this.select(n.mi.primary)}>{n.mi}</Cell>
+                        <Cell numeric selected={selected === n.do.primary} onClick={() => this.select(n.do.primary)}>{n.do}</Cell>
+                        <Cell numeric selected={selected === n.fr.primary} onClick={() => this.select(n.fr.primary)}>{n.fr}</Cell>
+                        <Cell numeric selected={selected === n.so.primary} onClick={() => this.select(n.so.primary)}>{n.so}</Cell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </div>
+          </Paper>
+        </ClickAwayListener>
+      </Grid>
+    );
+  }
+}
+
+class _CoursesPlanAgenda extends React.Component {
+
+  render() {
+    const {courseTypes} = this.props;
+    return (
+      <Grid item xs={12} sm={10} md={8} className='courses-plan-textarea'>
+        {
+          Object.keys(types).map((key, idx) => {
+            const courseType = findBy('name', courseTypes.data, key) || {};
+            return <div key={idx}>
+              <Typography variant='subtitle1' style={{marginTop: '8px', color: courseType.color}}>{key}</Typography>
+              <Typography gutterBottom>{types[key]}</Typography>
+            </div>
+          })
+        }
+      </Grid>
+    );
+  }
+}
+export const CoursesPlanAgenda = compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(_CoursesPlanAgenda);
 
 class CoursesPlan extends Component {
 
@@ -198,17 +277,6 @@ class CoursesPlan extends Component {
     );
   }
 }
-
-const mapStateToProps = state => ({
-  currentUser: state.profile.user
-});
-
-const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators({
-    // no actions needed for now
-  }, dispatch),
-  dispatch
-});
 
 export default compose(
   withRouter,

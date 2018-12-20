@@ -61,16 +61,16 @@ class Home extends Component {
           <Typography variant='h4' gutterBottom>
             Willkommen im FreyRaum
           </Typography>
-          <Typography align='justify' style={{hyphens: 'auto', webkitHyphens: 'auto', wordWrap: 'break-word', overflowWrap: 'break-word'}} gutterBottom>
+          <Typography gutterBottom>
             Funktionelles Training in familiärer Atmosphäre.
           </Typography>
-          <Typography align='justify' style={{hyphens: 'auto', webkitHyphens: 'auto', wordWrap: 'break-word', overflowWrap: 'break-word'}} gutterBottom>
+          <Typography gutterBottom>
             Mit der Gründung von FreyRaum entsteht in Toppenstedt ein für die Gegend einzigartiges Konzept.
             Ein Raum, in dem vor allem der Spaß an Bewegung an erster Stelle steht und ein abwechslungsreiches
             Trainingsprogramm wartet.
             Jedes Mal anders, jedes Mal neu!
           </Typography>
-          <Typography align='justify' style={{hyphens: 'auto', webkitHyphens: 'auto', wordWrap: 'break-word', overflowWrap: 'break-word'}} gutterBottom>
+          <Typography gutterBottom>
             Neben dem breiten Kursprogramm können Mitglieder auch zum eigenständigen bzw. freien Training
             vorbei kommen.
           </Typography>
@@ -199,9 +199,9 @@ class Home extends Component {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <a href='mailto:freya@freya.fitness' style={{textDecoration: 'none'}}>
+                  <a href='mailto:freyraum@freya.fitness' style={{textDecoration: 'none'}}>
                     <Typography variant='caption' align='center'>
-                      freya@freya.fitness
+                      freyraum@freya.fitness
                     </Typography>
                   </a>
                 </Grid>

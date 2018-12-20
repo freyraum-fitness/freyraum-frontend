@@ -45,12 +45,12 @@ class NewsItem extends Component {
                 {news.teaser}
               </Typography>
             </CardContent>
+            <CardActions>
+              <Button color='primary' onClick={this.showNewsDetails}>
+                mehr
+              </Button>
+            </CardActions>
           </CardActionArea>
-          <CardActions>
-            <Button color='primary' onClick={this.showNewsDetails}>
-              mehr
-            </Button>
-          </CardActions>
         </Card>
       </div>
     );
