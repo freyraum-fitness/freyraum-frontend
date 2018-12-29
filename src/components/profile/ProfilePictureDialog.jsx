@@ -17,6 +17,7 @@ import IconZoomIn from '@material-ui/icons/ZoomIn';
 import IconZoomOut from '@material-ui/icons/ZoomOut';
 import IconRotateLeft from '@material-ui/icons/RotateLeft';
 import IconRotateRight from '@material-ui/icons/RotateRight';
+import IconAddPhotoAlternate from '@material-ui/icons/AddPhotoAlternate';
 import LoadingIndicator from './../LoadingIndicator';
 import Hammer from 'react-hammerjs';
 
@@ -135,7 +136,7 @@ class ProfilePictureDialog extends React.Component {
         open={show}>
         <DialogContent style={{padding: '0px'}}>
           <Grid container spacing={16} justify="center" style={{width: '100%', margin: '0px'}}>
-            <Grid item xs={12} sm={10} md={8} style={{position: 'relative', padding: '0px'}}>
+            <Grid item xs={12} sm={8} md={6} style={{position: 'relative', padding: '0px'}}>
               <Hammer options={options} onPinch={this.pinch} onPinchEnd={this.pinchEnd}>
                 <div>
                   <AvatarEditor
@@ -143,7 +144,7 @@ class ProfilePictureDialog extends React.Component {
                     image={temp.dataUrl}
                     width={300}
                     height={300}
-                    border={[150, 75]}
+                    border={[75, 75]}
                     color={[100, 100, 100, 0.75]}
                     scale={zoom * scale}
                     rotate={rotate}
@@ -163,10 +164,10 @@ class ProfilePictureDialog extends React.Component {
                 padding: '16px auto',
                 textAlign: 'center'
               }}>
-                <Button variant='text' style={{color: 'white'}}>
+                <IconButton style={{color: 'white'}}>
+                  <IconAddPhotoAlternate/>
                   {this.getInput()}
-                  Bild wählen
-                </Button>
+                </IconButton>
                 <IconButton onClick={this.zoomIn} style={{color: 'white'}}>
                   <IconZoomIn/>
                 </IconButton>

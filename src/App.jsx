@@ -77,6 +77,7 @@ const reduceMatching = (pathname, matchPath) => {
 const reducePath = pathname =>
   reduceMatching(pathname, '/m/')
     || reduceMatching(pathname, '/course/')
+    || reduceMatching(pathname, '/news/')
     || reduceMatching(pathname, '/membership/');
 
 class App extends Component {

@@ -11,6 +11,7 @@ import {
   GridInputControl
 } from './../../components/GridFormControl';
 import {ValidationGroup, Validators} from './../../components/Validation';
+import {SignedIn, NotSignedIn} from './../../components/Auth';
 import {contactDataChanged, sendContact} from "../../model/contact";
 
 class Contact extends Component {
@@ -63,14 +64,21 @@ class Contact extends Component {
   render() {
     const {contact, actions} = this.props;
     const {contactDataChanged} = actions;
-    const {data, pending, errorMessage} = contact;
+    const {data, pending, error} = contact;
 
     return (
       <Grid container spacing={8} justify='center'>
         <Grid item xs={12} className='contact-text'>
-          <Typography>
-            Du hast Lust auf ein Probetraining oder möchtest Freya eine Nachricht schreiben? Dann los:
-          </Typography>
+          <SignedIn>
+            <Typography>
+              Du möchtest Freya eine Nachricht schreiben? Dann los:
+            </Typography>
+          </SignedIn>
+          <NotSignedIn>
+            <Typography>
+              Du hast Lust auf ein Probetraining oder möchtest Freya eine Nachricht schreiben? Dann los:
+            </Typography>
+          </NotSignedIn>
         </Grid>
         <ValidationGroup ref={this.setValidation}>
           <GridInputControl
@@ -126,8 +134,8 @@ class Contact extends Component {
             onChange={contactDataChanged}/>
         </ValidationGroup>
         {
-          errorMessage
-            ? <GridTextControl text={errorMessage} error={true}/>
+          error
+            ? <GridTextControl text={error} error={true}/>
             : undefined
         }
         <GridButtonControl

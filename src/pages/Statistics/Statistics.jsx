@@ -9,6 +9,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Tooltip from '@material-ui/core/Tooltip';
 import PullToRefresh from './../../components/PullToRefresh';
 import {Bar} from 'react-chartjs';
 import {fetchStatistics} from './../../model/statistics';
@@ -21,22 +22,20 @@ class TopCourse extends Component {
   render() {
     const {courseType, count} = this.props;
     return (
-      <Card style={{height: '100%'}}>
-        <CardContent style={{height: 'calc(100% - 32px)'}}>
-          <Grid container alignContent='space-between' style={{height: '100%'}}>
-            <Grid item xs={12}>
-              <Typography align='center' style={{color: courseType.color}}>
-                {courseType.name}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant='caption' align='center'>
-                {count + ' mal teilgenommen'}
-              </Typography>
-            </Grid>
+      <Tooltip title={'Du hast bereits ' + count + ' mal bei ' + courseType.name + ' teilgenommen'}>
+        <Grid container>
+          <Grid item xs={12}>
+            <Typography variant='h4' align='center'>
+              {count}
+            </Typography>
           </Grid>
-        </CardContent>
-      </Card>
+          <Grid item xs={12}>
+            <Typography align='center' style={{color: courseType.color}}>
+              {courseType.name}
+            </Typography>
+          </Grid>
+        </Grid>
+      </Tooltip>
     );
   }
 }

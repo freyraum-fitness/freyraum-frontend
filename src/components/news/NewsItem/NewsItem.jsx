@@ -1,6 +1,7 @@
 'use struct';
 import React, {Component} from 'react';
 import compose from 'recompose/compose';
+import withWidth from '@material-ui/core/withWidth';
 import {withRouter} from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -26,7 +27,7 @@ class NewsItem extends Component {
   };
 
   render() {
-    const {news} = this.props;
+    const {news, width} = this.props;
     return (
       <div className='news-item-container'>
         <Card className='news-item-card'>
@@ -34,7 +35,7 @@ class NewsItem extends Component {
             <CardMedia
               component={'div'}
               style={{paddingTop: '70%'}}
-              image={__API__ + '/test' + news.pictureId + '.jpg'}
+              image={__API__ + '/news/' + news.id + '/pictures/' + width.toUpperCase()}
               title={news.title}
             />
             <CardContent>
@@ -45,12 +46,12 @@ class NewsItem extends Component {
                 {news.teaser}
               </Typography>
             </CardContent>
-            <CardActions>
-              <Button color='primary' onClick={this.showNewsDetails}>
-                mehr
-              </Button>
-            </CardActions>
           </CardActionArea>
+          <CardActions>
+            <Button color='primary' onClick={this.showNewsDetails}>
+              mehr
+            </Button>
+          </CardActions>
         </Card>
       </div>
     );
@@ -58,5 +59,6 @@ class NewsItem extends Component {
 }
 
 export default compose(
+  withWidth(),
   withRouter,
 )(NewsItem);

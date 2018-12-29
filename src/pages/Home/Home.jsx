@@ -12,7 +12,9 @@ import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import {fetchStatistics} from '../../model/statistics';
+import AddComment from '@material-ui/icons/AddComment';
+import {fetchNews} from '../../model/news';
+import {fetchCourses} from '../../model/courses';
 import NewsItem from '../../components/news/NewsItem/NewsItem';
 import {comparingMod} from '../../utils/Comparator';
 import {AttendCourses, MyCourse} from '../../components/Course';
@@ -29,24 +31,6 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './style.less';
 
-export const Workouts = [
-  {
-    title: '12. Dezember',
-    url: 'https://www.youtube.com/watch?v=jNgP6d9HraI'
-  },
-  {
-    title: '11. Dezember',
-    url: 'https://www.youtube.com/watch?v=jNgP6d9HraI'
-  },
-  {
-    title: '10. Dezember',
-    url: 'https://www.youtube.com/watch?v=jNgP6d9HraI'
-  },
-  {
-    title: '9. Dezember',
-    url: 'https://www.youtube.com/watch?v=jNgP6d9HraI'
-  }
-];
 const compareCourseByStartDate = comparingMod('start', moment);
 
 class Home extends Component {
@@ -85,6 +69,11 @@ class Home extends Component {
     )
   };
 
+  onRefresh = () => {
+    this.props.actions.fetchNews();
+    this.props.actions.fetchCourses();
+  };
+
   render() {
     const {currentUser, profile, news, courses, location, history} = this.props;
     const {data = {}} = courses;
@@ -93,11 +82,11 @@ class Home extends Component {
 
     return (
       <SimplePage>
-        <PullToRefresh pending={profile.pending}>
+        <PullToRefresh pending={news.pending || courses.pending || profile.pending} onRefresh={this.onRefresh}>
           <SignedIn>
-            <section className='section'>
-              <Typography variant='subtitle1' className='title-h-scroll'>
-                Meine nächsten Kurse
+            <section className='first-section'>
+              <Typography variant='subtitle1' color='primary' className='title-h-scroll'>
+                Hallo {currentUser.firstname}, deine nächsten Kurse
               </Typography>
               <Slider dots swipeToSlide variableWidth infinite={false} arrows={false}
                       className={'slider variable-width'}
@@ -115,23 +104,17 @@ class Home extends Component {
             {this.getWelcomeGreetings()}
           </NotSignedIn>
 
-          <SignedIn>
-            <section className='section'>
-              <Typography variant='subtitle1' className='title-h-scroll'>
-                Adventskalender
-              </Typography>
-              <Slider dots swipeToSlide variableWidth infinite={false} arrows={false}
-                      className={'slider variable-width'}
-                      slidesToShow={1} slidesToScroll={1}>
-                {Workouts.map((item, idx) => <VideoCard key={idx} title={item.title} url={item.url}/>)}
-              </Slider>
-            </section>
-          </SignedIn>
-
           <section className='section'>
-            <Typography variant='subtitle1' className='title-h-scroll'>
-              Neuigkeiten
-            </Typography>
+            <div className='title-h-scroll'>
+              <Typography variant='subtitle1' color='primary'>
+                Neuigkeiten
+              </Typography>
+              <SignedIn hasAnyRole={['TRAINER', 'ADMIN']}>
+                <IconButton color='primary' onClick={() => history.push(location.pathname + '/news/new')}>
+                  <AddComment/>
+                </IconButton>
+              </SignedIn>
+            </div>
             <Slider dots swipeToSlide variableWidth infinite={false} arrows={false}
                     className={'slider variable-width'}
                     slidesToShow={1} slidesToScroll={1}>
@@ -225,8 +208,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({
-    // statistics
-    fetchStatistics: fetchStatistics,
+    fetchNews: fetchNews,
+    fetchCourses: fetchCourses,
   }, dispatch),
   dispatch
 });

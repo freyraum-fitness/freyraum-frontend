@@ -35,7 +35,6 @@ const styles = theme => ({
     width: 260
   },
   drawer: {
-    height: '100%',
     background: '#fafafa url("/logo_white_transparent.png") no-repeat',
   },
   drawerHeader: {

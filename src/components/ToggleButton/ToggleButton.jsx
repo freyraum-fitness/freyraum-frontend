@@ -18,7 +18,7 @@ class ToggleButton extends Component {
         ...customStyle,
         ...style
       }}
-      variant={selected ? 'raised' : 'outlined'}
+      variant={selected ? 'contained' : 'outlined'}
       size='small'
       onClick={onClick}
       color={color}>

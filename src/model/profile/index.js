@@ -30,7 +30,7 @@ const initialState = {
       file: undefined
     },
     pending: false,
-    errorMessage: undefined
+    error: undefined
   },
   createAccount: {
     pending: false,
@@ -112,7 +112,6 @@ export const createAccountDataChanged = (id, value) =>
 
 export const updateUsers = () => {
   return (dispatch, getState) => {
-    console.warn(getState().profile.users)
     if (getState().profile.users.lastUpdate || getState().profile.users.pending) {
       return; // TODO update every other call/day
     }
@@ -190,9 +189,9 @@ export default handleActions({
 
   [actions.profile.load.pending]: state => setPath(['pending'], true, state),
   [actions.profile.load.success]: (state, {payload}) =>
-    assignPath([], {pending: false, user: payload, errorMessage: null}, state),
+    assignPath([], {pending: false, user: payload, error: null}, state),
   [actions.profile.load.error]: (state, {payload}) =>
-    assignPath([], {pending: false, errorMessage: payload.message}, state),
+    assignPath([], {pending: false, error: payload.message}, state),
   [actions.profile.onProfileDetailsChange]: (state, {payload}) =>
     setPath(['user', ...payload.path], payload.value, state),
 
@@ -208,9 +207,9 @@ export default handleActions({
   [actions.profile.picture.save.pending]: state =>
     setPath(['picture', 'pending'], true, state),
   [actions.profile.picture.save.success]: state =>
-    assignPath(['picture'], {pending: false, errorMessage: undefined}, state),
+    assignPath(['picture'], {pending: false, error: undefined}, state),
   [actions.profile.picture.save.error]: (state, {payload}) =>
-    setPath(['picture', 'errorMessage'], payload.message, state),
+    setPath(['picture', 'error'], payload.message, state),
 
   [actions.setLoginRef]: (state, {payload}) =>
     setPath(['loginRef'], payload, state),

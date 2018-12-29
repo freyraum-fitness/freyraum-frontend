@@ -55,21 +55,21 @@ class VideoCard extends React.Component {
                 width='100%'
                 height='200px'/>
             </CardMedia>
-            <CardContent style={{display: 'flex', alignItems: 'center'}}>
-              {
-                playing
-                  ? <IconButton onClick={this.play}>
-                      <Pause/>
-                    </IconButton>
-                  : <IconButton>
-                      <PlayArrow/>
-                    </IconButton>
-              }
-              <Typography>
-                {title}
-              </Typography>
-            </CardContent>
           </CardActionArea>
+          <CardContent style={{display: 'flex', alignItems: 'center'}}>
+            {
+              playing
+                ? <IconButton onClick={this.play}>
+                    <Pause/>
+                  </IconButton>
+                : <IconButton>
+                    <PlayArrow/>
+                  </IconButton>
+            }
+            <Typography>
+              {title}
+            </Typography>
+          </CardContent>
         </Card>
       </div>
     );

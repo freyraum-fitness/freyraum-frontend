@@ -37,7 +37,7 @@ const initialState = {
   },
   delete: {
     pending: false,
-    errorMessage: ''
+    error: ''
   }
 };
 
@@ -252,15 +252,15 @@ const deleteCourseFromList = (state, courseId) => {
 export default handleActions({
   [actions.courses.load.pending]: state => setPath(['pending'], true, state),
   [actions.courses.load.success]: (state, {payload}) =>
-    assignPath([], {pending: false, data: payload, errorMessage: null}, state),
+    assignPath([], {pending: false, data: payload, error: null}, state),
   [actions.courses.load.error]: (state, {payload}) =>
-    assignPath([], {pending: false, errorMessage: payload.message}, state),
+    assignPath([], {pending: false, error: payload.message}, state),
 
   [actions.courses.create.pending]: state => setPath(['courseDetails', 'pending'], true, state),
   [actions.courses.create.success]: (state, {payload}) =>
     assignPath(['courseDetails'], {pending: false, course: payload, originalCourse: {}}, state),
   [actions.courses.create.error]: (state, {payload}) =>
-    assignPath(['courseDetails'], {pending: false, errorMessage: payload.message}, state),
+    assignPath(['courseDetails'], {pending: false, error: payload.message}, state),
 
   // DUPLICATE
   [actions.courses.duplicate]: state => {
@@ -273,17 +273,17 @@ export default handleActions({
   [actions.courses.delete.pending]: state => setPath(['delete', 'pending'], true, state),
   [actions.courses.delete.success]: (state, {payload}) => {
     const changedState = deleteCourseFromList(state, payload);
-    return assignPath(['delete'], {pending: false, errorMessage: null}, changedState);
+    return assignPath(['delete'], {pending: false, error: null}, changedState);
   },
   [actions.courses.delete.error]: (state, {payload}) =>
-    assignPath(['delete'], {pending: false, errorMessage: payload.message}, state),
+    assignPath(['delete'], {pending: false, error: payload.message}, state),
 
   [actions.courses.courseDetails.pending]: state =>
     setPath(['courseDetails'], {pending: true, course: {}, originalCourse: {}}, state),
   [actions.courses.courseDetails.success]: (state, {payload}) =>
     assignPath(['courseDetails'], {pending: false, course: payload, originalCourse: payload}, state),
   [actions.courses.courseDetails.error]: (state, {payload}) =>
-    assignPath(['courseDetails'], {pending: false, errorMessage: payload.message}, state),
+    assignPath(['courseDetails'], {pending: false, error: payload.message}, state),
   [actions.courses.courseDetails.onCourseDetailsChange]: (state, {payload}) =>
     setPath(['courseDetails', 'course', payload.id], payload.value, state),
   [actions.courses.courseDetails.resetDetails]: state =>

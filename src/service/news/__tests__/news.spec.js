@@ -1,9 +1,9 @@
 'use strict';
-import {getNews} from '../';
+import {getCurrentNews} from '../';
 
 describe('news Service', () => {
 
-  describe('getNews', () => {
+  describe('getCurrentNews', () => {
     const news = [{id: 'news1'}, {id: 'news2'}];
     let apiCall;
 
@@ -13,7 +13,7 @@ describe('news Service', () => {
     });
 
     it('should extract response body', async () => {
-      const result = await getNews();
+      const result = await getCurrentNews();
       expect(apiCall).toHaveBeenCalledWith(__API__ + '/news/',
         {"credentials": "include", "headers": {"Access-Control-Allow-Credentials": "true", "Access-Control-Allow-Origin": "*"}});
       expect(result).toEqual(news);
@@ -23,7 +23,7 @@ describe('news Service', () => {
       fetch.mockResponse(JSON.stringify({message: 'Some error'}), {status: 404});
 
       try {
-        await getNews();
+        await getCurrentNews();
       } catch (err) {
         expect(err.message).toEqual('Some error');
       }

@@ -175,7 +175,7 @@ export class GridItemSelectControl extends ValidationControl {
       md
     } = this.props;
     return <GridFormControl xs={xs} sm={sm} md={md} error={!valid}>
-      <InputLabel htmlFor={id}>{label}</InputLabel>
+      <InputLabel shrink={true} htmlFor={id}>{label}</InputLabel>
       <Select
         value={value}
         onChange={event => onChange(event.target.value)}

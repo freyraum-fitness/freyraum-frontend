@@ -116,14 +116,14 @@ const fetchWithToken = (url, params, retry = true) =>
           });
       }
       if (!response.ok) {
-        let errorMessage = 'Es ist ein unerwarteter Fehler aufgetreten.';
+        let error = 'Es ist ein unerwarteter Fehler aufgetreten.';
         await response.json()
           .then(error => {
             if (!!error.message) {
-              errorMessage = error.message;
+              error = error.message;
             }
-            console.warn("[" + response.status + "]", "Error message", errorMessage);
-            throw new Error(errorMessage);
+            console.warn("[" + response.status + "]", "Error message", error);
+            throw new Error(error);
           });
       }
       return new Promise(resolve => resolve(response));
@@ -162,6 +162,19 @@ export const PUT = (url, data) => fetchWithToken(url,
 export const POST = (url, data) => fetchWithToken(url,
   {
     method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      ...acceptJsonHeaders,
+      ...securityHeaders,
+      ...getAccessTokenHeader()
+    },
+    credentials: 'include'
+  })
+  .then(response => response.json());
+
+export const PATCH = (url, data) => fetchWithToken(url,
+  {
+    method: 'PATCH',
     body: JSON.stringify(data),
     headers: {
       ...acceptJsonHeaders,
