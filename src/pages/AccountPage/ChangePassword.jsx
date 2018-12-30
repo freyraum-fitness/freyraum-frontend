@@ -2,6 +2,7 @@
 import React, {Component} from 'react';
 import compose from 'recompose/compose';
 import connect from 'react-redux/es/connect/connect';
+import withRouter from 'react-router-dom/withRouter';
 import {bindActionCreators} from 'redux';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -30,8 +31,8 @@ class ChangePassword extends Component {
 
   doChangePassword = () => {
     if (this.validateForm()) {
-      const {password, actions} = this.props;
-      return actions.changePassword(password.data, () => exitLogoPage(location, history));
+      const {password, actions, location, history} = this.props;
+      return actions.changePassword(password.change.data, () => exitLogoPage(location, history));
     }
   };
 
@@ -108,6 +109,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default compose(
+  withRouter,
   connect(
     mapStateToProps,
     mapDispatchToProps
