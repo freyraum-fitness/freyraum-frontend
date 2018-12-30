@@ -32,7 +32,7 @@ class AccountPage extends LogoPage {
               <Route exact path='**/account/register' component={Register}/>
               <Route exact path='**/account/delete' component={DeleteAccount}/>
               <Route exact path='**/password/forgotten' component={ForgotPassword}/>
-              <Route exact path='**/password/reset' component={ResetPassword}/>
+              <Route exact path='**/password/reset/:resetPasswordToken' component={ResetPassword}/>
               <Route exact path='**/password/change' component={ChangePassword}/>
               <Route exact path='**/contact' component={Contact}/>
             </Switch>

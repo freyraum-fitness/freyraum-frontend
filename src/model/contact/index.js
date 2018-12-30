@@ -5,7 +5,7 @@ import {showNotification} from "../notification";
 
 const initialState = {
   pending: false,
-  errorMessage: '',
+  error: '',
   data: {
     firstname: '',
     lastname: '',
@@ -45,9 +45,9 @@ export const contactDataChanged = (id, value) =>
 export default handleActions({
   [actions.contact.send.pending]: state => setPath(['pending'], true, state),
   [actions.contact.send.success]: state =>
-    assignPath([], {pending: false, errorMessage: '', data: initialState.data}, state),
+    assignPath([], {pending: false, error: '', data: initialState.data}, state),
   [actions.contact.send.error]: (state, {payload}) =>
-    assignPath([], {pending: false, errorMessage: payload.message}, state),
+    assignPath([], {pending: false, error: payload.message}, state),
 
   [actions.contact.onDataChanged]: (state, {payload}) =>
     setPath(['data', payload.path], payload.value, state)

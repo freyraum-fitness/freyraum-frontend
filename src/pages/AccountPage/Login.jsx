@@ -11,6 +11,7 @@ import {GridButtonControl, GridInputControl, GridPasswordControl} from './../../
 import {login, loginDataChanged} from '../../model/login';
 import {toLogoPage, exitLogoPage} from '../../utils/Routing';
 import './style.less';
+import {GridTextControl} from "../../components/GridFormControl";
 
 class Login extends Component {
 
@@ -52,36 +53,41 @@ class Login extends Component {
             label='Password'
             value={formData.password}
             onChange={(id, value) => actions.loginDataChanged('password', value)}/>
-          <GridButtonControl
-            className='login-login-button'
-            color='inherit'
-            variant='outlined'
-            pending={login.pending}
-            label='anmelden'
-            onClick={this.doLogin}/>
-          <GridButtonControl
-            className='login-forgot-password'
-            color='inherit'
-            variant='text'
-            size='small'
-            disabled={login.pending}
-            label='Passwort vergessen?'
-            onClick={() => toLogoPage(location, history, '/password/forgotten')}/>
-          <Grid item xs={12} className='login-or'>
-            <Typography>
-              Du hast noch kein Konto und möchtest dich gerne zu den Sportkursen online anmelden?
-              Dann erstelle hier ganz einfach deinen eigenen Account:
-            </Typography>
-          </Grid>
-          <GridButtonControl
-            className='login-register-button'
-            color='inherit'
-            variant='text'
-            size='small'
-            disabled={login.pending}
-            label='neues Konto erstellen'
-            onClick={() => toLogoPage(location, history, '/account/register')}/>
         </ValidationGroup>
+        {
+          login.error
+            ? <GridTextControl text={login.error} error={true}/>
+            : undefined
+        }
+        <GridButtonControl
+          className='login-login-button'
+          color='inherit'
+          variant='outlined'
+          pending={login.pending}
+          label='anmelden'
+          onClick={this.doLogin}/>
+        <GridButtonControl
+          className='login-forgot-password'
+          color='inherit'
+          variant='text'
+          size='small'
+          disabled={login.pending}
+          label='Passwort vergessen?'
+          onClick={() => toLogoPage(location, history, '/password/forgotten')}/>
+        <Grid item xs={12} className='login-or'>
+          <Typography>
+            Du hast noch kein Konto und möchtest dich gerne zu den Sportkursen online anmelden?
+            Dann erstelle hier ganz einfach deinen eigenen Account:
+          </Typography>
+        </Grid>
+        <GridButtonControl
+          className='login-register-button'
+          color='inherit'
+          variant='text'
+          size='small'
+          disabled={login.pending}
+          label='neues Konto erstellen'
+          onClick={() => toLogoPage(location, history, '/account/register')}/>
       </Grid>
     );
   }

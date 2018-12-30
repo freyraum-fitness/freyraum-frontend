@@ -7,7 +7,7 @@ describe('news reducer', () => {
   beforeEach(() => {
     state = {
       pending: false,
-      errorMessage: null,
+      error: null,
       data: undefined
     }
   });
@@ -41,7 +41,7 @@ describe('news reducer', () => {
       const error = new Error('Oops, something went wrong!');
       const nextState = reducer(state, actions.news.load.error(error));
 
-      const expectedState = Object.assign({}, state, {pending: false, errorMessage: error.message});
+      const expectedState = Object.assign({}, state, {pending: false, error: error.message});
 
       expect(nextState).toEqual(expectedState);
     });

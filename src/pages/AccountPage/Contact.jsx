@@ -11,6 +11,7 @@ import {
   GridInputControl
 } from './../../components/GridFormControl';
 import {ValidationGroup, Validators} from './../../components/Validation';
+import {SignedIn, NotSignedIn} from './../../components/Auth';
 import {contactDataChanged, sendContact} from "../../model/contact";
 
 class Contact extends Component {
@@ -63,20 +64,28 @@ class Contact extends Component {
   render() {
     const {contact, actions} = this.props;
     const {contactDataChanged} = actions;
-    const {data, pending, errorMessage} = contact;
+    const {data, pending, error} = contact;
 
     return (
       <Grid container spacing={8} justify='center'>
         <Grid item xs={12} className='contact-text'>
-          <Typography>
-            Du hast Lust auf ein Probetraining oder möchtest Freya eine Nachricht schreiben? Dann los:
-          </Typography>
+          <SignedIn>
+            <Typography>
+              Du möchtest Freya eine Nachricht schreiben? Dann los:
+            </Typography>
+          </SignedIn>
+          <NotSignedIn>
+            <Typography>
+              Du hast Lust auf ein Probetraining oder möchtest Freya eine Nachricht schreiben? Dann los:
+            </Typography>
+          </NotSignedIn>
         </Grid>
         <ValidationGroup ref={this.setValidation}>
           <GridInputControl
             className='contact-firstname'
             id='firstname'
             label='Vorname'
+            required
             xs={6}
             value={data.firstname}
             validators={[Validators.notEmpty('Bitte gib deinen Vornamen ein')]}
@@ -85,6 +94,7 @@ class Contact extends Component {
             className='contact-lastname'
             id='lastname'
             label='Nachname'
+            required
             xs={6}
             value={data.lastname}
             validators={[Validators.notEmpty('Bitte gib deinen Nachnamen ein')]}
@@ -109,6 +119,7 @@ class Contact extends Component {
             className='contact-subject'
             id='subject'
             label='Betreff'
+            required
             value={data.subject}
             validators={[Validators.notEmpty('Bitte gib einen Betreff an')]}
             onChange={contactDataChanged}/>
@@ -116,12 +127,17 @@ class Contact extends Component {
             className='contact-message'
             id='message'
             label='Nachricht'
+            required
             value={data.message}
             multiline
             validators={[Validators.notEmpty('Bitte trage hier deine Nachricht ein')]}
             onChange={contactDataChanged}/>
-          {errorMessage ? <GridTextControl text={errorMessage} error={true}/> : undefined}
         </ValidationGroup>
+        {
+          error
+            ? <GridTextControl text={error} error={true}/>
+            : undefined
+        }
         <GridButtonControl
           className='contact-button'
           pending={pending}

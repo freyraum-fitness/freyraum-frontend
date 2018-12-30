@@ -35,9 +35,7 @@ export class GridTextControl extends Component {
 
   render() {
     const {text, error = false, xs, sm, md} = this.props;
-    return <GridWrapper
-      xs={xs} sm={sm} md={md}
-      style={{paddingLeft: '0px', paddingRight: '0px', paddingTop: '16px', paddingBottom: '16px'}}>
+    return <GridWrapper xs={xs} sm={sm} md={md}>
       <Typography style={{color: error ? red.A200 : undefined}}>
         {text}
         </Typography>
@@ -56,11 +54,11 @@ export class GridInputControl extends ValidationControl {
 
   render() {
     const {valid, errors} = this.state;
-    const {id, label, value, readonly, className,
+    const {id, label, value, required, readonly, className,
       multiline, disableUnderline,
       type, endAdornment, onChange, xs, sm, md} = this.props;
     return <GridFormControl error={!valid} xs={xs} sm={sm} md={md} className={className}>
-      <InputLabel htmlFor={id} shrink>{label}</InputLabel>
+      <InputLabel htmlFor={id} required={required}>{label}</InputLabel>
       <Input
         id={id}
         value={value}
@@ -131,9 +129,9 @@ export class GridPasswordControl extends ValidationControl {
 
   render() {
     const {showPassword, valid, errors} = this.state;
-    const {id, className, label, value, onChange} = this.props;
+    const {id, className, label, required, value, onChange} = this.props;
     return <GridFormControl error={!valid} className={className}>
-      <InputLabel htmlFor={id} shrink>{label}</InputLabel>
+      <InputLabel htmlFor={id} required={required}>{label}</InputLabel>
       <Input
         id={id}
         value={value}
@@ -159,7 +157,7 @@ export class GridItemSelectControl extends ValidationControl {
       return valueProp(v)
     }
     return view(valueProp, v);
-  }
+  };
 
   render() {
     const {valid, errors} = this.state;
@@ -177,7 +175,7 @@ export class GridItemSelectControl extends ValidationControl {
       md
     } = this.props;
     return <GridFormControl xs={xs} sm={sm} md={md} error={!valid}>
-      <InputLabel htmlFor={id} shrink>{label}</InputLabel>
+      <InputLabel shrink={true} htmlFor={id}>{label}</InputLabel>
       <Select
         value={value}
         onChange={event => onChange(event.target.value)}

@@ -29,7 +29,7 @@ export const fetchMembershipTypes = (filterOptions) => {
 export default handleActions({
   [actions.membershipTypes.load.pending]: state => setPath(['pending'], true, state),
   [actions.membershipTypes.load.success]: (state, {payload}) =>
-    assignPath([], {pending: false, data: payload, errorMessage: null}, state),
+    assignPath([], {pending: false, data: payload, error: null}, state),
   [actions.membershipTypes.load.error]: (state, {payload}) =>
-    assignPath([], {pending: false, errorMessage: payload.message}, state),
+    assignPath([], {pending: false, error: payload.message}, state),
 }, initialState);

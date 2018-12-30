@@ -4,7 +4,7 @@ describe('contact reducer', () => {
 
   const initialState = {
     pending: false,
-    errorMessage: '',
+    error: '',
     data: {
       email: '',
       firstname: '',
@@ -50,7 +50,7 @@ describe('contact reducer', () => {
       const error = new Error('Oops, something went wrong!');
       const nextState = reducer(state, actions.contact.send.error(error));
 
-      const expectedState = Object.assign({}, state, {pending: false, errorMessage: error.message});
+      const expectedState = Object.assign({}, state, {pending: false, error: error.message});
 
       expect(nextState).toEqual(expectedState);
     });

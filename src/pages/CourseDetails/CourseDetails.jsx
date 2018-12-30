@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-'use strict';
 import compose from 'recompose/compose';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -19,31 +18,33 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
-import {TypeMapper} from './../../components/Course';
+import {Attendee} from './../../components/Course';
 import * as Format from '../../utils/Format';
+import {DATE_FORMAT_WITH_DAY, HOUR_MINUTE} from '../../utils/Format';
 import {ProfilePicture} from './../../components/profile';
 import {showNotification} from './../../model/notification';
 import {MODE} from './../../model/courses';
-import {getTextColorForBg, SECONDARY, TITLE_BG} from '../../theme';
+import {getTextColorForBg, SECONDARY} from '../../theme';
 import IconBack from '@material-ui/icons/ArrowBack';
 import IconCalendar from '@material-ui/icons/DateRange';
 import IconCopy from '@material-ui/icons/FileCopy';
 import IconClock from '@material-ui/icons/AccessTime';
+import Edit from '@material-ui/icons/Edit';
 import IconDelete from '@material-ui/icons/Remove';
 import IconDeleteForever from '@material-ui/icons/DeleteForever';
 import IconLocation from '@material-ui/icons/LocationOn';
 import IconUser from '@material-ui/icons/Person';
 import IconUserAdd from '@material-ui/icons/PersonAdd';
 import IconUserGroup from '@material-ui/icons/Group';
-import {deepEqual, findById, setPath, viewPath} from '../../utils/RamdaUtils';
+import {deepEqual, setPath, viewPath} from '../../utils/RamdaUtils';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import ConfirmButton from '../../components/ConfirmButton';
 import {GridDateTimeControl} from '../../components/GridFormControl';
 import {
   addUserToCourse,
   createCourse,
-  duplicateCourse,
   deleteCourse,
+  duplicateCourse,
   fetchCourses,
   onCourseDetailsChange,
   removeUserFromCourse,
@@ -55,10 +56,13 @@ import {
 } from '../../model/courses';
 import {updateUsers} from '../../model/profile';
 import {withRouter} from 'react-router-dom';
-import {Attendee, ListItemWithDialog} from './../../components/Course';
 import {shadeRGBColor} from './../../theme';
 import './style.less';
-import {HOUR_MINUTE, DATE_FORMAT_WITH_DAY} from '../../utils/Format';
+import {ListItemWithDialog} from "../../components/WithDialog";
+import {SignedIn} from "../../components/Auth";
+import OnlyIf from "../../components/Auth/OnlyIf";
+
+'use strict';
 
 class CourseDetails extends Component {
 
@@ -76,18 +80,26 @@ class CourseDetails extends Component {
     },
   };
 
-  componentWillMount = () => {
-    const {match, actions} = this.props;
-    const {showCourseDetails, createCourse, updateUsers} = actions;
+  constructor(props) {
+    super(props);
+    const {match, actions} = props;
     const id = match.params.id;
     if ('new' === id) {
       this.state.mode = MODE.CREATE;
-      createCourse();
+      actions.createCourse();
     } else {
       this.state.mode = MODE.VIEW;
-      showCourseDetails(id);
+      actions.showCourseDetails(id);
     }
-    updateUsers();
+    actions.updateUsers();
+  }
+
+  toggleMode = () => {
+    if (this.state.mode === MODE.VIEW) {
+      this.setState(setPath(['mode'], MODE.MODIFY, this.state));
+    } else if (this.state.mode === MODE.MODIFY) {
+      this.setState(setPath(['mode'], MODE.VIEW, this.state));
+    }
   };
 
   goBack = () => {
@@ -100,8 +112,8 @@ class CourseDetails extends Component {
 
   signInOut = () => {
     const {course = {}} = this.props.courseDetails;
-    const {id, signedIn} = course;
-    if (signedIn) {
+    const {id, participationStatus} = course;
+    if (participationStatus === 'SIGNED_IN' || participationStatus === 'ON_WAITLIST') {
       this.props.actions.signOut(id);
     } else {
       this.props.actions.signIn(id);
@@ -296,6 +308,7 @@ class CourseDetails extends Component {
 
     const hasChanges = !deepEqual(course, originalCourse);
     const {mode} = this.state;
+    const editable = !mode.readonly;
 
     let pending = false;
     if (!course || (!course.id && mode !== MODE.CREATE)) {
@@ -311,10 +324,9 @@ class CourseDetails extends Component {
       deleteCourse,
     } = actions;
 
-
     const courseId = viewPath(['courseDetails', 'course', 'id'], this.props);
     const {
-      start, courseType, minutes, attendees = [], maxParticipants, signedIn
+      start, courseType, minutes, attendees = [], maxParticipants, participationStatus
     } = course;
     if (pending) {
       return <LoadingIndicator/>;
@@ -342,14 +354,22 @@ class CourseDetails extends Component {
                     <IconBack/>
                   </IconButton>
                 </Tooltip>
-                {
-                  trainerOrAdmin
-                    ? <div style={{display: 'inline-block'}}>
+
+                <OnlyIf isTrue={mode !== MODE.CREATE}>
+                  <SignedIn hasAnyRole={['TRAINER', 'ADMIN']}>
+                    <div style={{display: 'inline-block'}}>
+                      <Tooltip title='Bearbeiten'>
+                        <IconButton color='inherit' onClick={this.toggleMode} style={editable ? {transform: 'rotateY(180deg)'} : undefined}>
+                          <Edit/>
+                        </IconButton>
+                      </Tooltip>
+
                       <Tooltip title="Duplizieren">
                         <IconButton onClick={this.duplicateCourse} style={{color: textColor}}>
                           <IconCopy/>
                         </IconButton>
                       </Tooltip>
+
                       <Tooltip title="Kurs löschen">
                         <ConfirmButton
                           iconButton
@@ -366,8 +386,8 @@ class CourseDetails extends Component {
                         </ConfirmButton>
                       </Tooltip>
                     </div>
-                    : undefined
-                }
+                  </SignedIn>
+                </OnlyIf>
               </div>
             </Grid>
           </Grid>
@@ -399,13 +419,18 @@ class CourseDetails extends Component {
               <Card>
                 <CardContent style={{padding: '0px'}}>
                   <List style={{paddingBottom: '0px'}}>
-                    <ListItem button={trainerOrAdmin} onClick={this.openDatePicker}>
+                    <ListItem button={editable} onClick={editable ? this.openDatePicker : undefined}>
                       <ListItemIcon>
-                        <IconCalendar size={24}/>
+                        {
+                          editable
+                          ? <Edit size={24}/>
+                          : <IconCalendar size={24}/>
+                        }
+
                       </ListItemIcon>
                       <ListItemText
                         primary={start ? moment(start).format(HOUR_MINUTE) + ' Uhr' : ''}
-                        secondary={start ? 'am ' + moment(start).format(DATE_FORMAT_WITH_DAY) : ''}/>
+                        secondary={start ? moment(start).format(DATE_FORMAT_WITH_DAY) : ''}/>
                     </ListItem>
                     {/* Invisible component - just used for date time selection */}
                     <GridDateTimeControl
@@ -422,11 +447,13 @@ class CourseDetails extends Component {
                     />
 
                     <ListItemWithDialog
+                      editable={editable}
                       icon={<IconClock size={24}/>}
-                      label={'Kursdauer'}
+                      label='Kursdauer'
                       value={minutes}
+                      type='number'
                       primary={minutes + ' Minuten'}
-                      onOk={value => onCourseDetailsChange('minutes', Number.parseInt(value))}/>
+                      onChange={value => onCourseDetailsChange('minutes', Number.parseInt(value))}/>
 
                     <ListItem>
                       <ListItemIcon>
@@ -438,11 +465,13 @@ class CourseDetails extends Component {
                     </ListItem>
 
                     <ListItemWithDialog
+                      editable={editable}
                       icon={<IconUserGroup size={24}/>}
-                      label={'maximale Teilehmerzahl'}
+                      label='maximale Teilehmerzahl'
                       value={maxParticipants}
+                      type='number'
                       primary={'maximal ' + maxParticipants + ' Teilnehmer'}
-                      onOk={value => onCourseDetailsChange('maxParticipants', Number.parseInt(value))}/>
+                      onChange={value => onCourseDetailsChange('maxParticipants', Number.parseInt(value))}/>
 
                   </List>
                 </CardContent>
@@ -465,12 +494,16 @@ class CourseDetails extends Component {
                 </CardActions>
 
                 <CardActions style={{justifyContent: 'space-between'}}>
-                  <Typography
-                    style={{display: 'inline-block', color: 'green', paddingLeft: '16px', paddingRight: '16px'}}>
-                    {signedIn ? 'Du bist angemeldet' : ''}
+                  <Typography style={{display: 'inline-block', color: participationStatus === 'SIGNED_IN' ? 'green' : 'orange', paddingLeft: '16px', paddingRight: '16px'}}>
+                    <OnlyIf isTrue={participationStatus === 'SIGNED_IN'}>
+                      Du bist angemeldet
+                    </OnlyIf>
+                    <OnlyIf isTrue={participationStatus === 'ON_WAITLIST'}>
+                      Du bist auf der Warteliste
+                    </OnlyIf>
                   </Typography>
                   <Button color='primary' onClick={this.signInOut} disabled={hasChanges}>
-                    {signedIn ? 'Abmelden' : 'Teilnehmen'}
+                    {participationStatus === 'SIGNED_IN' || participationStatus === 'ON_WAITLIST' ? 'Abmelden' : 'Teilnehmen'}
                   </Button>
                 </CardActions>
               </Card>

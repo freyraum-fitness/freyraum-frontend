@@ -18,7 +18,7 @@ export const initialState = {
   create: {
     show: false,
     pending: false,
-    errorMessage: '',
+    error: '',
     data: {
       user: {},
       membershipTypeId: null,
@@ -201,9 +201,9 @@ export default handleActions({
 
   [actions.createMembership.save.pending]: state => setPath(['create', 'pending'], true, state),
   [actions.createMembership.save.success]: state =>
-    assignPath(['create'], {pending: false, errorMessage: ''}, state),
+    assignPath(['create'], {pending: false, error: ''}, state),
   [actions.createMembership.save.error]: (state, {payload}) =>
-    assignPath(['create'], {pending: false, errorMessage: payload}, state),
+    assignPath(['create'], {pending: false, error: payload}, state),
 
   // details
   [actions.membership.onDataChanged]: (state, {payload}) =>

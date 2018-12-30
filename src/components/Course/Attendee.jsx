@@ -31,10 +31,10 @@ class Attendee extends Component {
           onWaitlist
             ? <Typography
               variant='caption'
-              style={{color: 'rgba(255, 0, 0, 0.65'}}
+              style={{color: 'rgba(255, 165, 0, 1)'}}
               gutterBottom
               align='center'>
-              (auf Warteliste)
+              (Warteliste)
             </Typography>
             : undefined
         }

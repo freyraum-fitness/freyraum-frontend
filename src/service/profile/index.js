@@ -16,7 +16,3 @@ export const login = LOGIN;
 export const createAccount = (createData) => POST(`${baseURL}/profile/create`, createData);
 
 export const getAllUsers = () => GET(`${baseURL}/profile/`);
-
-export const passwordForgotten = (data) => POST(`${baseURL}/password/forgot`, data);
-
-export const resetPassword = (data) => POST(`${baseURL}/password/reset`, data);

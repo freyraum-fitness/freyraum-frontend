@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Tooltip from '@material-ui/core/Tooltip';
 import ExitToApp from '@material-ui/icons/ExitToApp';
+import Menu from '@material-ui/icons/Menu';
 import {openDrawer} from './../../model/drawer';
 import {toLogoPage} from './../../utils/Routing';
 import ConfirmButton from './../ConfirmButton';
@@ -24,21 +25,21 @@ class PageAppBar extends Component {
     const {actions} = this.props;
     return (
       <Tooltip title='Menü einblenden' enterDelay={500}>
-        <IconButton className='menu' onClick={actions.openDrawer}>
-          <img src='/logo.png' width={42}/>
+        <IconButton color='inherit' className='menu' onClick={actions.openDrawer}>
+          <Menu/>
         </IconButton>
       </Tooltip>
     );
   };
 
-  title = () => {
-    return (
-      <Typography type='title' color='inherit' className='title'>
-        <span className='frey'>FREY</span>
-        <span className='raum'>RAUM</span>
-      </Typography>
-    );
-  };
+  logo = () => <span className='title-logo'>
+    <img src='/logo.png' width={36}/>
+  </span>;
+
+  title = () => <Typography type='title' color='inherit' className='title'>
+    <span className='frey'>FREY</span>
+    <span className='raum'>RAUM</span>
+  </Typography>;
 
   loginButton = () => {
     const {currentUser, actions, location, history} = this.props;
@@ -71,6 +72,7 @@ class PageAppBar extends Component {
         <WeUseCookies/>
         <Toolbar>
           {this.menuButton()}
+          {this.logo()}
           {
             hideTitle
               ? undefined

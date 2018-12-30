@@ -1,6 +1,6 @@
 'use strict';
 
-export const getNews = (param) => {
+export const getCurrentNews = (param) => {
   return new Promise((resolve, reject) => {
     if(param instanceof Error) {
       reject(param)

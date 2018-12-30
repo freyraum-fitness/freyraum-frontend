@@ -9,6 +9,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Tooltip from '@material-ui/core/Tooltip';
 import PullToRefresh from './../../components/PullToRefresh';
 import {Bar} from 'react-chartjs';
 import {fetchStatistics} from './../../model/statistics';
@@ -16,8 +17,35 @@ import {comparingModFunc} from './../../utils/Comparator';
 import {findById} from './../../utils/RamdaUtils';
 import moment from 'moment';
 
+class TopCourse extends Component {
+
+  render() {
+    const {courseType, count} = this.props;
+    return (
+      <Tooltip title={'Du hast bereits ' + count + ' mal bei ' + courseType.name + ' teilgenommen'}>
+        <Grid container>
+          <Grid item xs={12}>
+            <Typography variant='h4' align='center'>
+              {count}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography align='center' style={{color: courseType.color}}>
+              {courseType.name}
+            </Typography>
+          </Grid>
+        </Grid>
+      </Tooltip>
+    );
+  }
+}
 
 class Statistics extends Component {
+
+  constructor(props) {
+    super(props);
+    this.fetchStatistics();
+  }
 
   onRefresh = () => {
     const {user, actions} = this.props;
@@ -26,40 +54,55 @@ class Statistics extends Component {
     }
   };
 
-  render() {
-    const {user, statistics, courseTypes, actions} = this.props;
+  fetchStatistics = () => {
+    const {user, statistics, actions} = this.props;
     const {fetchStatistics} = actions;
 
     if (user && user.id && !statistics.pending) {
       fetchStatistics(user.id);
     }
+  };
 
-    const {name = ""} = findById(courseTypes.data, statistics.data.favouriteCourseTypeId) || {};
+  componentDidMount() {
+    this.fetchStatistics();
+  }
+
+  renderTop3 = (top3, idx, courseTypes, participationsPerType) => {
+    if (!top3[idx]) {
+      return null;
+    }
+    return (
+      <Grid item xs={4} sm={4}>
+        <TopCourse courseType={findById(courseTypes.data, top3[idx])} count={participationsPerType[top3[idx]]}/>
+      </Grid>
+    );
+  };
+
+  render() {
+    const {statistics, courseTypes} = this.props;
+
     const participationsPerMonth = statistics.data.participationsPerMonth;
     const sorted = Object.keys(participationsPerMonth)
       .sort(comparingModFunc(value => value, moment));
+
+    const participationsPerType = statistics.data.participationsPerType;
+    const top3 = Object.keys(participationsPerType)
+      .sort(comparingModFunc(key => participationsPerType[key], v => v, 'DESC'));
+
 
     return (
       <SimplePage>
         <PullToRefresh
           pending={statistics.pending}
           onRefresh={this.onRefresh}>
-          <Grid container spacing={16} justify="center" style={{width: '100%', margin: '0px'}}>
-            <Grid item xs={12} sm={8}>
-              <Card>
-                <CardHeader title='Dein Lieblingskurs'/>
-                <CardContent>
-                  <Typography>
-                    {name}
-                  </Typography>
-                  <Typography variant='caption'>
-                    {'Du hast an diesem Kurs bereits ' + statistics.data.favouriteCourseParticipations + ' mal teilgenommen.'}
-                  </Typography>
-                </CardContent>
-              </Card>
+          <Grid container spacing={16} justify="center" style={{width: '100%', margin: '0px', padding: '16px 0 0'}}>
+            <Grid container spacing={8} item xs={12} sm={10} md={8} alignItems='stretch' style={{padding: '4px'}}>
+              {this.renderTop3(top3, 0, courseTypes, participationsPerType)}
+              {this.renderTop3(top3, 1, courseTypes, participationsPerType)}
+              {this.renderTop3(top3, 2, courseTypes, participationsPerType)}
             </Grid>
 
-            <Grid item xs={12} sm={8}>
+            <Grid item xs={12} sm={10} md={8}>
               <Card>
                 <CardHeader title='Statistiken'/>
                 <CardContent>

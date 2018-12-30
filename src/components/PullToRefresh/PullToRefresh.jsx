@@ -33,7 +33,7 @@ class PullToRefresh extends Component {
     const {updating} = this.state;
     let loading = undefined;
     if (pending || updating) {
-      loading = <LoadingIndicator noLabel style={{marginTop: '8px'}}/>;
+      loading = <LoadingIndicator noLabel style={{paddingTop: '8px'}}/>;
     }
     return (
       <div style={style} id='pull-to-refresh' className='pull-to-refresh'>

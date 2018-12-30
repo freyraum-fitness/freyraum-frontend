@@ -8,6 +8,7 @@ import {withStyles} from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import IconHome from '@material-ui/icons/Home';
 import IconLineChart from '@material-ui/icons/ShowChart';
 import IconCalendar from '@material-ui/icons/DateRange';
@@ -22,6 +23,7 @@ import IconContact from '@material-ui/icons/ContactMail';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import IconButton from '@material-ui/core/IconButton';
 import MenuLink from './MenuLink';
 import {closeDrawer, openDrawer} from '../../model/drawer';
 import {logout} from '../../model/logout';
@@ -33,9 +35,15 @@ const styles = theme => ({
     width: 260
   },
   drawer: {
-    height: '100%',
+    background: '#fafafa url("/logo_white_transparent.png") no-repeat',
   },
-  drawerHeader: theme.mixins.toolbar,
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0 8px',
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
+  }
 });
 
 class Drawer extends Component {
@@ -45,13 +53,17 @@ class Drawer extends Component {
     const {closeDrawer, logout} = actions;
     return (
       <div className={classes.drawer}>
-        <div className={classes.drawerHeader}/>
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={closeDrawer}>
+            <ChevronLeftIcon/>
+          </IconButton>
+        </div>
         <Divider/>
         <List>
           <MenuLink to='/' label='Home' icon={<IconHome/>} onClick={closeDrawer}/>
           <SignedIn>
           <MenuLink to='/statistics' label='Statistiken und PR' icon={<IconLineChart/>} onClick={closeDrawer}/>
-          <MenuLink to='/courses' label='Alle Kurse' icon={<IconCalendar/>} onClick={closeDrawer}/>
+          <MenuLink to='/courses' label='Kurse' icon={<IconCalendar/>} onClick={closeDrawer}/>
           <SignedIn hasAnyRole={['TRAINER', 'ADMIN']}>
             <MenuLink to='/memberships' label='Mitgliedschaften' icon={<IconUserGroup/>} onClick={closeDrawer}/>
           </SignedIn>
@@ -62,7 +74,7 @@ class Drawer extends Component {
         <Divider/>
         <List>
           <MenuLink to='/about' label='Über Freya + FreyRaum' icon={<IconInfo/>} onClick={closeDrawer}/>
-          <MenuLink to='/courses-plan' label='Kurse im FreyRaum' icon={<IconCalendar/>} onClick={closeDrawer}/>
+          <MenuLink to='/courses-plan' label='Allgemeiner Kursplan' icon={<IconCalendar/>} onClick={closeDrawer}/>
           <MenuLink to='/agb' label='AGB' icon={<IconDocument/>} onClick={closeDrawer}/>
           <MenuLink to='/impressum' label='Impressum' icon={<IconInfo/>} onClick={closeDrawer}/>
         </List>
@@ -81,7 +93,12 @@ class Drawer extends Component {
             }}/>
           </SignedIn>
           <NotSignedIn>
-            <MenuLink to='/login' label='Login' icon={<IconSignIn/>} onClick={closeDrawer}/>
+            <ListItem button onClick={() => {toLogoPage(location, history, '/login'); closeDrawer()}}>
+              <ListItemIcon>
+                <IconSignIn/>
+              </ListItemIcon>
+              <ListItemText primary='Login'/>
+            </ListItem>
           </NotSignedIn>
         </List>
         {/* space to enable login/logout link on small devices (bug on ios) */}

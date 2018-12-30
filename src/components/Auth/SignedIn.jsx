@@ -6,9 +6,9 @@ import {viewPath} from "../../utils/RamdaUtils";
 class SignedIn extends Component {
 
   render() {
-    const {currentUser, hasRole, hasAnyRole, children} = this.props;
+    const {currentUser, hasRole, hasAnyRole, children, alternative = null} = this.props;
     if (!currentUser) {
-      return null;
+      return alternative;
     }
     if (!hasRole && !hasAnyRole) {
       return children;
@@ -25,7 +25,7 @@ class SignedIn extends Component {
         }
       }
     }
-    return null;
+    return alternative;
   }
 }
 
