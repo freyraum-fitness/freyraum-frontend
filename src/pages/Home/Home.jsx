@@ -20,12 +20,15 @@ import {comparingMod, comparingModFunc, DESC} from '../../utils/Comparator';
 import {AttendCourses, MyCourse} from '../../components/Course';
 import {NotSignedIn, SignedIn} from './../../components/Auth';
 import PullToRefresh from './../../components/PullToRefresh/PullToRefresh';
+import VideoCard from './../../components/VideoCard';
 import {toLogoPage} from '../../utils/Routing';
 import {CoursesPlanAgenda, CoursesPlanIntro, CoursesPlanOverview} from '../CoursesPlan';
-import Slider from 'react-slick';
 import Instagram from 'mdi-material-ui/Instagram';
 import Facebook from 'mdi-material-ui/Facebook';
+import Youtube from 'mdi-material-ui/Youtube';
 import {PRIMARY} from '../../theme';
+import {Workouts} from "./Workouts";
+import {Slider} from './Slider';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './style.less';
@@ -90,9 +93,7 @@ class Home extends Component {
               <Typography variant='subtitle1' color='primary' className='title-h-scroll'>
                 Hallo {currentUser ? currentUser.firstname : ''}, deine nächsten Kurse
               </Typography>
-              <Slider dots swipeToSlide variableWidth infinite={false} arrows={false}
-                      className={'slider variable-width'}
-                      slidesToShow={1} slidesToScroll={1}>
+              <Slider>
                 {
                   myCourses.length === 0
                     ? <AttendCourses/>
@@ -106,6 +107,19 @@ class Home extends Component {
             {this.getWelcomeGreetings()}
           </NotSignedIn>
 
+          <SignedIn>
+            <section className='section'>
+              <div className='title-h-scroll'>
+                <Typography variant='subtitle1' color='primary'>
+                  Adventskalender
+                </Typography>
+              </div>
+              <Slider>
+                {Workouts.map((item, idx) => <VideoCard key={idx} title={item.title} url={item.url}/>)}
+              </Slider>
+            </section>
+          </SignedIn>
+
           <section className='section'>
             <div className='title-h-scroll'>
               <Typography variant='subtitle1' color='primary'>
@@ -117,9 +131,7 @@ class Home extends Component {
                 </IconButton>
               </SignedIn>
             </div>
-            <Slider dots swipeToSlide variableWidth infinite={false} arrows={false}
-                    className={'slider variable-width'}
-                    slidesToShow={1} slidesToScroll={1}>
+            <Slider>
               {newsData.map((newsItem, idx) => <NewsItem key={idx} news={newsItem}/>)}
             </Slider>
           </section>
@@ -178,6 +190,14 @@ class Home extends Component {
                     <a target='_blank' href='https://www.facebook.com/freyraum.fitness/'>
                       <IconButton style={{color: PRIMARY}}>
                         <Facebook/>
+                      </IconButton>
+                    </a>
+                  </Tooltip>
+
+                  <Tooltip title='YouTube' placement='top'>
+                    <a target='_blank' href='https://www.youtube.com/channel/UCPudg12FsBXS6xD-b-YVp6A/videos'>
+                      <IconButton style={{color: PRIMARY}}>
+                        <Youtube/>
                       </IconButton>
                     </a>
                   </Tooltip>
