@@ -1,5 +1,5 @@
 'use strict';
-import React, {Component} from 'react';
+import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
@@ -17,16 +17,17 @@ import IconZoomIn from '@material-ui/icons/ZoomIn';
 import IconZoomOut from '@material-ui/icons/ZoomOut';
 import IconRotateLeft from '@material-ui/icons/RotateLeft';
 import IconRotateRight from '@material-ui/icons/RotateRight';
+import IconAddPhotoAlternate from '@material-ui/icons/AddPhotoAlternate';
 import LoadingIndicator from './../LoadingIndicator';
 import Hammer from 'react-hammerjs';
 
-let options = {
+const options = {
   recognizers: {
     pinch: { enable: true }
   }
 };
 
-class ProfilePictureDialog extends Component {
+class ProfilePictureDialog extends React.Component {
 
   state = {
     rotate: 0,
@@ -35,15 +36,7 @@ class ProfilePictureDialog extends Component {
     acceptAGB: false
   };
 
-  constructor(props) {
-    super(props);
-    this.handleUpload = this.handleUpload.bind(this);
-    this.handleRequestSave = this.handleRequestSave.bind(this);
-    this.handleRequestClose = this.handleRequestClose.bind(this);
-    this.setAvatarEditorRef = this.setAvatarEditorRef.bind(this);
-  }
-
-  handleUpload(e) {
+  handleUpload = e => {
     const {changeTempProfilePicture} = this.props;
     const reader = new FileReader();
     const file = e.target.files[0];
@@ -56,7 +49,7 @@ class ProfilePictureDialog extends Component {
     };
     this.setState(setPath(['errorText'], undefined, this.state));
     reader.readAsDataURL(file);
-  }
+  };
 
   handleRequestSave = () => {
     const {file} = this.props.temp;
@@ -143,7 +136,7 @@ class ProfilePictureDialog extends Component {
         open={show}>
         <DialogContent style={{padding: '0px'}}>
           <Grid container spacing={16} justify="center" style={{width: '100%', margin: '0px'}}>
-            <Grid item xs={12} sm={10} md={8} style={{position: 'relative', padding: '0px'}}>
+            <Grid item xs={12} sm={8} md={6} style={{position: 'relative', padding: '0px'}}>
               <Hammer options={options} onPinch={this.pinch} onPinchEnd={this.pinchEnd}>
                 <div>
                   <AvatarEditor
@@ -151,7 +144,7 @@ class ProfilePictureDialog extends Component {
                     image={temp.dataUrl}
                     width={300}
                     height={300}
-                    border={[150, 75]}
+                    border={[75, 75]}
                     color={[100, 100, 100, 0.75]}
                     scale={zoom * scale}
                     rotate={rotate}
@@ -171,10 +164,10 @@ class ProfilePictureDialog extends Component {
                 padding: '16px auto',
                 textAlign: 'center'
               }}>
-                <Button variant='flat' style={{color: 'white'}}>
+                <IconButton style={{color: 'white'}}>
+                  <IconAddPhotoAlternate/>
                   {this.getInput()}
-                  Bild wählen
-                </Button>
+                </IconButton>
                 <IconButton onClick={this.zoomIn} style={{color: 'white'}}>
                   <IconZoomIn/>
                 </IconButton>

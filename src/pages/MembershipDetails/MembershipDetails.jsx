@@ -334,7 +334,6 @@ const mapDispatchToProps = dispatch => ({
     // participatoins
     deleteParticipation: deleteParticipation,
     // membership
-    hideCreateMembership: hideCreateMembership,
     onMembershipDetailsDataChanged: onMembershipDetailsDataChanged,
     createMembership: createMembership,
     fetchMembership: fetchMembership,

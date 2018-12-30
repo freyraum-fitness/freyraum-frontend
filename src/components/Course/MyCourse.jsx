@@ -6,6 +6,8 @@ import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardActionArea from "@material-ui/core/CardActionArea";
+import HourglassEmpty from "@material-ui/icons/HourglassEmpty";
+import Check from "@material-ui/icons/Check";
 import moment from "moment";
 import './style.less';
 
@@ -34,6 +36,16 @@ class MyCourse extends Component {
     });
   };
 
+  getIcon = () => {
+    const {course} = this.props;
+    if ('SIGNED_IN' === course.participationStatus) {
+      return <Check style={{color: 'green', fontSize: '1rem'}}/>
+    }
+    if ('ON_WAITLIST' === course.participationStatus) {
+      return <HourglassEmpty style={{color: 'orange', fontSize: '1rem'}}/>
+    }
+  };
+
   render() {
     const {course} = this.props;
     const {name, color} = course.courseType;
@@ -42,9 +54,12 @@ class MyCourse extends Component {
         <Card>
           <CardActionArea onClick={this.showCourseDetails}>
             <CardContent className='my-course-content'>
-              <Typography variant='caption'>
-                {this.getStartTime(course.start)}
-              </Typography>
+              <div className='my-course-caption'>
+                <Typography variant='caption'>
+                  {this.getStartTime(course.start)}
+                </Typography>
+                {this.getIcon()}
+              </div>
               <Typography variant='h6'>
                 {name}
               </Typography>

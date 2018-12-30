@@ -3,72 +3,48 @@
 }
 
 .fullscreen-appbar {
-  .animated();
-  background: linear-gradient(30deg, #00B0DB 40%, #0CF2E1 110%);
-  z-index: 5000;
-  width: 100vw;
-  height: 100vh;
+  background-color: transparent !important;
+  z-index: 5001 !important;
   box-shadow: none !important;
-
-  .animation-enter &, .animation-exit & {
-    height: 56px !important;
-    background: linear-gradient(10deg, #00B0DB 40%, #0CF2E1 110%) !important;
-
-    @media (min-width: 600px) {
-      height: 64px !important;
-    }
-  }
-
-  .animation-enter-active & {
-    height: 100vh !important;
-    background: linear-gradient(30deg, #00B0DB 40%, #0CF2E1 110%) !important;
-  }
 
   .grow {
     flex: 1;
   }
 
-  .fullscreen-toolbar {
+  .title-logo {
     .animated();
-    @media (min-width: 600px) {
-      margin-bottom: 48px;
-    }
+    position: relative;
+    padding-right: 2px;
+    top: -25px;
+    opacity: 0;
 
     .animation-enter &, .animation-exit & {
-      margin-bottom: 0 !important;
+      top: 0 !important;
+      opacity: 1 !important;
     }
 
     .animation-enter-active & {
-      @media (min-width: 600px) {
-        margin-bottom: 48px !important;
-      }
+      top: -25px !important;
+      opacity: 0 !important;
     }
   }
 
   .title {
     .animated();
     position: relative;
-    font-size: 24px !important;
+    font-size: 20px !important;
     text-align: center;
-    max-width: 100%;
-    width: 100%;
-    @media (min-width: 600px) {
-      top: 24px !important;
-      font-size: 56px !important;
-    }
+    top: -25px;
+    opacity: 0;
 
     .animation-enter &, .animation-exit & {
-      max-width: 0 !important;
       top: 0 !important;
-      font-size: 24px !important;
+      opacity: 1 !important;
     }
 
     .animation-enter-active & {
-      max-width: 100% !important;
-      @media (min-width: 600px) {
-        top: 24px !important;
-        font-size: 56px !important;
-      }
+      top: -25px !important;
+      opacity: 0 !important;
     }
 
     .frey {

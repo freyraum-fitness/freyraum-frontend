@@ -99,12 +99,11 @@ class Profile extends Component {
 
               {this.renderMemberships()}
             </Grid>
-
             <ProfilePictureDialog
               show={profile.picture.dialog.open}
               temp={profile.picture.temp}
               pending={profile.picture.pending}
-              errorMessage={profile.picture.errorMessage}
+              error={profile.picture.error}
               changeTempProfilePicture={actions.changeTempProfilePicture}
               onSave={actions.saveProfilePicture}
               onClose={actions.closeProfilePictureChangeDialog}

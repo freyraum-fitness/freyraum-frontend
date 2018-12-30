@@ -12,12 +12,15 @@ import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import {fetchStatistics} from '../../model/statistics';
+import AddComment from '@material-ui/icons/AddComment';
+import {fetchNews} from '../../model/news';
+import {fetchCourses} from '../../model/courses';
 import NewsItem from '../../components/news/NewsItem/NewsItem';
 import {comparingMod} from '../../utils/Comparator';
-import MyCourse from '../../components/Course/MyCourse';
-import {SignedIn, NotSignedIn} from './../../components/Auth';
+import {AttendCourses, MyCourse} from '../../components/Course';
+import {NotSignedIn, SignedIn} from './../../components/Auth';
 import PullToRefresh from './../../components/PullToRefresh/PullToRefresh';
+import VideoCard from './../../components/VideoCard';
 import {toLogoPage} from '../../utils/Routing';
 import {CoursesPlanAgenda, CoursesPlanIntro, CoursesPlanOverview} from '../CoursesPlan';
 import Slider from 'react-slick';
@@ -52,7 +55,7 @@ class Home extends Component {
             Jedes Mal anders, jedes Mal neu!
           </Typography>
           <Typography gutterBottom>
-            Neben dem breiten Kursprogramm, können Mitglieder auch zum eigenständigen bzw. freien Training
+            Neben dem breiten Kursprogramm können Mitglieder auch zum eigenständigen bzw. freien Training
             vorbei kommen.
           </Typography>
         </Grid>
@@ -66,57 +69,70 @@ class Home extends Component {
     )
   };
 
+  onRefresh = () => {
+    this.props.actions.fetchNews();
+    this.props.actions.fetchCourses();
+  };
+
   render() {
     const {currentUser, profile, news, courses, location, history} = this.props;
     const {data = {}} = courses;
-    const myCourses = data.filter(course => course.signedIn);
+    const myCourses = data.filter(course => course.participationStatus === 'SIGNED_IN' || course.participationStatus === 'ON_WAITLIST');
     myCourses.sort(compareCourseByStartDate);
 
     return (
       <SimplePage>
-        <PullToRefresh pending={profile.pending}>
+        <PullToRefresh pending={news.pending || courses.pending || profile.pending} onRefresh={this.onRefresh}>
           <SignedIn>
-            <div className='section'>
-              <Typography variant='subtitle1' className='title-h-scroll'>
-                Meine nächten Kurse
+            <section className='first-section'>
+              <Typography variant='subtitle1' color='primary' className='title-h-scroll'>
+                Hallo {currentUser ? currentUser.firstname : ''}, deine nächsten Kurse
               </Typography>
               <Slider dots swipeToSlide variableWidth infinite={false} arrows={false}
                       className={'slider variable-width'}
                       slidesToShow={1} slidesToScroll={1}>
                 {
                   myCourses.length === 0
-                    ? <span>'Melde dich hier zu Kursen an'</span>
+                    ? <AttendCourses/>
                     : myCourses.map((course, idx) => <MyCourse key={idx} course={course}/>)
                 }
               </Slider>
-            </div>
+            </section>
           </SignedIn>
 
           <NotSignedIn>
             {this.getWelcomeGreetings()}
           </NotSignedIn>
 
-          <div className='section'>
-            <Typography variant='subtitle1' className='title-h-scroll'>
-              Neuigkeiten
-            </Typography>
-            <Slider dots swipeToSlide variableWidth infinite={false} arrows={false} className={'slider variable-width'}
+          <section className='section'>
+            <div className='title-h-scroll'>
+              <Typography variant='subtitle1' color='primary'>
+                Neuigkeiten
+              </Typography>
+              <SignedIn hasAnyRole={['TRAINER', 'ADMIN']}>
+                <IconButton color='primary' onClick={() => history.push(location.pathname + '/news/new')}>
+                  <AddComment/>
+                </IconButton>
+              </SignedIn>
+            </div>
+            <Slider dots swipeToSlide variableWidth infinite={false} arrows={false}
+                    className={'slider variable-width'}
                     slidesToShow={1} slidesToScroll={1}>
               {news.data.map((newsItem, idx) => <NewsItem key={idx} news={newsItem}/>)}
             </Slider>
-          </div>
+          </section>
 
           <NotSignedIn>
-            <div className='section'>
+            <section className='section'>
               <Grid container spacing={0} justify='center' style={{width: '100%', margin: '0px'}}>
                 <CoursesPlanIntro currentUser={currentUser} location={location} history={history}/>
                 <CoursesPlanOverview/>
                 <CoursesPlanAgenda/>
               </Grid>
-            </div>
+            </section>
           </NotSignedIn>
 
-          <div className='section' style={{backgroundColor: '#fafafa'}}>
+          <section className='section' style={{backgroundColor: '#fafafa'}}>
             <Grid container spacing={0} justify='center' style={{width: '100%', margin: '0px'}}>
               <Grid item container xs={12} sm={10} md={8} className='home-textarea' justify='center'>
                 <Grid item xs={12}>
@@ -131,14 +147,14 @@ class Home extends Component {
                     </Typography>
                   </NotSignedIn>
                   <Button fullWidth color='primary' onClick={() => toLogoPage(location, history, '/contact')}>
-                    Kontakformular
+                    Kontaktformular
                   </Button>
                 </Grid>
               </Grid>
             </Grid>
-          </div>
+          </section>
 
-          <div className='section' style={{backgroundColor: '#fafafa'}}>
+          <section className='section' style={{backgroundColor: '#fafafa'}}>
             <Grid container spacing={0} justify='center' style={{width: '100%', margin: '0px'}}>
               <Grid item container xs={12} sm={10} md={8} className='home-textarea' justify='center'>
                 <Grid item xs={12}>
@@ -166,15 +182,15 @@ class Home extends Component {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <a href='mailto:freya@freya.fitness' style={{textDecoration: 'none'}}>
+                  <a href='mailto:freyraum@freya.fitness' style={{textDecoration: 'none'}}>
                     <Typography variant='caption' align='center'>
-                      freya@freya.fitness
+                      freyraum@freya.fitness
                     </Typography>
                   </a>
                 </Grid>
               </Grid>
             </Grid>
-          </div>
+          </section>
         </PullToRefresh>
       </SimplePage>
     );
@@ -192,8 +208,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({
-    // statistics
-    fetchStatistics: fetchStatistics,
+    fetchNews: fetchNews,
+    fetchCourses: fetchCourses,
   }, dispatch),
   dispatch
 });

@@ -11,7 +11,8 @@ const initialState = {
     userId: null,
     favouriteCourseTypeId: null,
     favouriteCourseParticipations: null,
-    participationsPerMonth: {}
+    participationsPerMonth: {},
+    participationsPerType: {},
   }
 };
 

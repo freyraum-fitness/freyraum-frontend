@@ -118,7 +118,7 @@ class Courses extends Component {
         <Course
           key={idx}
           course={course}
-          showCourseDetails={actions.showCourseDetails}
+          showCourseDetails={actions.showNewsDetails}
           signIn={actions.signIn}
           signOut={actions.signOut}/>
       );

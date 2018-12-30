@@ -7,7 +7,7 @@ describe('profile reducer', () => {
   beforeEach(() => {
     state = {
       pending: false,
-      errorMessage: null,
+      error: null,
       user: undefined
     }
   });
@@ -41,7 +41,7 @@ describe('profile reducer', () => {
       const error = new Error('Oops, something went wrong!');
       const nextState = reducer(state, actions.profile.load.error(error));
 
-      const expectedState = Object.assign({}, state, {pending: false, errorMessage: error.message});
+      const expectedState = Object.assign({}, state, {pending: false, error: error.message});
 
       expect(nextState).toEqual(expectedState);
     });
