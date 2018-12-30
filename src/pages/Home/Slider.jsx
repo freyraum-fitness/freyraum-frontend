@@ -39,6 +39,7 @@ export class Slider extends React.Component {
     const {children, ...props} = this.props;
     return (
       <SlickSlider dots swipeToSlide variableWidth infinite={false} arrows={false}
+                   lazyLoad='progressive'
                    className={'slider variable-width'}
                    appendDots={this.appendDots}
                    slidesToShow={1} slidesToScroll={1} {...props}>

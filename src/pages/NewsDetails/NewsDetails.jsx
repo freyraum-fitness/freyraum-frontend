@@ -163,11 +163,19 @@ class NewsDetails extends Component {
   }
 
   getNewsImage(news, width, actions) {
+
+    let size = 'MD';
+    if (width === 'sm') {
+      size = 'SM';
+    } else if (width === 'xs') {
+      size = 'XS';
+    }
+
     return <Grid item xs={12} sm={10} md={8} className='news-details-picture'>
       <img
         width='100%'
         alt=''
-        src={__API__ + '/news/' + news.id + '/pictures/' + width.toUpperCase()}/>
+        src={__API__ + '/news/' + news.id + '/pictures/' + size}/>
 
       <OnlyIf isTrue={!!news.id}>
         <SignedIn hasAnyRole={['TRAINER', 'ADMIN']}>
