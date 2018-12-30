@@ -16,11 +16,10 @@ import AddComment from '@material-ui/icons/AddComment';
 import {fetchNews} from '../../model/news';
 import {fetchCourses} from '../../model/courses';
 import NewsItem from '../../components/news/NewsItem/NewsItem';
-import {comparingMod} from '../../utils/Comparator';
+import {comparingMod, comparingModFunc, DESC} from '../../utils/Comparator';
 import {AttendCourses, MyCourse} from '../../components/Course';
 import {NotSignedIn, SignedIn} from './../../components/Auth';
 import PullToRefresh from './../../components/PullToRefresh/PullToRefresh';
-import VideoCard from './../../components/VideoCard';
 import {toLogoPage} from '../../utils/Routing';
 import {CoursesPlanAgenda, CoursesPlanIntro, CoursesPlanOverview} from '../CoursesPlan';
 import Slider from 'react-slick';
@@ -32,6 +31,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import './style.less';
 
 const compareCourseByStartDate = comparingMod('start', moment);
+const compareNewsByValidityFrom = comparingModFunc(news => news.validity.from, moment, DESC);
 
 class Home extends Component {
 
@@ -79,6 +79,8 @@ class Home extends Component {
     const {data = {}} = courses;
     const myCourses = data.filter(course => course.participationStatus === 'SIGNED_IN' || course.participationStatus === 'ON_WAITLIST');
     myCourses.sort(compareCourseByStartDate);
+    const newsData = news.data;
+    newsData.sort(compareNewsByValidityFrom);
 
     return (
       <SimplePage>
@@ -118,7 +120,7 @@ class Home extends Component {
             <Slider dots swipeToSlide variableWidth infinite={false} arrows={false}
                     className={'slider variable-width'}
                     slidesToShow={1} slidesToScroll={1}>
-              {news.data.map((newsItem, idx) => <NewsItem key={idx} news={newsItem}/>)}
+              {newsData.map((newsItem, idx) => <NewsItem key={idx} news={newsItem}/>)}
             </Slider>
           </section>
 
