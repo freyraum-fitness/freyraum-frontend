@@ -34,7 +34,7 @@ class NewsItem extends Component {
             <CardMedia
               component={'div'}
               style={{paddingTop: '70%'}}
-              image={__API__ + '/news/' + news.id + '/pictures/PREVIEW'}
+              image={__API__ + '/news/' + news.id + '/pictures/XS'}
               title={news.title}
             />
             <CardContent>
