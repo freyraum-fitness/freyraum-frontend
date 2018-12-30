@@ -107,7 +107,8 @@ class CourseDetails extends Component {
   };
 
   handleRequestSave = () => {
-    this.props.actions.saveCourseDetails(this.props.courseDetails.course);
+    this.props.actions.saveCourseDetails(
+      this.props.courseDetails.course, () => this.setState(setPath(['mode'], MODE.VIEW, this.state)));
   };
 
   signInOut = () => {
