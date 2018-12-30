@@ -107,7 +107,8 @@ class CourseDetails extends Component {
   };
 
   handleRequestSave = () => {
-    this.props.actions.saveCourseDetails(this.props.courseDetails.course);
+    this.props.actions.saveCourseDetails(
+      this.props.courseDetails.course, () => this.setState(setPath(['mode'], MODE.VIEW, this.state)));
   };
 
   signInOut = () => {
@@ -359,7 +360,7 @@ class CourseDetails extends Component {
                   <SignedIn hasAnyRole={['TRAINER', 'ADMIN']}>
                     <div style={{display: 'inline-block'}}>
                       <Tooltip title='Bearbeiten'>
-                        <IconButton color='inherit' onClick={this.toggleMode} style={editable ? {transform: 'rotateY(180deg)'} : undefined}>
+                        <IconButton onClick={this.toggleMode} style={{color: textColor, transform: editable ? 'rotateY(180deg)' : undefined}}>
                           <Edit/>
                         </IconButton>
                       </Tooltip>

@@ -18,8 +18,7 @@ export class WithDialogDialog extends React.Component {
     value: '',
   };
 
-  constructor(props) {
-    super(props);
+  componentWillReceiveProps(props) {
     this.state.value = props.value;
   }
 

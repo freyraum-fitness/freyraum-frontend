@@ -139,7 +139,7 @@ export const deleteCourse = id => {
   };
 };
 
-export const saveCourseDetails = course => {
+export const saveCourseDetails = (course, onSuccess) => {
   return dispatch => {
     dispatch(actions.courses.save.pending());
     const func = !!course.id ? saveCourse : saveNewCourse;
@@ -147,6 +147,7 @@ export const saveCourseDetails = course => {
       .then(updatedCourse => {
         dispatch(actions.courses.save.success(updatedCourse));
         dispatch(showNotification('Kurs gespeichert', 'success'));
+        onSuccess();
       })
       .catch(error=> dispatch(actions.courses.save.error(error)));
   };

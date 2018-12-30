@@ -27,6 +27,38 @@
   bottom: 0;
 }
 
+/* hiding all bullets by default */
+.slick-dots li {
+  display: none
+}
+.slick-dots li.slick-active-m3,
+.slick-dots li.slick-active-m2,
+.slick-dots li.slick-active-m1,
+.slick-dots li.slick-active,
+.slick-dots li.slick-active-p1,
+.slick-dots li.slick-active-p2,
+.slick-dots li.slick-active-p3 {
+  display: inline-block;
+}
+.slick-dots li.slick-active BUTTON::before {
+  color: #00B0DB;
+}
+.slick-dots li.slick-active-m3 BUTTON::before,
+.slick-dots li.slick-active-p3 BUTTON::before {
+  font-size: 4px;
+}
+
+.slick-track{
+  display: flex;
+
+  .slick-slide{
+    display: flex;
+    height: auto;
+    align-items: stretch; //optional
+    justify-content: center; //optional
+  }
+}
+
 .h-scroll-area {
   display: flex;
   white-space: nowrap;
