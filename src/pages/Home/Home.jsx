@@ -86,7 +86,7 @@ class Home extends Component {
           <SignedIn>
             <section className='first-section'>
               <Typography variant='subtitle1' color='primary' className='title-h-scroll'>
-                Hallo {currentUser.firstname}, deine nächsten Kurse
+                Hallo {currentUser ? currentUser.firstname : ''}, deine nächsten Kurse
               </Typography>
               <Slider dots swipeToSlide variableWidth infinite={false} arrows={false}
                       className={'slider variable-width'}
