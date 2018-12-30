@@ -58,7 +58,7 @@ import {updateUsers} from '../../model/profile';
 import {withRouter} from 'react-router-dom';
 import {shadeRGBColor} from './../../theme';
 import './style.less';
-import WithDialog, {ListItemWithDialog} from "../../components/WithDialog";
+import {ListItemWithDialog} from "../../components/WithDialog";
 import {SignedIn} from "../../components/Auth";
 import OnlyIf from "../../components/Auth/OnlyIf";
 
@@ -112,8 +112,8 @@ class CourseDetails extends Component {
 
   signInOut = () => {
     const {course = {}} = this.props.courseDetails;
-    const {id, signedIn} = course;
-    if (signedIn) {
+    const {id, participationStatus} = course;
+    if (participationStatus === 'SIGNED_IN' || participationStatus === 'ON_WAITLIST') {
       this.props.actions.signOut(id);
     } else {
       this.props.actions.signIn(id);
@@ -326,7 +326,7 @@ class CourseDetails extends Component {
 
     const courseId = viewPath(['courseDetails', 'course', 'id'], this.props);
     const {
-      start, courseType, minutes, attendees = [], maxParticipants, signedIn
+      start, courseType, minutes, attendees = [], maxParticipants, participationStatus
     } = course;
     if (pending) {
       return <LoadingIndicator/>;
@@ -494,12 +494,16 @@ class CourseDetails extends Component {
                 </CardActions>
 
                 <CardActions style={{justifyContent: 'space-between'}}>
-                  <Typography
-                    style={{display: 'inline-block', color: 'green', paddingLeft: '16px', paddingRight: '16px'}}>
-                    {signedIn ? 'Du bist angemeldet' : ''}
+                  <Typography style={{display: 'inline-block', color: participationStatus === 'SIGNED_IN' ? 'green' : 'orange', paddingLeft: '16px', paddingRight: '16px'}}>
+                    <OnlyIf isTrue={participationStatus === 'SIGNED_IN'}>
+                      Du bist angemeldet
+                    </OnlyIf>
+                    <OnlyIf isTrue={participationStatus === 'ON_WAITLIST'}>
+                      Du bist auf der Warteliste
+                    </OnlyIf>
                   </Typography>
                   <Button color='primary' onClick={this.signInOut} disabled={hasChanges}>
-                    {signedIn ? 'Abmelden' : 'Teilnehmen'}
+                    {participationStatus === 'SIGNED_IN' || participationStatus === 'ON_WAITLIST' ? 'Abmelden' : 'Teilnehmen'}
                   </Button>
                 </CardActions>
               </Card>

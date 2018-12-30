@@ -14,7 +14,7 @@ describe('news Service', () => {
 
     it('should extract response body', async () => {
       const result = await getCurrentNews();
-      expect(apiCall).toHaveBeenCalledWith(__API__ + '/news/',
+      expect(apiCall).toHaveBeenCalledWith(__API__ + '/news',
         {"credentials": "include", "headers": {"Access-Control-Allow-Credentials": "true", "Access-Control-Allow-Origin": "*"}});
       expect(result).toEqual(news);
     });

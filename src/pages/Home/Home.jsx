@@ -77,7 +77,7 @@ class Home extends Component {
   render() {
     const {currentUser, profile, news, courses, location, history} = this.props;
     const {data = {}} = courses;
-    const myCourses = data.filter(course => course.signedIn);
+    const myCourses = data.filter(course => course.participationStatus === 'SIGNED_IN' || course.participationStatus === 'ON_WAITLIST');
     myCourses.sort(compareCourseByStartDate);
 
     return (

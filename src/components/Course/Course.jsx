@@ -69,13 +69,13 @@ class Course extends Component {
     const {anchor} = this.state.course;
     const {signIn, signOut} = this.props;
     const courseId = viewPath(['course', 'id'], this.props);
-    const signedIn = viewPath(['course', 'signedIn'], this.props);
+    const participationStatus = viewPath(['course', 'participationStatus'], this.props);
     return <Menu
       open={!!anchor}
       anchorEl={anchor}
       onClose={this.closeMenu}>
       {
-        signedIn
+        participationStatus === 'SIGNED_IN' || participationStatus === 'ON_WAITLIST'
           ? <MenuItem onClick={() => {
             this.closeMenu();
             signOut(courseId);
@@ -106,7 +106,7 @@ class Course extends Component {
       start,
       minutes,
       instructor,
-      signedIn,
+      participationStatus,
       attendees,
       maxParticipants,
       canceled
@@ -129,8 +129,8 @@ class Course extends Component {
         }}>{'mit ' + instructor.firstname}</Typography>
     </div>);
     const additional = (<div>
-      {signedIn ?
-        <Typography style={{display: 'inline-block', color: 'green'}}>Du bist angemeldet</Typography> : undefined}
+      {participationStatus === 'SIGNED_IN' ? <Typography style={{display: 'inline-block', color: 'green'}}>Du bist angemeldet</Typography> : undefined}
+      {participationStatus === 'ON_WAITLIST' ? <Typography style={{display: 'inline-block', color: 'orange'}}>Auf der Warteliste</Typography> : undefined}
       {getAvailability(attendees, maxParticipants, textDecoration)}
     </div>);
     const infos = canceled ? (<div>
