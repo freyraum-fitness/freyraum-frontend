@@ -183,12 +183,7 @@ class CourseDetails extends Component {
       this.closeAddUserMenu();
       addUserToCourse(courseId, user.id)
     }}>
-      <Avatar>
-        <ProfilePicture user={user} asAvatar/>
-      </Avatar>
-      <span style={{marginLeft: '8px'}}>
-        {user.firstname + ' ' + user.lastname}
-      </span>
+      {user.firstname + ' ' + user.lastname}
     </MenuItem>
   };
 
