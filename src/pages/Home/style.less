@@ -29,7 +29,14 @@
 
 /* hiding all bullets by default */
 .slick-dots li {
-  display: none
+  transition: all 850ms cubic-bezier(0.23, 1, 0.32, 1) 0ms !important;
+  width: 0;
+  margin: 0;
+  overflow: hidden;
+  display: inline-block;
+}
+.slick-dots li BUTTON::before {
+  font-size: 4px;
 }
 .slick-dots li.slick-active-m3,
 .slick-dots li.slick-active-m2,
@@ -38,14 +45,22 @@
 .slick-dots li.slick-active-p1,
 .slick-dots li.slick-active-p2,
 .slick-dots li.slick-active-p3 {
-  display: inline-block;
+  font-size: 6px;
+  width: 20px;
+  margin: 0 5px;
 }
 .slick-dots li.slick-active BUTTON::before {
   color: #00B0DB;
 }
-.slick-dots li.slick-active-m3 BUTTON::before,
-.slick-dots li.slick-active-p3 BUTTON::before {
-  font-size: 4px;
+.slick-dots li.slick-active-m2 BUTTON::before,
+.slick-dots li.slick-active-m1 BUTTON::before,
+.slick-dots li.slick-active-p1 BUTTON::before,
+.slick-dots li.slick-active-p2 BUTTON::before {
+  font-size: 6px;
+}
+
+.slick-dots li.slick-active BUTTON::before {
+  font-size: 8px;
 }
 
 .slick-track{
