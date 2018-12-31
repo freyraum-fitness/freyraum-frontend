@@ -107,19 +107,6 @@ class Home extends Component {
             {this.getWelcomeGreetings()}
           </NotSignedIn>
 
-          <SignedIn>
-            <section className='section'>
-              <div className='title-h-scroll'>
-                <Typography variant='subtitle1' color='primary'>
-                  Adventskalender
-                </Typography>
-              </div>
-              <Slider>
-                {Workouts.map((item, idx) => <VideoCard key={idx} title={item.title} url={item.url}/>)}
-              </Slider>
-            </section>
-          </SignedIn>
-
           <section className='section'>
             <div className='title-h-scroll'>
               <Typography variant='subtitle1' color='primary'>
@@ -135,6 +122,19 @@ class Home extends Component {
               {newsData.map((newsItem, idx) => <NewsItem key={idx} news={newsItem}/>)}
             </Slider>
           </section>
+
+          <SignedIn>
+            <section className='section'>
+              <div className='title-h-scroll'>
+                <Typography variant='subtitle1' color='primary'>
+                  Adventskalender
+                </Typography>
+              </div>
+              <Slider>
+                {Workouts.map((item, idx) => <VideoCard key={idx} title={item.title} url={item.url}/>)}
+              </Slider>
+            </section>
+          </SignedIn>
 
           <NotSignedIn>
             <section className='section'>
