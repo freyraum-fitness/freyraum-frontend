@@ -16,6 +16,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Grid from '@material-ui/core/Grid';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import {Attendee} from './../../components/Course';
@@ -61,6 +62,7 @@ import './style.less';
 import {ListItemWithDialog} from "../../components/WithDialog";
 import {SignedIn} from "../../components/Auth";
 import OnlyIf from "../../components/Auth/OnlyIf";
+import Fuse from 'fuse.js';
 
 'use strict';
 
@@ -74,6 +76,7 @@ class CourseDetails extends Component {
     },
     addUser: {
       anchor: null,
+      search: '',
     },
     courseType: {
       anchor: null,
@@ -154,11 +157,15 @@ class CourseDetails extends Component {
   };
 
   openAddUserMenu = event => {
-    this.setState(setPath(['addUser'], {anchor: event.currentTarget}, this.state));
+    this.setState(setPath(['addUser'], {anchor: event.currentTarget, search: ''}, this.state));
   };
 
   closeAddUserMenu = () => {
-    this.setState(setPath(['addUser'], {anchor: null}, this.state));
+    this.setState(setPath(['addUser'], {anchor: null, search: ''}, this.state));
+  };
+
+  searchUser = value => {
+    this.setState(setPath(['addUser', 'search'], value, this.state));
   };
 
   getUserMenuItem = (user, idx) => {
@@ -186,13 +193,32 @@ class CourseDetails extends Component {
   };
 
   getAddUserMenu = () => {
-    const {anchor} = this.state.addUser;
+    const {anchor, search} = this.state.addUser;
     const {updateUsers} = this.props.actions;
     const open = !!anchor;
     if (open) {
       updateUsers();
     }
     const {pending, data} = this.props.users;
+
+    let filtered = data;
+    if (search !== '') {
+      const options = {
+        shouldSort: true,
+        threshold: 0.2,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys: [
+          'firstname',
+          'lastname'
+        ]
+      };
+      const fuse = new Fuse(filtered, options);
+      filtered = fuse.search(search);
+    }
+
     return <Menu
       open={open}
       anchorEl={anchor}
@@ -202,7 +228,13 @@ class CourseDetails extends Component {
         },
       }}
       onClose={this.closeAddUserMenu}>
-      {pending ? <LoadingIndicator/> : data.map(this.getUserMenuItem)}
+      <MenuItem>
+        <TextField
+          value={search}
+          onChange={event => this.searchUser(event.target.value)}
+          placeholder='Suchen...'/>
+      </MenuItem>
+      {pending ? <LoadingIndicator/> : filtered.map(this.getUserMenuItem)}
     </Menu>
   };
 
