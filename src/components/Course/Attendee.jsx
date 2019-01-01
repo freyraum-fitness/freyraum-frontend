@@ -15,7 +15,7 @@ class Attendee extends Component {
         item xs={3}
         className='attendee'
         style={{
-          transition: 'all 650ms cubic-bezier(0.23, 1, 0.32, 1)' + (500 + idx * 50) + 'ms'
+          transition: '-webkit-transform 650ms cubic-bezier(0.23, 1, 0.32, 1)' + (500 + idx * 50) + 'ms, opacity 850ms cubic-bezier(0.23, 1, 0.32, 1) ' + (500 + idx * 50) + 'ms'
         }}
         onClick={onClick}>
         <Avatar className='attendee_avatar' style={{backgroundColor: TITLE_BG}}>

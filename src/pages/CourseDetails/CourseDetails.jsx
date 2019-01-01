@@ -510,7 +510,7 @@ class CourseDetails extends Component {
                     padding: '0px',
                     overflow: 'hidden',
                     justifyContent: 'center',
-                    transition: 'all 650ms cubic-bezier(0.23, 1, 0.32, 1)'
+                    transition: 'height 650ms cubic-bezier(0.23, 1, 0.32, 1)'
                   }}
                   className={hasChanges ? 'hasChanges' : undefined}>
                   <Button color='secondary' onClick={this.discardChanges}>
