@@ -1,7 +1,7 @@
 
 .animation-container {
   position: fixed;
-  overflow: hidden;
+  overflow: auto;
   top: 0;
   right: 0;
   bottom: 0;
@@ -14,6 +14,7 @@
 }
 
 .animation-container.animation-enter, .animation-container.animation-exit {
+  overflow: hidden !important;
   background-color: transparent !important;
 }
 
@@ -204,8 +205,8 @@
   opacity: 1;
   position: absolute;
   top: 0;
-  margin-top: 90px;
-  margin-bottom: 90px;
+  padding-top: 90px;
+  padding-bottom: 90px;
   width: 100%;
 
   .animation-enter &, .animation-exit & {
