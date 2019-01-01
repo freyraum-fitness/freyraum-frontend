@@ -20,15 +20,13 @@ import {comparingMod, comparingModFunc, DESC} from '../../utils/Comparator';
 import {AttendCourses, MyCourse} from '../../components/Course';
 import {NotSignedIn, SignedIn} from './../../components/Auth';
 import PullToRefresh from './../../components/PullToRefresh/PullToRefresh';
-import VideoCard from './../../components/VideoCard';
+import Slider from './../../components/Slider';
 import {toLogoPage} from '../../utils/Routing';
 import {CoursesPlanAgenda, CoursesPlanIntro, CoursesPlanOverview} from '../CoursesPlan';
 import Instagram from 'mdi-material-ui/Instagram';
 import Facebook from 'mdi-material-ui/Facebook';
 import Youtube from 'mdi-material-ui/Youtube';
 import {PRIMARY} from '../../theme';
-import {Workouts} from "./Workouts";
-import {Slider} from './Slider';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './style.less';
@@ -130,9 +128,20 @@ class Home extends Component {
                   Adventskalender
                 </Typography>
               </div>
-              <Slider>
-                {Workouts.map((item, idx) => <VideoCard key={idx} title={item.title} url={item.url}/>)}
-              </Slider>
+              <Grid container spacing={0} justify='center' style={{width: '100%', margin: '0px'}}>
+                <Grid item container xs={12} sm={10} md={8} className='home-textarea' justify='center'>
+                  <Grid item xs={12}>
+                    <Typography>
+                      Alle Workouts aus unserem Adventskalendar kannst du dir noch einmal ansehen und natürlich mitmachen.
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid item container xs={12} sm={10} md={8} justify='center'>
+                  <Button color='primary' onClick={() => history.push('/advent')}>
+                    🎄 Hier geht es zum Adventskalendar 🎄
+                  </Button>
+                </Grid>
+              </Grid>
             </section>
           </SignedIn>
 

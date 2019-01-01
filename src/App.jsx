@@ -18,6 +18,7 @@ import Settings from './pages/Settings';
 import AccountPage from './pages/AccountPage';
 import About from './pages/About';
 import Agb from './pages/Agb';
+import Advent from './pages/Advent';
 import Impressum from './pages/Impressum';
 import Memberships from './pages/Memberships';
 import MembershipDetails from './pages/MembershipDetails';
@@ -126,6 +127,7 @@ class App extends Component {
               <Route exact path='/courses-plan' component={CoursesPlan}/>
               <Route exact path='/about' component={About}/>
               <Route exact path='/agb' component={Agb}/>
+              <Route exact path='/advent' component={Advent}/>
               <Route exact path='/impressum' component={Impressum}/>
               {
                 trainerOrAdmin
