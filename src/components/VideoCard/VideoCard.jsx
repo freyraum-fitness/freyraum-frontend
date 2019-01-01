@@ -29,49 +29,47 @@ class VideoCard extends React.Component {
     const {title, url} = this.props;
     const {playing} = this.state;
     return (
-      <div className='video-card-container'>
-        <Card>
-          <CardActionArea onClick={playing ? this.pause : this.play}>
-            <CardMedia src='iframe' style={{pointerEvents: 'none'}}>
-              <ReactPlayer
-                url={url}
-                config={{
-                  youtube: {
-                    playerVars: {
-                      fs: 0,
-                      rel: 0,
-                      playsinline: 0,
-                      showinfo: 0,
-                      controls: 0,
-                      modestbranding: 1,
-                    }
+      <Card>
+        <CardActionArea onClick={playing ? this.pause : this.play}>
+          <CardMedia src='iframe' style={{pointerEvents: 'none'}}>
+            <ReactPlayer
+              url={url}
+              config={{
+                youtube: {
+                  playerVars: {
+                    fs: 0,
+                    rel: 0,
+                    playsinline: 0,
+                    showinfo: 0,
+                    controls: 0,
+                    modestbranding: 1,
                   }
-                }}
-                playing={playing}
-                playsinline
-                onPause={this.pause}
-                onPlay={this.play}
-                onEnded={this.pause}
-                width='100%'
-                height='200px'/>
-            </CardMedia>
-          </CardActionArea>
-          <CardContent style={{display: 'flex', alignItems: 'center'}}>
-            {
-              playing
-                ? <IconButton onClick={this.play}>
-                    <Pause/>
-                  </IconButton>
-                : <IconButton>
-                    <PlayArrow/>
-                  </IconButton>
-            }
-            <Typography>
-              {title}
-            </Typography>
-          </CardContent>
-        </Card>
-      </div>
+                }
+              }}
+              playing={playing}
+              playsinline
+              onPause={this.pause}
+              onPlay={this.play}
+              onEnded={this.pause}
+              width='100%'
+              height='200px'/>
+          </CardMedia>
+        </CardActionArea>
+        <CardContent style={{display: 'flex', alignItems: 'center'}}>
+          {
+            playing
+              ? <IconButton onClick={this.play}>
+                  <Pause/>
+                </IconButton>
+              : <IconButton>
+                  <PlayArrow/>
+                </IconButton>
+          }
+          <Typography>
+            {title}
+          </Typography>
+        </CardContent>
+      </Card>
     );
   }
 }

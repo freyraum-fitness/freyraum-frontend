@@ -1,65 +1,52 @@
 'use strict';
-import React, {Component} from 'react';
-import compose from 'recompose/compose';
-import {withStyles} from '@material-ui/core/styles';
-import SwipeableViews from 'react-swipeable-views';
-import MobileStepper from '@material-ui/core/MobileStepper';
-import Button from '@material-ui/core/Button';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LoadingIndicator from './../LoadingIndicator';
+import React from 'react';
+import SlickSlider from 'react-slick';
+import {setPath} from './../../utils/RamdaUtils';
+import './style.less';
 
-const sliderStyles = () => ({
-  container: {
-    position: 'relative'
-  },
-  stepper: {
-    background: 'none',
-    height: '32px',
-    width: '100%',
-    padding: '0',
-    justifyContent: 'center',
-  }
-});
+class Slider extends React.Component {
 
-class Slider extends Component {
-
-  state = {
-    index: 0
-  };
-
-  handleChangeIndex = index => {
-    this.setState({index: index});
+  appendDots = dots => {
+    let updated = Object.assign([], dots);
+    for (const i in dots) {
+      const idx = Number(i);
+      const dot = dots[idx];
+      if (dot.props.className === 'slick-active') {
+        if (idx >= 1) {
+          updated = setPath([idx - 1, 'props', 'className'], 'slick-active-m1', updated);
+        }
+        if (idx >= 2) {
+          updated = setPath([idx - 2, 'props', 'className'], 'slick-active-m2', updated);
+        }
+        if (idx >= 3) {
+          updated = setPath([idx - 3, 'props', 'className'], 'slick-active-m3', updated);
+        }
+        if (idx < dots.length - 1) {
+          updated = setPath([idx + 1, 'props', 'className'], 'slick-active-p1', updated);
+        }
+        if (idx < dots.length - 2) {
+          updated = setPath([idx + 2, 'props', 'className'], 'slick-active-p2', updated);
+        }
+        if (idx < dots.length - 3) {
+          updated = setPath([idx + 3, 'props', 'className'], 'slick-active-p3', updated);
+        }
+        break;
+      }
+    }
+    return <ul>{updated}</ul>;
   };
 
   render() {
-    const {loading, classes, children = []} = this.props;
-    const {index} = this.state;
-
+    const {children, ...props} = this.props;
     return (
-      <div className={classes.container}>
-        <SwipeableViews
-          disableLazyLoading={true}
-          index={index}
-          slideStyle={{width: 'unset'}}
-          onChangeIndex={this.handleChangeIndex}>
-          {loading ? <LoadingIndicator/> : children}
-        </SwipeableViews>
-
-        <div>
-          <MobileStepper
-            type="dots"
-            steps={children.length}
-            activeStep={index % children.length}
-            position='static'
-            className={classes.stepper}
-          />
-        </div>
-      </div>
+      <SlickSlider dots swipeToSlide variableWidth infinite={false} arrows={false}
+                   className={'slider variable-width'}
+                   appendDots={this.appendDots}
+                   slidesToShow={1} slidesToScroll={1} {...props}>
+        {children}
+      </SlickSlider>
     );
-  };
+  }
 }
 
-export default compose(
-  withStyles(sliderStyles)
-)(Slider);
+export default Slider;

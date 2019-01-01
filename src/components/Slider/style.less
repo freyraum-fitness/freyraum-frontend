@@ -1,0 +1,55 @@
+
+.slick-slider {
+  padding-bottom: 25px !important;
+}
+
+.slick-dots {
+  bottom: 0 !important;
+}
+
+/* hiding all bullets by default */
+.slick-dots li {
+  transition: all 850ms cubic-bezier(0.23, 1, 0.32, 1) 0ms !important;
+  width: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  display: inline-block !important;
+}
+.slick-dots li BUTTON::before {
+  font-size: 4px !important;
+}
+.slick-dots li.slick-active-m3,
+.slick-dots li.slick-active-m2,
+.slick-dots li.slick-active-m1,
+.slick-dots li.slick-active,
+.slick-dots li.slick-active-p1,
+.slick-dots li.slick-active-p2,
+.slick-dots li.slick-active-p3 {
+  font-size: 6px !important;
+  width: 20px !important;
+  margin: 0 5px !important;
+}
+.slick-dots li.slick-active BUTTON::before {
+  color: #00B0DB !important;
+}
+.slick-dots li.slick-active-m2 BUTTON::before,
+.slick-dots li.slick-active-m1 BUTTON::before,
+.slick-dots li.slick-active-p1 BUTTON::before,
+.slick-dots li.slick-active-p2 BUTTON::before {
+  font-size: 6px !important;
+}
+
+.slick-dots li.slick-active BUTTON::before {
+  font-size: 8px !important;
+}
+
+.slick-track{
+  display: flex !important;
+
+  .slick-slide{
+    display: flex !important;
+    height: auto !important;
+    align-items: stretch !important;
+    justify-content: center !important;
+  }
+}

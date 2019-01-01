@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import withWidth, {isWidthDown} from '@material-ui/core/withWidth';
 import './style.less';
 
-class About extends SimplePage {
+class About extends React.Component {
 
   render() {
     const {width} = this.props;
