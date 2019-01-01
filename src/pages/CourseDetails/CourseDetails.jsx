@@ -199,7 +199,8 @@ class CourseDetails extends Component {
     let filtered = data;
     if (search !== '') {
       const options = {
-        shouldSort: true,
+        shouldSort: false,
+        tokenize: true,
         threshold: 0.2,
         location: 0,
         distance: 100,
