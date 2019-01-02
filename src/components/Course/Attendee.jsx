@@ -12,7 +12,7 @@ class Attendee extends Component {
     const {idx, user, onWaitlist, onClick} = this.props;
     return (
       <Grid
-        item xs={3}
+        item xs={3} sm={2}
         className='attendee'
         style={{
           transition: '-webkit-transform 650ms cubic-bezier(0.23, 1, 0.32, 1)' + (500 + idx * 50) + 'ms, opacity 850ms cubic-bezier(0.23, 1, 0.32, 1) ' + (500 + idx * 50) + 'ms'
