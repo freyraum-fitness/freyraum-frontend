@@ -99,9 +99,10 @@ class Course extends Component {
     </Menu>
   };
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps, nextState) {
     return !deepEqual(nextProps.course, this.props.course)
-      || nextProps.showDate !== this.props.showDate;
+      || nextProps.showDate !== this.props.showDate
+      || !deepEqual(nextState, this.state);
   }
 
   render() {
