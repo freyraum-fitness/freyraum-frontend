@@ -2,19 +2,19 @@
 import React, {Component} from 'react';
 import compose from 'recompose/compose';
 import connect from 'react-redux/es/connect/connect';
-import {withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import SimplePage from './../SimplePage';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
 import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
 import PullToRefresh from './../../components/PullToRefresh';
 import Course from '../../components/Course/index';
+import {SignedIn} from "../../components/Auth";
+import {NavIconButton} from "../../components/Navigation";
 import {fetchCourses, signIn, signOut} from './../../model/courses';
 import {comparingMod} from './../../utils/Comparator';
 import * as Format from './../../utils/Format';
@@ -23,8 +23,10 @@ import {withStyles} from '@material-ui/core/styles';
 import {fade} from '@material-ui/core/styles/colorManipulator';
 import withWidth from '@material-ui/core/withWidth';
 import './style.less';
-import {setPath, viewPath} from '../../utils/RamdaUtils';
+import {deepEqual, setPath} from '../../utils/RamdaUtils';
 import Fuse from 'fuse.js';
+import LazyLoad from 'react-lazyload';
+
 
 const compareCourseByStartDate = comparingMod('start', moment);
 
@@ -107,30 +109,39 @@ class Courses extends Component {
       const formattedDayOfCourse = moment(course.start).format(Format.DAY_OF_WEEK_DATE_FORMAT);
       if (lastFormatted !== formattedDayOfCourse) {
         elements.push(
-          <ListSubheader key={formattedDayOfCourse} disableGutters className='course-date'>
-            {formattedDayOfCourse}
-          </ListSubheader>
+          <LazyLoad height={64} once offset={128}>
+            <ListSubheader key={formattedDayOfCourse} disableGutters className='course-date'>
+              {formattedDayOfCourse}
+            </ListSubheader>
+          </LazyLoad>
         );
       }
       lastFormatted = formattedDayOfCourse;
 
       elements.push(
-        <Course
-          key={idx}
-          course={course}
-          showCourseDetails={actions.showNewsDetails}
-          signIn={actions.signIn}
-          signOut={actions.signOut}/>
+        <LazyLoad height={64} once offset={128}>
+          <Course
+            key={idx}
+            course={course}
+            showCourseDetails={actions.showNewsDetails}
+            signIn={actions.signIn}
+            signOut={actions.signOut}/>
+        </LazyLoad>
       );
     }
     return elements;
   };
 
+  shouldComponentUpdate(nextProps) {
+    return nextProps.pending !== this.props.pending
+      || !deepEqual(nextProps.courses, this.props.courses);
+  }
+
   render() {
     const {search} = this.state;
-    const {courses, history, location, actions, classes, width} = this.props;
+    const {courses, pending, actions, classes, width} = this.props;
 
-    let filtered = courses.data;
+    let filtered = courses;
     if (search !== '') {
       const options = {
         shouldSort: false,
@@ -146,12 +157,9 @@ class Courses extends Component {
           'courseType.name'
         ]
       };
-      const fuse = new Fuse(courses.data, options);
+      const fuse = new Fuse(filtered, options);
       filtered = fuse.search(search);
     }
-
-    const roles = viewPath(['currentUser', 'roles'], this.props) || {};
-    const trainerOrAdmin = roles['TRAINER'] || roles['ADMIN'];
 
     const additionalActions = (
       <div className={classes.additionalActions}>
@@ -169,22 +177,20 @@ class Courses extends Component {
             }}
           />
         </div>
-        {
-          trainerOrAdmin
-            ? <Tooltip title='Kurs erstellen' enterDelay={500}>
-              <IconButton color='inherit' onClick={() => history.push(location.pathname + '/course/new')}>
-                <AddIcon/>
-              </IconButton>
-            </Tooltip>
-            : undefined
-        }
+        <SignedIn hasAnyRole={['TRAINER', 'ADMIN']}>
+          <Tooltip title='Kurs erstellen' enterDelay={500}>
+            <NavIconButton color='inherit' to='/course/new'>
+              <AddIcon/>
+            </NavIconButton>
+          </Tooltip>
+        </SignedIn>
       </div>
     );
 
     return (
       <SimplePage additionalActions={additionalActions} hideTitle={'xs' === width}>
         <PullToRefresh
-          pending={courses.pending}
+          pending={pending}
           onRefresh={() => actions.fetchCourses(true)}>
           <Grid container spacing={0} justify='center' style={{width: '100%', margin: '0px'}}>
             <Grid item xs={12} sm={10} md={8}>
@@ -201,8 +207,8 @@ class Courses extends Component {
 
 const
   mapStateToProps = state => ({
-    courses: state.courses,
-    currentUser: state.profile.user
+    courses: state.courses.data,
+    pending: state.courses.pending,
   });
 
 const
@@ -219,6 +225,5 @@ const
 export default compose(
   withStyles(styles),
   withWidth(),
-  withRouter,
   connect(mapStateToProps, mapDispatchToProps)
 )(Courses);

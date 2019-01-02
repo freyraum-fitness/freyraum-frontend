@@ -14,6 +14,7 @@ import {setPath, viewPath} from '../../utils/RamdaUtils/index';
 import {withRouter} from 'react-router-dom';
 
 import {red} from '@material-ui/core/colors';
+import {deepEqual} from "../../utils/RamdaUtils";
 
 export const TypeMapper = {
   UNKNOWN: {name: 'unbekannter Kurs', color: red['A200']}
@@ -97,6 +98,11 @@ class Course extends Component {
       </MenuItem>
     </Menu>
   };
+
+  shouldComponentUpdate(nextProps) {
+    return !deepEqual(nextProps.course, this.props.course)
+      || nextProps.showDate !== this.props.showDate;
+  }
 
   render() {
     const {course, showDate} = this.props;
