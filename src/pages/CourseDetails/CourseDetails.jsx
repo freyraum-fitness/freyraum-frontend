@@ -290,7 +290,7 @@ class CourseDetails extends Component {
 
   getAddUserButton = () => {
     return <Grid
-      item xs={3}
+      item xs={3} sm={2}
       style={{cursor: 'pointer'}}
       onClick={this.openAddUserMenu}
     >
