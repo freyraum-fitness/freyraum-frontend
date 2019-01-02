@@ -1,3 +1,4 @@
+'use strict';
 import {createActions, handleActions} from 'redux-actions';
 import {
   addUserToCourse as addUserToCourseApiCall,
@@ -12,7 +13,7 @@ import {
   signOut as signOutApiCall
 } from '../../service/courses';
 import {showNotification} from './../notification';
-import {assignPath, setPath, viewPath} from '../../utils/RamdaUtils';
+import {assignPath, setPath} from '../../utils/RamdaUtils';
 
 export const MODE = {
   CREATE: {
@@ -265,8 +266,7 @@ export default handleActions({
 
   // DUPLICATE
   [actions.courses.duplicate]: state => {
-    const course = Object.assign({}, state.courseDetails.course);
-    course.id = undefined;
+    const course = Object.assign(state.courseDetails.course, {id: undefined, attendees: [], participationStatus: null});
     return assignPath(['courseDetails'], {pending: false, course: course, originalCourse: {}}, state);
   },
 
