@@ -109,7 +109,7 @@ class Courses extends Component {
       const formattedDayOfCourse = moment(course.start).format(Format.DAY_OF_WEEK_DATE_FORMAT);
       if (lastFormatted !== formattedDayOfCourse) {
         elements.push(
-          <LazyLoad height={64} once offset={128}>
+          <LazyLoad key={formattedDayOfCourse} height={64} once offset={128}>
             <ListSubheader key={formattedDayOfCourse} disableGutters className='course-date'>
               {formattedDayOfCourse}
             </ListSubheader>
@@ -119,7 +119,7 @@ class Courses extends Component {
       lastFormatted = formattedDayOfCourse;
 
       elements.push(
-        <LazyLoad height={64} once offset={128}>
+        <LazyLoad key={idx} height={64} once offset={128}>
           <Course
             key={idx}
             course={course}
@@ -132,9 +132,10 @@ class Courses extends Component {
     return elements;
   };
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps, nextState) {
     return nextProps.pending !== this.props.pending
-      || !deepEqual(nextProps.courses, this.props.courses);
+      || !deepEqual(nextProps.courses, this.props.courses)
+      || !deepEqual(nextState, this.state);
   }
 
   render() {
