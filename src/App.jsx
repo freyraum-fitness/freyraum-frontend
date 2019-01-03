@@ -81,7 +81,11 @@ const reducePath = pathname =>
     || reduceMatching(pathname, '/news/')
     || reduceMatching(pathname, '/membership/');
 
+const PREFIX = '@@scroll/';
+
 class App extends Component {
+
+  static locationVisited = {};
 
   constructor(props) {
     super(props);
@@ -89,11 +93,47 @@ class App extends Component {
     init(dispatch);
   };
 
-  componentDidUpdate(prevProps) {
-    if (this.props.location.pathname !== prevProps.location.pathname) {
-      window.scrollTo(0, 0);
+  componentDidMount() {
+    history.scrollRestoration = 'manual';
+    window.addEventListener('scroll', this.onScroll);
+  }
+
+  componentWillUnmount() {
+    history.scrollRestoration = 'auto';
+    window.removeEventListener('scroll', this.onScroll);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const {location, history: {action}} = nextProps;
+    if (location !== this.props.location) {
+      if (action === 'PUSH') {
+        // new navigation - scroll to top
+        this.scrollTo(0);
+      } else {
+        const pathname = App.getLocationPathname(location.pathname);
+        if (App.locationVisited.hasOwnProperty(pathname)) {
+          const scrollY = App.locationVisited[pathname];
+          this.scrollTo(scrollY);
+        }
+      }
     }
   }
+
+  static getLocationPathname(pathname) {
+    return PREFIX + (pathname || '');
+  }
+
+  onScroll = () => {
+    requestAnimationFrame(() => {
+      App.locationVisited[App.getLocationPathname(this.props.location.pathname)] = window.scrollY;
+    });
+  };
+
+  scrollTo = y => {
+    requestAnimationFrame(() => {
+      window.scrollTo(0, y);
+    });
+  };
 
   render() {
     if (this.props.profilePending && !this.props.currentUser) {

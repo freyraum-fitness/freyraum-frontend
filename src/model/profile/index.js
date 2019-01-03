@@ -1,15 +1,13 @@
 'use strict';
 import {createActions, handleActions} from 'redux-actions';
 import {
-  getOwnProfile,
   changeProfilePicture,
-  login as loginApiCall,
   createAccount as createAccountApiCall,
   getAllUsers as getAllUsersApiCall,
+  getOwnProfile,
 } from '../../service/profile';
 import {updateSettings as updatePreferenceApiCall} from '../../service/settings';
-import {setPath, assignPath, viewPath} from '../../utils/RamdaUtils';
-import init from './../init.js';
+import {assignPath, setPath, viewPath} from '../../utils/RamdaUtils';
 import {showNotification} from '../notification';
 import moment from 'moment';
 
@@ -78,8 +76,6 @@ export const actions = createActions({
     ERROR: error => error,
     SUCCESS: users => users
   },
-  SET_LOGIN_REF: ref => ref,
-  SHOULD_SCROLL_TO_LOGIN: shouldScroll => shouldScroll,
   CREATE_ACCOUNT: {
     PENDING: undefined,
     SUCCESS: profile => profile,
@@ -184,9 +180,6 @@ const updateUserPreferences = (state, preference) => {
 };
 
 export default handleActions({
-  [actions.showLogin]: state => setPath(['showLogin'], true, state),
-  [actions.showRegistration]: state => setPath(['showLogin'], false, state),
-
   [actions.profile.load.pending]: state => setPath(['pending'], true, state),
   [actions.profile.load.success]: (state, {payload}) =>
     assignPath([], {pending: false, user: payload, error: null}, state),
@@ -210,11 +203,6 @@ export default handleActions({
     assignPath(['picture'], {pending: false, error: undefined}, state),
   [actions.profile.picture.save.error]: (state, {payload}) =>
     setPath(['picture', 'error'], payload.message, state),
-
-  [actions.setLoginRef]: (state, {payload}) =>
-    setPath(['loginRef'], payload, state),
-  [actions.shouldScrollToLogin]: (state, {payload}) =>
-    setPath(['shouldScrollToLogin'], payload, state),
 
   // create account
   [actions.createAccount.dataChanged]: (state, {payload}) =>

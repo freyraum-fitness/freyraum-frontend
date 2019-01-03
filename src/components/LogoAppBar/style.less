@@ -1,5 +1,11 @@
+
+.delayed(@millis) {
+  transition: -webkit-transform 850ms cubic-bezier(0.23, 1, 0.32, 1) @millis,
+              opacity 850ms cubic-bezier(0.23, 1, 0.32, 1) @millis !important;
+}
+
 .animated() {
-  transition: all 850ms cubic-bezier(0.23, 1, 0.32, 1) 0ms !important;
+  .delayed(0ms);
 }
 
 .fullscreen-appbar {
@@ -17,14 +23,15 @@
     padding-right: 2px;
     top: -25px;
     opacity: 0;
+    -webkit-transform: translate3d(0, 0, 0);
 
     .animation-enter &, .animation-exit & {
-      top: 0 !important;
+      -webkit-transform: translate3d(0, 25px, 0) !important;
       opacity: 1 !important;
     }
 
     .animation-enter-active & {
-      top: -25px !important;
+      -webkit-transform: translate3d(0, 0, 0) !important;
       opacity: 0 !important;
     }
   }
@@ -36,14 +43,15 @@
     text-align: center;
     top: -25px;
     opacity: 0;
+    -webkit-transform: translate3d(0, 0, 0);
 
     .animation-enter &, .animation-exit & {
-      top: 0 !important;
+      -webkit-transform: translate3d(0, 25px, 0) !important;
       opacity: 1 !important;
     }
 
     .animation-enter-active & {
-      top: -25px !important;
+      -webkit-transform: translate3d(0, 0, 0) !important;
       opacity: 0 !important;
     }
 
@@ -69,35 +77,35 @@
     .animated();
     top: -25px;
     opacity: 0;
+    -webkit-transform: translate3d(0, 0, 0);
 
     .animation-enter &, .animation-exit & {
-      top: 0 !important;
+      -webkit-transform: translate3d(0, 25px, 0) !important;
       opacity: 1 !important;
     }
 
     .animation-enter-active & {
-      top: -25px !important;
+      -webkit-transform: translate3d(0, 0, 0) !important;
       opacity: 0 !important;
     }
   }
 
   .back-button {
+    .delayed(850ms);
     position: absolute !important;
     z-index: 1000;
     top: 0;
     left: 0;
     opacity: 1;
+    -webkit-transform: rotate(0deg) translate3d(0, 0, 0);
 
     .animation-enter & {
-      transition: all 850ms cubic-bezier(0.23, 1, 0.32, 1) 425ms !important;
-      transform: rotate(-90deg);
-      top: -50px !important;
+      -webkit-transform: translate3d(0, -25px, 0) rotate(-90deg) !important;
       opacity: 0 !important;
     }
 
     .animation-enter-active & {
-      transform: rotate(0deg) !important;
-      top: 0 !important;
+      -webkit-transform: rotate(0deg) translate3d(0, 0, 0) !important;
       opacity: 1 !important;
     }
 
