@@ -43,8 +43,8 @@ const data = [
     mo: {primary: 'FIT MOMS'},
     di: {primary: 'BEST AGERS(65+)'},
     mi: {primary: 'FUN.BASE'},
-    do: {primary: 'FUN.BASE'},
-    fr: {},
+    do: {},
+    fr: {primary: 'FUN.BASE'},
     so: {},
   },
   {
