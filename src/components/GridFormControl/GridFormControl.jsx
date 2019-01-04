@@ -8,19 +8,21 @@ import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
+import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconVisibility from '@material-ui/icons/Visibility';
 import IconVisibilityOff from '@material-ui/icons/VisibilityOff';
 import {DatePicker, DateTimePicker} from 'material-ui-pickers';
-import {view, setPath, togglePath} from './../../utils/RamdaUtils';
+import {view, setPath, assignPath, togglePath, findBy} from './../../utils/RamdaUtils';
 import * as Format from './../../utils/Format';
 import {ValidationControl} from './../Validation';
 import LoadingIndicator from './../LoadingIndicator';
+import Fuse from 'fuse.js';
 
 import red from '@material-ui/core/colors/red';
 
@@ -151,6 +153,11 @@ export class GridPasswordControl extends ValidationControl {
 
 export class GridItemSelectControl extends ValidationControl {
 
+  constructor(props) {
+    super(props);
+    this.state = assignPath([], {search: '', anchor: null}, this.state);
+  }
+
   getValue = v => {
     const {valueProp = 'value'} = this.props;
     if (typeof valueProp === 'function') {
@@ -159,12 +166,55 @@ export class GridItemSelectControl extends ValidationControl {
     return view(valueProp, v);
   };
 
+  openSelect = event => {
+    this.setState(assignPath([], {search: '', anchor: event.currentTarget} , this.state));
+  };
+
+  closeSelect = () => {
+    this.setState(setPath(['anchor'], null, this.state));
+  };
+
+  getSearchItem = () => {
+    if (this.props.searchEnabled) {
+      return (
+        <MenuItem>
+          <TextField
+            value={this.state.search}
+            onChange={event => this.setState(setPath(['search'], event.target.value, this.state))}
+            placeholder='Suchen...'/>
+        </MenuItem>
+      );
+    }
+  };
+
+  getFilteredData = () => {
+    const {search} = this.state;
+    let filtered = this.props.values;
+    if (search !== '') {
+      const options = {
+        shouldSort: false,
+        tokenize: true,
+        threshold: 0.2,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys: [
+          'firstname',
+          'lastname'
+        ]
+      };
+      const fuse = new Fuse(filtered, options);
+      filtered = fuse.search(search);
+    }
+    return filtered;
+  };
+
   render() {
-    const {valid, errors} = this.state;
+    const {valid, anchor, errors} = this.state;
     const {
       id,
       value = '',
-      values,
       keyProp = 'key',
       valueProp = 'value',
       label,
@@ -174,19 +224,31 @@ export class GridItemSelectControl extends ValidationControl {
       sm,
       md
     } = this.props;
+    const data = this.getFilteredData();
+    let displayValue = '';
+    let actualValue = findBy(keyProp, data, value);
+    if (!!actualValue) {
+      if (typeof(valueProp) === 'function') {
+        displayValue = valueProp(actualValue);
+      } else {
+        displayValue = actualValue[valueProp];
+      }
+    }
     return <GridFormControl xs={xs} sm={sm} md={md} error={!valid}>
       <InputLabel shrink={true} htmlFor={id}>{label}</InputLabel>
-      <Select
-        value={value}
-        onChange={event => onChange(event.target.value)}
+      <Input
+        value={displayValue}
         input={<Input id={id}/>}
-        disabled={readonly}>
-        {values.map((v, idx) =>
-          <MenuItem key={idx} value={view(keyProp, v)}>
+        onClick={this.openSelect}
+        disabled={readonly}/>
+      <Menu open={!!anchor} anchorEl={anchor} onClose={this.closeSelect}>
+        {this.getSearchItem()}
+        {data.map((v, idx) =>
+          <MenuItem key={v.id || idx} value={view(keyProp, v)} onClick={() => {onChange(view(keyProp, v)); this.closeSelect()}}>
             {this.getValue(v)}
           </MenuItem>
         )}
-      </Select>
+      </Menu>
       {!valid ? <FormHelperText>{errors}</FormHelperText> : undefined}
     </GridFormControl>
   }

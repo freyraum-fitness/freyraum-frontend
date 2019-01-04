@@ -213,7 +213,7 @@ export class CoursesPlanOverview extends React.Component {
                 <TableBody>
                   {data.map((n, idx) => {
                     return (
-                      <TableRow key={idx} className={idx % 2 === 0 ? 'odd' : undefined}>
+                      <TableRow key={n.time} className={idx % 2 === 0 ? 'odd' : undefined}>
                         <Cell component="th" scope="row">
                           {n.time}
                         </Cell>
@@ -243,11 +243,11 @@ class _CoursesPlanAgenda extends React.Component {
     return (
       <Grid item xs={12} sm={10} md={8} className='courses-plan-textarea'>
         {
-          Object.keys(types).map((key, idx) => {
-            const courseType = findBy('name', courseTypes.data, key) || {};
-            return <div key={idx}>
-              <Typography variant='subtitle1' style={{marginTop: '8px', color: courseType.color}}>{key}</Typography>
-              <Typography gutterBottom>{types[key]}</Typography>
+          Object.keys(types).map(name => {
+            const courseType = findBy('name', courseTypes.data, name) || {};
+            return <div key={name}>
+              <Typography variant='subtitle1' style={{marginTop: '8px', color: courseType.color}}>{name}</Typography>
+              <Typography gutterBottom>{types[name]}</Typography>
             </div>
           })
         }

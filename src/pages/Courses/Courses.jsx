@@ -119,9 +119,8 @@ class Courses extends Component {
       lastFormatted = formattedDayOfCourse;
 
       elements.push(
-        <LazyLoad key={idx} height={64} once offset={128}>
+        <LazyLoad key={course.id} height={64} once offset={128}>
           <Course
-            key={idx}
             course={course}
             showCourseDetails={actions.showNewsDetails}
             signIn={actions.signIn}

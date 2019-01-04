@@ -22,7 +22,7 @@ class Advent extends React.Component {
               Hier ist noch einmal unser Adventskalendar zum Ansehen und mitmachen.
             </Typography>
           </Grid>
-          {Workouts.map((item, idx) => <Grid key={idx} item xs={12} sm={6} md={3}><VideoCard title={item.title} url={item.url}/></Grid>)}
+          {Workouts.map(item => <Grid key={item.title} item xs={12} sm={6} md={3}><VideoCard title={item.title} url={item.url}/></Grid>)}
         </Grid>
       </SimplePage>
     );

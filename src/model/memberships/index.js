@@ -11,6 +11,21 @@ import {
 import moment from 'moment';
 import {deleteParticipation as deleteParticipationApiCall} from "../../service/participations";
 
+export const MODE = {
+  CREATE: {
+    title: 'Neue Mitgliedschaft anlegen',
+    readonly: false,
+  },
+  VIEW: {
+    title: 'Details',
+    readonly: true,
+  },
+  MODIFY: {
+    title: 'Mitgliedschaft bearbeiten',
+    readonly: false,
+  }
+};
+
 export const initialState = {
   pending: false,
   lastUpdate: undefined,
@@ -32,7 +47,7 @@ export const initialState = {
     data: {
       id: null,
       user: {},
-      membershipTypeId: null,
+      membershipTypeId: '',
       validity: {},
       participations: [],
     },

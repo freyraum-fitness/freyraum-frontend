@@ -15,6 +15,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import {ValidationGroup, Validators} from './../../components/Validation';
 import {
+  MODE,
   createMembership,
   deleteMembership,
   deleteParticipation,
@@ -49,20 +50,24 @@ const DateFormatter = ({value}) => moment(value).format(TIMESTAMP_FORMAT_DE);
 class MembershipDetails extends Component {
 
   state = {
+    mode: null,
     participation: {
       anchor: null,
       participation: null
     }
   };
 
-  componentWillMount = () => {
+  constructor(props) {
+    super(props);
     const {match, actions} = this.props;
-    const {fetchMembership, updateUsers} = actions;
     const id = match.params.id;
-    if (id !== 'new') {
-      fetchMembership(id);
+    if (id === 'new') {
+      this.state.mode = MODE.CREATE;
+    } else {
+      this.state.mode = MODE.VIEW ;
+      actions.fetchMembership(id);
     }
-    updateUsers();
+    actions.updateUsers();
   };
 
   handleRequestClose = () => {
@@ -106,14 +111,11 @@ class MembershipDetails extends Component {
 
   getCourseMenu = () => {
     const {anchor, participation} = this.state.participation;
-    const {deleteParticipation, moveParticipation} = this.props.actions;
+    const {deleteParticipation} = this.props.actions;
     return <Menu
       open={!!anchor}
       anchorEl={anchor}
       onClose={this.closeMenu}>
-      <MenuItem onClick={() => {this.closeMenu(); moveParticipation(participation.id);}}>
-        <span style={{marginLeft: '8px'}}>anderer Mitgliedschaft zuordnen</span>
-      </MenuItem>
       <MenuItem onClick={() => {this.closeMenu(); deleteParticipation(participation.id);}}>
         <span style={{marginLeft: '8px'}}>Teilnahme löschen</span>
       </MenuItem>
@@ -121,7 +123,7 @@ class MembershipDetails extends Component {
   };
 
   renderParticipations = () => {
-    const {memberships, courseTypes} = this.props;
+    const {memberships} = this.props;
     const participations = viewPath(['details', 'data', 'participations'], memberships);
 
     if (memberships.details.pending) {
@@ -138,10 +140,7 @@ class MembershipDetails extends Component {
       {
         name: 'course_type',
         title: 'Kurs',
-        getCellValue: row => {
-          const {name} = findById(courseTypes.data, row.course.courseTypeId) || {};
-          return name;
-        }
+        getCellValue: row => row.course.courseType.name
       },
 
     ];
@@ -186,21 +185,17 @@ class MembershipDetails extends Component {
   };
 
   render() {
-    const {memberships, membershipTypes, match, users, actions} = this.props;
-    const {params} = match;
-    const {id} = params;
-    const {fetchMembership, updateUsers, onMembershipDetailsDataChanged} = actions;
+    const {mode} = this.state;
+    const isNew = mode === MODE.CREATE;
+
+    const {memberships, membershipTypes, users, actions} = this.props;
+    const {onMembershipDetailsDataChanged} = actions;
     const {details} = memberships;
-    const {pending, data, error, participations} = details;
-
-    const isNew = id === 'new';
-
+    const {pending, data, error} = details;
     const {user, membershipTypeId, validity} = data;
     const {
       key,
-      name,
-      description,
-      maxParticipations
+      description
     } = findById(membershipTypes.data, membershipTypeId) || {};
 
     return (
@@ -228,6 +223,7 @@ class MembershipDetails extends Component {
                 value={user.id}
                 validators={[Validators.notEmpty()]}
                 values={users.data}
+                searchEnabled={true}
                 keyProp='id'
                 valueProp={user => user.firstname + ' ' + user.lastname}
                 onChange={value => onMembershipDetailsDataChanged(['user'], findById(users.data, value))}
@@ -323,7 +319,6 @@ const mapStateToProps = state => ({
   membershipTypes: state.membershipTypes,
   users: state.profile.users,
   memberships: state.memberships,
-  courseTypes: state.courseTypes,
 });
 
 const mapDispatchToProps = dispatch => ({

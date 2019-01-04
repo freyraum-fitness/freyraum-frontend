@@ -95,7 +95,7 @@ class Home extends Component {
                 {
                   myCourses.length === 0
                     ? <AttendCourses/>
-                    : myCourses.map((course, idx) => <MyCourse key={idx} course={course}/>)
+                    : myCourses.map(course => <MyCourse key={course.id} course={course}/>)
                 }
               </Slider>
             </section>
@@ -117,7 +117,7 @@ class Home extends Component {
               </SignedIn>
             </div>
             <Slider>
-              {newsData.map((newsItem, idx) => <NewsItem key={idx} news={newsItem}/>)}
+              {newsData.map(newsItem => <NewsItem key={newsItem.id} news={newsItem}/>)}
             </Slider>
           </section>
 
