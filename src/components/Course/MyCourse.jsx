@@ -10,6 +10,7 @@ import HourglassEmpty from "@material-ui/icons/HourglassEmpty";
 import Check from "@material-ui/icons/Check";
 import moment from "moment";
 import './style.less';
+import {deepEqual} from "../../utils/RamdaUtils";
 
 class MyCourse extends Component {
 
@@ -45,6 +46,10 @@ class MyCourse extends Component {
       return <HourglassEmpty style={{color: 'orange', fontSize: '1rem'}}/>
     }
   };
+
+  shouldComponentUpdate(nextProps) {
+    return !deepEqual(nextProps.course, this.props.course);
+  }
 
   render() {
     const {course} = this.props;

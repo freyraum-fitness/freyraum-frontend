@@ -127,6 +127,10 @@ const mapDispatchToProps = dispatch => ({
 
 class _Cell extends React.Component {
 
+  shouldComponentUpdate(nextProps) {
+    return nextProps.selected !== this.props.selected;
+  }
+
   render() {
     const {selected, onClick, children, numeric, courseTypes} = this.props;
     let color = undefined;
@@ -191,6 +195,10 @@ export class CoursesPlanOverview extends React.Component {
     this.setState({selected: name});
   };
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextState.selected !== this.state.selected;
+  }
+
   render() {
     const {selected} = this.state;
     return (
@@ -237,6 +245,10 @@ export class CoursesPlanOverview extends React.Component {
 }
 
 class _CoursesPlanAgenda extends React.Component {
+
+  shouldComponentUpdate() {
+    return false;
+  }
 
   render() {
     const {courseTypes} = this.props;

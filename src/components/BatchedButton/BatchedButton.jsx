@@ -5,6 +5,12 @@ import ToggleButton from './../ToggleButton';
 
 class BatchedButton extends Component {
 
+  shouldComponentUpdate(nextProps) {
+    return nextProps.selected !== this.props.selected
+      || nextProps.badgeContent !== this.props.badgeContent
+      || nextProps.label !== this.props.label;
+  }
+
   render() {
     const {selected, badgeContent, ...props} = this.props;
     const button = <ToggleButton selected={selected} {...props}/>;

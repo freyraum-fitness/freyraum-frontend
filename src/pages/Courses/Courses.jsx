@@ -208,7 +208,7 @@ class Courses extends Component {
 const
   mapStateToProps = state => ({
     courses: state.courses.data,
-    pending: state.courses.pending,
+    pending: state.courses.pending || state.courseTypes.pending,
   });
 
 const
