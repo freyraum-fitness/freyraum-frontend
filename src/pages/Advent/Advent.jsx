@@ -3,14 +3,23 @@ import React from 'react';
 import SimplePage from '../SimplePage';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import {Workouts} from "./Workouts";
-import VideoCard from "../../components/VideoCard";
+import {Workouts} from './Workouts';
+import VideoCard from '../../components/VideoCard';
+import LazyLoad from 'react-lazyload';
+
 import './style.less';
 
 class Advent extends React.Component {
 
-  render() {
+  renderWorkout = workout => (
+    <LazyLoad key={workout.title} height={300} once offset={300}>
+      <Grid item xs={12} sm={6} md={3}>
+        <VideoCard title={workout.title} url={workout.url}/>
+      </Grid>
+    </LazyLoad>
+  );
 
+  render() {
     return (
       <SimplePage>
         <Grid container spacing={16} justify='center' style={{width: '100%', margin: '0px'}}>
@@ -22,7 +31,7 @@ class Advent extends React.Component {
               Hier ist noch einmal unser Adventskalendar zum Ansehen und mitmachen.
             </Typography>
           </Grid>
-          {Workouts.map(item => <Grid key={item.title} item xs={12} sm={6} md={3}><VideoCard title={item.title} url={item.url}/></Grid>)}
+          {Workouts.map(this.renderWorkout)}
         </Grid>
       </SimplePage>
     );
