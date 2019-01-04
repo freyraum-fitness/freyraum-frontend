@@ -119,9 +119,8 @@ class Courses extends Component {
       lastFormatted = formattedDayOfCourse;
 
       elements.push(
-        <LazyLoad key={idx} height={64} once offset={128}>
+        <LazyLoad key={course.id} height={64} once offset={128}>
           <Course
-            key={idx}
             course={course}
             showCourseDetails={actions.showNewsDetails}
             signIn={actions.signIn}
@@ -209,7 +208,7 @@ class Courses extends Component {
 const
   mapStateToProps = state => ({
     courses: state.courses.data,
-    pending: state.courses.pending,
+    pending: state.courses.pending || state.courseTypes.pending,
   });
 
 const

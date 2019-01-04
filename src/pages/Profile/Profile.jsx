@@ -41,7 +41,7 @@ class Profile extends Component {
               Deine Mitgliedschaft
             </ListSubheader>
             {
-              memberships.map((value, idx) => <MyMembership membership={value} key={idx}/>)
+              memberships.map(membership => <MyMembership membership={membership} key={membership.id}/>)
             }
           </List>
         </Card>

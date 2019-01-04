@@ -4,6 +4,11 @@ import Button from '@material-ui/core/Button';
 
 class ToggleButton extends Component {
 
+  shouldComponentUpdate(nextProps) {
+    return nextProps.selected !== this.props.selected
+      || nextProps.label !== this.props.label;
+  }
+
   render() {
     const {selected, label, onClick, style, color = 'secondary', customColor} = this.props;
     const customStyle = customColor

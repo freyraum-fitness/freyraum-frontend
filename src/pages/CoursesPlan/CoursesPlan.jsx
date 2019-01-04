@@ -43,8 +43,8 @@ const data = [
     mo: {primary: 'FIT MOMS'},
     di: {primary: 'BEST AGERS(65+)'},
     mi: {primary: 'FUN.BASE'},
-    do: {primary: 'FUN.BASE'},
-    fr: {},
+    do: {},
+    fr: {primary: 'FUN.BASE'},
     so: {},
   },
   {
@@ -127,6 +127,10 @@ const mapDispatchToProps = dispatch => ({
 
 class _Cell extends React.Component {
 
+  shouldComponentUpdate(nextProps) {
+    return nextProps.selected !== this.props.selected;
+  }
+
   render() {
     const {selected, onClick, children, numeric, courseTypes} = this.props;
     let color = undefined;
@@ -191,6 +195,10 @@ export class CoursesPlanOverview extends React.Component {
     this.setState({selected: name});
   };
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextState.selected !== this.state.selected;
+  }
+
   render() {
     const {selected} = this.state;
     return (
@@ -213,7 +221,7 @@ export class CoursesPlanOverview extends React.Component {
                 <TableBody>
                   {data.map((n, idx) => {
                     return (
-                      <TableRow key={idx} className={idx % 2 === 0 ? 'odd' : undefined}>
+                      <TableRow key={n.time} className={idx % 2 === 0 ? 'odd' : undefined}>
                         <Cell component="th" scope="row">
                           {n.time}
                         </Cell>
@@ -238,16 +246,20 @@ export class CoursesPlanOverview extends React.Component {
 
 class _CoursesPlanAgenda extends React.Component {
 
+  shouldComponentUpdate() {
+    return false;
+  }
+
   render() {
     const {courseTypes} = this.props;
     return (
       <Grid item xs={12} sm={10} md={8} className='courses-plan-textarea'>
         {
-          Object.keys(types).map((key, idx) => {
-            const courseType = findBy('name', courseTypes.data, key) || {};
-            return <div key={idx}>
-              <Typography variant='subtitle1' style={{marginTop: '8px', color: courseType.color}}>{key}</Typography>
-              <Typography gutterBottom>{types[key]}</Typography>
+          Object.keys(types).map(name => {
+            const courseType = findBy('name', courseTypes.data, name) || {};
+            return <div key={name}>
+              <Typography variant='subtitle1' style={{marginTop: '8px', color: courseType.color}}>{name}</Typography>
+              <Typography gutterBottom>{types[name]}</Typography>
             </div>
           })
         }

@@ -168,7 +168,7 @@ class CourseDetails extends Component {
     this.setState(setPath(['addUser', 'search'], value, this.state));
   };
 
-  getUserMenuItem = (user, idx) => {
+  getUserMenuItem = user => {
     const attendees = viewPath(['courseDetails', 'course', 'attendees'], this.props) || [];
     const {addUserToCourse} = this.props.actions;
     const courseId = viewPath(['courseDetails', 'course', 'id'], this.props);
@@ -179,7 +179,7 @@ class CourseDetails extends Component {
       }
     }
 
-    return <MenuItem key={idx} onClick={() => {
+    return <MenuItem key={user.id} onClick={() => {
       this.closeAddUserMenu();
       addUserToCourse(courseId, user.id)
     }}>
@@ -260,8 +260,8 @@ class CourseDetails extends Component {
       {
         pending
           ? <LoadingIndicator/>
-          : data.map((courseType, idx) =>
-            <MenuItem key={idx} onClick={() => {
+          : data.map(courseType =>
+            <MenuItem key={courseType.id} onClick={() => {
               this.closeCourseTypeMenu();
               onCourseDetailsChange('courseType', courseType)
             }}>
@@ -278,9 +278,8 @@ class CourseDetails extends Component {
     const maxParticipants = viewPath(['courseDetails', 'course', 'maxParticipants'], this.props) || 0;
     return attendees.map((user, idx) => {
       const onWaitlist = idx >= maxParticipants;
-      const {id = ''} = user;
       return <Attendee
-        key={idx + '_' + id}
+        key={user.id}
         idx={idx}
         user={user}
         onWaitlist={onWaitlist}
