@@ -101,12 +101,11 @@ class Course extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     return !deepEqual(nextProps.course, this.props.course)
-      || nextProps.showDate !== this.props.showDate
       || !deepEqual(nextState, this.state);
   }
 
   render() {
-    const {course, showDate} = this.props;
+    const {course} = this.props;
     const {
       id,
       courseType,
@@ -162,12 +161,6 @@ class Course extends Component {
           display: 'inline-block',
           padding: '0 36px 0 0'
         }}> {/* 16px + 4px + 16px */}
-          {showDate
-            ? <Typography>
-              {moment(start).format('DD.MM.')}
-            </Typography>
-            : undefined
-          }
           <Typography>
             {moment(start).format(Format.HOUR_MINUTE)}
           </Typography>

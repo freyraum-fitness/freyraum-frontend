@@ -273,15 +273,17 @@ class CourseDetails extends Component {
   };
 
   getAttendeeList = attendees => {
+    const {currentUser} = this.props;
     const roles = viewPath(['currentUser', 'roles'], this.props) || {};
     const actionAllowed = roles['TRAINER'] || roles['ADMIN'];
     const maxParticipants = viewPath(['courseDetails', 'course', 'maxParticipants'], this.props) || 0;
     return attendees.map((user, idx) => {
       const onWaitlist = idx >= maxParticipants;
       return <Attendee
-        key={user.id}
+        key={user.id || idx}
         idx={idx}
         user={user}
+        isCurrentUser={user.id === currentUser.id}
         onWaitlist={onWaitlist}
         onClick={actionAllowed ? event => this.openMenu(event, user) : undefined}/>;
     });
