@@ -1,3 +1,4 @@
+'use strict';
 import React, {Component} from 'react';
 import compose from 'recompose/compose';
 import connect from 'react-redux/es/connect/connect';
@@ -9,6 +10,7 @@ import Switch from 'react-router-dom/Switch';
 import withRouter from 'react-router-dom/withRouter';
 import {CSSTransition as OriginalCSSTransition, TransitionGroup} from 'react-transition-group';
 import Home from './pages/Home';
+import ErrorPage from './pages/ErrorPage';
 import Courses from './pages/Courses';
 import CourseDetails from './pages/CourseDetails';
 import Statistics from './pages/Statistics';
@@ -23,6 +25,7 @@ import Impressum from './pages/Impressum';
 import Memberships from './pages/Memberships';
 import MembershipDetails from './pages/MembershipDetails';
 import NewsDetails from './pages/NewsDetails';
+import {PersonalRecords, PersonalRecordDetails} from './pages/PersonalRecords';
 import init from './model/init.js';
 import {hideNotification} from './model/notification';
 import CustomizedSnackbar from './components/CustomizedSnackbar';
@@ -51,20 +54,51 @@ class CSSTransition extends OriginalCSSTransition {
 
 class _PrivateRoute extends Component {
 
+  isAuthorized = () => {
+    const {currentUser, hasAnyRole} = this.props;
+    if (!currentUser) {
+      return false;
+    }
+
+    if (!!hasAnyRole) {
+      const roles = viewPath(['roles'], currentUser) || {};
+      for (const role of hasAnyRole) {
+        if (roles[role]) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    return true;
+  };
+
   render() {
-    const {component: Component, currentUser, ...rest} = this.props;
+    const {component: Component, currentUser,...rest} = this.props;
     return (
       <Route
         {...rest}
-        render={props => !!currentUser
-          ? <Component {...props}/>
-          : <Redirect
+        render={props => {
+          if (!currentUser) {
+            return <Redirect
               to={{
                 pathname: 'home/m/login',
                 state: {from: props.location}
               }}
-            />
-        }/>
+            />;
+          }
+
+          if (this.isAuthorized()) {
+            return <Component {...props}/>;
+          } else {
+            return <Redirect
+              to={{
+                pathname: 'error/401',
+                state: {from: props.location}
+              }}
+            />;
+          }
+        }}/>
     );
   }
 }
@@ -139,10 +173,7 @@ class App extends Component {
     if (this.props.profilePending && !this.props.currentUser) {
       return <div style={{height: '100vh'}}><LoadingIndicator/></div>;
     }
-
     const {notification, actions, location} = this.props;
-    const roles = viewPath(['currentUser', 'roles'], this.props) || {};
-    const trainerOrAdmin = roles['TRAINER'] || roles['ADMIN'];
 
     return (
       <div>
@@ -160,29 +191,30 @@ class App extends Component {
 
               {/* app pages */}
               <Route exact path='/home' component={Home}/>
-              <PrivateRoute exact path='/statistics' component={Statistics}/>
-              <PrivateRoute exact path='/courses' component={Courses}/>
-              <PrivateRoute exact path='/profile' component={Profile}/>
-              <PrivateRoute exact path='/settings' component={Settings}/>
+              <PrivateRoute hasAnyRole={['USER']} exact path='/statistics' component={Statistics}/>
+              <PrivateRoute hasAnyRole={['USER']} exact path='/courses'    component={Courses}/>
+              <PrivateRoute hasAnyRole={['USER']} exact path='/profile'    component={Profile}/>
+              <PrivateRoute hasAnyRole={['USER']} exact path='/settings'   component={Settings}/>
               <Route exact path='/courses-plan' component={CoursesPlan}/>
               <Route exact path='/about' component={About}/>
               <Route exact path='/agb' component={Agb}/>
               <Route exact path='/advent' component={Advent}/>
               <Route exact path='/impressum' component={Impressum}/>
-              {
-                trainerOrAdmin
-                  ? <PrivateRoute exact path='/memberships' component={Memberships}/>
-                  : undefined
-              }
+              <PrivateRoute hasAnyRole={['ADMIN']} exact path='/memberships' component={Memberships}/>
+              <PrivateRoute hasAnyRole={['USER', 'ADMIN']} exact path='/personal-records' component={PersonalRecords}/>
+              <PrivateRoute hasAnyRole={['ADMIN']} exact path='/personal-records/:id' component={PersonalRecordDetails}/>
 
               {/* modals */}
               <Route path='**/m/' component={AccountPage}/>
-              <PrivateRoute path='**/course/:id' component={CourseDetails}/>
+              <PrivateRoute hasAnyRole={['USER', 'ADMIN']} path='**/course/:id' component={CourseDetails}/>
               <Route path='**/news/:id' component={NewsDetails}/>
-              <PrivateRoute path='**/membership/:id' component={MembershipDetails}/>
+              <PrivateRoute hasAnyRole={['USER', 'ADMIN']} path='**/membership/:id' component={MembershipDetails}/>
 
-              {/* redirect everything to home */}
-              <Redirect from='*' to='/home'/>
+              {/* error handling */}
+              <Route path='/error/:errorCode' component={ErrorPage}/>
+              {/* redirect everything to error/404 */}
+              <Redirect to='/error/404' component={ErrorPage}/>
+
             </Switch>
           </CSSTransition>
         </TransitionGroup>

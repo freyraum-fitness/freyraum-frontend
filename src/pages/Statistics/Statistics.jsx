@@ -67,13 +67,10 @@ class Statistics extends Component {
     this.fetchStatistics();
   }
 
-  renderTop3 = (top3, idx, courseTypes, participationsPerType) => {
-    if (!top3[idx]) {
-      return null;
-    }
+  renderTop3 = (top, idx, courseTypes, participationsPerType) => {
     return (
-      <Grid item xs={4} sm={4}>
-        <TopCourse courseType={findById(courseTypes.data, top3[idx])} count={participationsPerType[top3[idx]]}/>
+      <Grid item xs={4} sm={3} md={2}>
+        <TopCourse courseType={findById(courseTypes.data, top)} count={participationsPerType[top]}/>
       </Grid>
     );
   };
@@ -96,13 +93,30 @@ class Statistics extends Component {
           pending={statistics.pending}
           onRefresh={this.onRefresh}>
           <Grid container spacing={16} justify="center" style={{width: '100%', margin: '0px', padding: '16px 0 0'}}>
-            <Grid container spacing={8} item xs={12} sm={10} md={8} alignItems='stretch' style={{padding: '4px'}}>
-              {this.renderTop3(top3, 0, courseTypes, participationsPerType)}
-              {this.renderTop3(top3, 1, courseTypes, participationsPerType)}
-              {this.renderTop3(top3, 2, courseTypes, participationsPerType)}
+            <Grid container item xs={12} md={8}>
+              <Grid container spacing={8} item xs={12} alignItems='stretch' style={{padding: '4px'}}>
+                <Grid item xs={12}>
+                  <Typography variant='subtitle1' color='primary' className='title-h-scroll'>
+                    Deine Teilnahmen
+                  </Typography>
+                </Grid>
+                {
+                  top3.map((top, idx) => this.renderTop3(top, idx, courseTypes, participationsPerType))
+                }
+              </Grid>
+              <Grid container spacing={8} item xs={12} alignItems='stretch' style={{padding: '4px'}}>
+                <Grid item xs={12}>
+                  <Typography variant='subtitle1' color='primary' className='title-h-scroll'>
+                    Deine PRs
+                  </Typography>
+                </Grid>
+                {
+                  top3.map((top, idx) => this.renderTop3(top, idx, courseTypes, participationsPerType))
+                }
+              </Grid>
             </Grid>
 
-            <Grid item xs={12} sm={10} md={8}>
+            <Grid item xs={12} md={4}>
               <Card>
                 <CardHeader title='Statistiken'/>
                 <CardContent>

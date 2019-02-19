@@ -8,6 +8,7 @@ import withWidth from '@material-ui/core/withWidth';
 import SimplePage from '../SimplePage';
 import Grid from '@material-ui/core/Grid';
 import {fetchNews} from '../../model/news';
+import {fetchCurrentExercises} from '../../model/exercises';
 import {fetchCourses} from '../../model/courses';
 import {NotSignedIn, SignedIn} from './../../components/Auth';
 import PullToRefresh from './../../components/PullToRefresh/PullToRefresh';
@@ -79,6 +80,7 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({
     fetchNews: fetchNews,
     fetchCourses: fetchCourses,
+    fetchCurrentExercises: fetchCurrentExercises
   }, dispatch),
   dispatch
 });
