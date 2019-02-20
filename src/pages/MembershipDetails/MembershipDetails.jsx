@@ -163,7 +163,7 @@ class MembershipDetails extends Component {
         columns={columns}>
 
         <SearchState/>
-        <SortingState defaultSorting={[{columnName: 'course_start', direction: 'asc'}]}/>
+        <SortingState defaultSorting={[{columnName: 'course_start', direction: 'desc'}]}/>
         <IntegratedFiltering/>
         <IntegratedSorting/>
 
