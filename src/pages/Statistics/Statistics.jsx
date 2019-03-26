@@ -104,16 +104,6 @@ class Statistics extends Component {
                   top3.map((top, idx) => this.renderTop3(top, idx, courseTypes, participationsPerType))
                 }
               </Grid>
-              <Grid container spacing={8} item xs={12} alignItems='stretch' style={{padding: '4px'}}>
-                <Grid item xs={12}>
-                  <Typography variant='subtitle1' color='primary' className='title-h-scroll'>
-                    Deine PRs
-                  </Typography>
-                </Grid>
-                {
-                  top3.map((top, idx) => this.renderTop3(top, idx, courseTypes, participationsPerType))
-                }
-              </Grid>
             </Grid>
 
             <Grid item xs={12} md={4}>
