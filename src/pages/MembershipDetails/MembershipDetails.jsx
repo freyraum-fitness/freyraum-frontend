@@ -138,6 +138,18 @@ class MembershipDetails extends Component {
         getCellValue: row => row.course.start
       },
       {
+        name: 'participation_status',
+        title: 'Status',
+        getCellValue: row => {
+          switch (row.course.participationStatus) {
+            case 'SIGNED_IN': return 'angemeldet';
+            case 'SIGNED_OUT': return 'abgemeldet';
+            case 'ON_WAITLIST': return 'auf Warteliste';
+            default: return 'unbekannt';
+          }
+        }
+      },
+      {
         name: 'course_type',
         title: 'Kurs',
         getCellValue: row => row.course.courseType.name
@@ -151,7 +163,7 @@ class MembershipDetails extends Component {
         columns={columns}>
 
         <SearchState/>
-        <SortingState defaultSorting={[{columnName: 'course_start', direction: 'asc'}]}/>
+        <SortingState defaultSorting={[{columnName: 'course_start', direction: 'desc'}]}/>
         <IntegratedFiltering/>
         <IntegratedSorting/>
 
@@ -281,21 +293,20 @@ class MembershipDetails extends Component {
               isNew
                 ? undefined
                 : <div>
-                    <Grid item xs={12} sm={8}>
-                      <ConfirmButton
-                        question='Möchtest du diese Mitgliedschaft wirklich löschen? Dadurch werden auch ALLE Teilnahmen an Kursen gelöscht und können nicht wieder hergestellt werden.'
-                        onClick={this.handleRequestDelete}
-                        variant='contained'
-                        color='secondary'
-                        fullWidth
-                        pending={false}
-                      >
-                        Mitgliedschaft löschen<IconDeleteForever style={{marginLeft: '8px'}} size={16}/>
-                      </ConfirmButton>
-                    </Grid>
+                  <Grid item xs={12} sm={8}>
+                    <ConfirmButton
+                      question='Möchtest du diese Mitgliedschaft wirklich löschen? Dadurch werden auch ALLE Teilnahmen an Kursen gelöscht und können nicht wieder hergestellt werden.'
+                      onClick={this.handleRequestDelete}
+                      variant='contained'
+                      color='secondary'
+                      fullWidth
+                      pending={false}
+                    >
+                      Mitgliedschaft löschen<IconDeleteForever style={{marginLeft: '8px'}} size={16}/>
+                    </ConfirmButton>
+                  </Grid>
 
-
-                    < GridTextControl
+                  <GridTextControl
                     text={'Hier kannst du die Kursteilnahmen einsehen, die bisher auf dieses Karte gebucht wurden.'}/>
                   {this.renderParticipations()}
                 </div>
