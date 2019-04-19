@@ -1,8 +1,6 @@
 
 pipeline {
-  agent {
-    docker { image 'node:9-alpine' }
-  }
+  agent none
   options {
     skipDefaultCheckout()
   }
@@ -14,26 +12,44 @@ pipeline {
   }
   stages {
     stage('checkout') {
-      steps { checkout scm }
+      agent any
+      steps {
+        checkout scm
+      }
     }
 
     stage('npm install') {
-      steps { sh 'npm install' }
+      agent {
+        docker { image 'node:9-alpine' }
+      }
+      steps {
+        sh 'npm install'
+      }
     }
 
     stage('npm test') {
-      steps { sh 'npm test' }
+      agent {
+        docker { image 'node:9-alpine' }
+      }
+      steps {
+        sh 'npm test'
+      }
     }
 
     stage('npm build production') {
-      steps { sh 'npm run build' }
+      agent {
+        docker { image 'node:9-alpine' }
+      }
+      steps {
+        sh 'npm run build'
+      }
     }
 
     stage('build rc container') {
       agent any
       steps {
         sh 'docker build . -f Dockerfile -t ${APP_NAME}'
-        sh 'docker push ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${RC_TAG}'
+        sh 'docker push ${APP_NAME} ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${RC_TAG}'
       }
     }
 
