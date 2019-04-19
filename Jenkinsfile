@@ -1,6 +1,8 @@
 
 pipeline {
-  agent any
+  agent {
+    docker { image 'node:9-alpine' }
+  }
   options {
     skipDefaultCheckout()
   }
