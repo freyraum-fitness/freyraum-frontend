@@ -67,7 +67,7 @@ pipeline {
       success {
         slackSend(
           color: "#BDFFC3",
-          message: "${APP_NAME}:${OK_TAG} docker container build"
+          message: "${APP_NAME} - tagged container as ${OK_TAG}"
         )
       }
       failure {
