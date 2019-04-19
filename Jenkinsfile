@@ -36,7 +36,7 @@ pipeline {
 
     stage('tag image as ok') {
       steps {
-        sh 'docker tag ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${RC_TAG} ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${OK_TAG}
+        sh 'docker tag ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${RC_TAG} ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${OK_TAG}'
       }
     }
   }
