@@ -30,6 +30,7 @@ pipeline {
     }
 
     stage('build rc container') {
+      agent any
       steps {
         sh 'docker build . -f Dockerfile -t ${APP_NAME}'
         sh 'docker push ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${RC_TAG}'
@@ -37,6 +38,7 @@ pipeline {
     }
 
     stage('tag image as ok') {
+      agent any
       steps {
         sh 'docker tag ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${RC_TAG} ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${OK_TAG}'
       }
