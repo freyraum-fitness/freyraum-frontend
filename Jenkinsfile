@@ -57,7 +57,7 @@ pipeline {
     stage('tag image as ok') {
       agent any
       steps {
-        sh 'docker tag ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${RC_TAG} ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${OK_TAG}'
+        sh 'docker tag ${DOCKER_REGISTRY}/${APP_NAME}:${RC_TAG} ${DOCKER_REGISTRY}/${APP_NAME}:${OK_TAG}'
         sh 'docker push ${DOCKER_REGISTRY}/${APP_NAME}:${OK_TAG}'
       }
     }
