@@ -2,6 +2,7 @@ pipeline {
   agent any
   options {
     skipDefaultCheckout()
+    overrideIndexTriggers(false)
   }
   parameters {
     string (
@@ -14,11 +15,6 @@ pipeline {
     DOCKER_REGISTRY = "localhost:5000"
     APP_NAME = "freyraum-frontend"
   }
-  when(
-      expression {
-        return ${TAG} != ""
-      }
-  )
   stages {
     stage('pull image') {
       steps { sh 'docker pull ${DOCKER_REGISTRY}/${APP_NAME}:${TAG}' }
