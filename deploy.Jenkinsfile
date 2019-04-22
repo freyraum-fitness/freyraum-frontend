@@ -21,7 +21,7 @@ pipeline {
       steps {
         sh '''
           docker run -d \
-            -p 30050:4000 \
+            -p 3333:4000 \
             --restart=always \
             --name ${APP_NAME} \
             ${DOCKER_REGISTRY}/${APP_NAME}:ok
