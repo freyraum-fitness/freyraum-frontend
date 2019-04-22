@@ -6,8 +6,6 @@ pipeline {
   environment {
     DOCKER_REGISTRY = "localhost:5000"
     APP_NAME = "freyraum-frontend"
-
-    DB = credentials('db')
   }
   stages {
     stage('pull :ok') {
