@@ -24,7 +24,7 @@ pipeline {
             -p 30050:4000 \
             --restart=always \
             --name ${APP_NAME} \
-            ${APP_NAME}:ok
+            ${DOCKER_REGISTRY}/${APP_NAME}:ok
         '''
       }
     }
