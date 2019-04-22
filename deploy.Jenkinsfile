@@ -3,7 +3,7 @@ pipeline {
   options {
     skipDefaultCheckout()
   }
-  environment{
+  environment {
     DOCKER_REGISTRY = "localhost:5000"
     APP_NAME = "freyraum-frontend"
 
@@ -31,19 +31,14 @@ pipeline {
       }
     }
 
-    post {
-      success {
-        slackSend(
-            color: "#BDFFC3",
-            message: "${APP_NAME}:latest started"
-        )
-      }
-      failure {
-        slackSend(
-            color: "#FF9FA1",
-            message: "${APP_NAME} - failed to update - app down!"
-        )
-      }
+  }
+  post {
+    success {
+      slackSend(color: "#BDFFC3", message: "${APP_NAME}:latest started")
+    }
+    failure {
+      slackSend(color: "#FF9FA1", message: "${APP_NAME} - failed to update - app down!")
     }
   }
+
 }
