@@ -2,14 +2,7 @@ pipeline {
   agent any
   options {
     skipDefaultCheckout()
-    overrideIndexTriggers(false)
-  }
-  parameters {
-    string (
-        defaultValue: 'ok',
-        description: 'the tag that should be build',
-        name : 'TAG'
-    )
+    timeout(time: 5, unit: 'MINUTES')
   }
   environment {
     DOCKER_REGISTRY = "localhost:5000"
@@ -17,6 +10,13 @@ pipeline {
   }
   stages {
     stage('pull image') {
+      input {
+        message "Choose a tag"
+        ok "update container"
+        parameters {
+          choice(name: 'TAG', choices: ['ok'], description: 'docker image tag')
+        }
+      }
       steps { sh 'docker pull ${DOCKER_REGISTRY}/${APP_NAME}:${TAG}' }
     }
     stage('stop app') {
