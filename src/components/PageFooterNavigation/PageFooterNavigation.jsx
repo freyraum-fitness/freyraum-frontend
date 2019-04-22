@@ -53,7 +53,7 @@ class PageFooterNavigation extends Component {
         showLabels={true}
         className={classes.bottomNavigation}>
         <BottomNavigationAction className={classes.navIcon} label="Home" icon={<IconHome size={24}/>}/>
-        <BottomNavigationAction className={classes.navIcon} label="Statsistik" icon={<IconLineChart size={24}/>}/>
+        <BottomNavigationAction className={classes.navIcon} label="Statistik" icon={<IconLineChart size={24}/>}/>
         <BottomNavigationAction className={classes.navIcon} label="Kurse" icon={<IconCalendar size={24}/>}/>
         <BottomNavigationAction className={classes.navIcon} label="Profil" icon={<IconUser size={24}/>}/>
         <BottomNavigationAction className={classes.navIcon} label="Settings" icon={<IconSettings size={24}/>}/>
