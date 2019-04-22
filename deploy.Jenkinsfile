@@ -6,7 +6,7 @@ pipeline {
   parameters {
     string (
         defaultValue: 'ok',
-        description: 'tag',
+        description: 'the tag that should be build',
         name : 'TAG'
     )
   }
@@ -14,6 +14,11 @@ pipeline {
     DOCKER_REGISTRY = "localhost:5000"
     APP_NAME = "freyraum-frontend"
   }
+  when(
+      expression {
+        return ${TAG} != ""
+      }
+  )
   stages {
     stage('pull image') {
       steps { sh 'docker pull ${DOCKER_REGISTRY}/${APP_NAME}:${TAG}' }
