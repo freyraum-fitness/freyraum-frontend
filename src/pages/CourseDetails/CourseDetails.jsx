@@ -524,40 +524,23 @@ class CourseDetails extends Component {
                   </Button>
                 </CardActions>
 
-                <CardActions style={{justifyContent: 'space-between'}}>
-                  <OnlyIf isTrue={participationStatus === 'SIGNED_IN'}>
-                    <Typography style={{display: 'inline-block', color: 'green', paddingLeft: '16px', paddingRight: '16px'}}>
-                      Du bist angemeldet
-                    </Typography>
-                  </OnlyIf>
-                  <OnlyIf isTrue={participationStatus === 'ON_WAITLIST'}>
-                    <Typography style={{display: 'inline-block', color: 'orange', paddingLeft: '16px', paddingRight: '16px'}}>
-                      Du bist auf der Warteliste
-                    </Typography>
-                  </OnlyIf>
-                  <OnlyIf isTrue={
-                    participationStatus !== 'SIGNED_IN'
-                    && participationStatus !== 'ON_WAITLIST'
-                    && attendees.length < maxParticipants}>
-                    <Button color='primary' style={{width: '100%', margin: '8px'}} variant='contained' onClick={this.signInOut} disabled={hasChanges}>
-                      Am Kurs teilnehmen
-                    </Button>
-                  </OnlyIf>
-                  <OnlyIf isTrue={
-                    participationStatus !== 'SIGNED_IN'
-                    && participationStatus !== 'ON_WAITLIST'
-                    && attendees.length >= maxParticipants}>
-                    <Button color='primary' style={{width: '100%', margin: '8px'}} variant='contained' onClick={this.signInOut} disabled={hasChanges}>
-                      Auf die Warteliste setzen
-                    </Button>
-                  </OnlyIf>
-                  <OnlyIf isTrue={participationStatus === 'SIGNED_IN' || participationStatus === 'ON_WAITLIST'}>
-                    <Button style={{backgroundColor: red[500], color: 'white', margin: '8px'}} variant='contained' onClick={this.signInOut} disabled={hasChanges}>
-                      Abmelden
-                    </Button>
-                  </OnlyIf>
-                </CardActions>
               </Card>
+              <div style={{display: 'flex', justifyContent: 'space-between',  alignItems: 'center', margin: '8px 0'}}>
+                <OnlyIf isTrue={participationStatus === 'SIGNED_IN' || participationStatus === 'ON_WAITLIST'}>
+                  <Typography className='participationStatus' style={{color: participationStatus === 'SIGNED_IN' ? 'green' : 'orange'}}>
+                    {participationStatus === 'SIGNED_IN' ? 'Du bist angemeldet' : 'Du bist auf der Warteliste'}
+                  </Typography>
+                  <Button style={{backgroundColor: red[500], color: 'white'}} variant='contained' onClick={this.signInOut} disabled={hasChanges}>
+                    Abmelden
+                  </Button>
+                </OnlyIf>
+
+                <OnlyIf isTrue={participationStatus !== 'SIGNED_IN' && participationStatus !== 'ON_WAITLIST'}>
+                  <Button color='primary' style={{width: '100%'}} variant='contained' onClick={this.signInOut} disabled={hasChanges}>
+                    {attendees.length < maxParticipants ? 'Am Kurs teilnehmen' : 'Auf die Warteliste setzen'}
+                  </Button>
+                </OnlyIf>
+              </div>
             </Grid>
 
             <Grid item xs={12} sm={10} md={8}>
