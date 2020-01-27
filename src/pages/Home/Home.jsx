@@ -48,9 +48,6 @@ class Home extends Component {
             <WelcomeGreetings className='section'/>
           </NotSignedIn>
           <News/>
-          <SignedIn>
-            <AdventWorkouts className='section'/>
-          </SignedIn>
 
           <NotSignedIn>
             <section className='section'>
