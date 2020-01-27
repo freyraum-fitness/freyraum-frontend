@@ -175,10 +175,10 @@ export const signIn = courseId => {
   }
 };
 
-export const signOut = courseId => {
+export const signOut = (courseId, reason) => {
   return dispatch => {
     dispatch(actions.courses.signOut.pending());
-    return signOutApiCall(courseId)
+    return signOutApiCall(courseId, reason)
       .then(course => {
         dispatch(actions.courses.signOut.success(course));
         dispatch(showNotification('abgemeldet', 'success'));

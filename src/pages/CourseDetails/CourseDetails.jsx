@@ -64,6 +64,7 @@ import {SignedIn} from "../../components/Auth";
 import OnlyIf from "../../components/Auth/OnlyIf";
 import Fuse from 'fuse.js';
 import {red} from '@material-ui/core/colors';
+import {Validators} from "../../components/Validation";
 
 'use strict';
 
@@ -115,11 +116,11 @@ class CourseDetails extends Component {
       this.props.courseDetails.course, () => this.setState(setPath(['mode'], MODE.VIEW, this.state)));
   };
 
-  signInOut = () => {
+  signInOut = (reason) => {
     const {course = {}} = this.props.courseDetails;
     const {id, participationStatus} = course;
     if (participationStatus === 'SIGNED_IN' || participationStatus === 'ON_WAITLIST') {
-      this.props.actions.signOut(id);
+      this.props.actions.signOut(id, reason);
     } else {
       this.props.actions.signIn(id);
     }
@@ -363,20 +364,20 @@ class CourseDetails extends Component {
       return <LoadingIndicator/>;
     }
 
-    let {name, color} = courseType;
-    if (!name) {
-      name = "Kurstyp wählen";
-      color = '#00fa00';
+    let {name: courseTypeName, color: courseTypeColor} = courseType;
+    if (!courseTypeName) {
+      courseTypeName = "Kurstyp wählen";
+      courseTypeColor = '#00fa00';
     }
 
-    const textColor = getTextColorForBg(color, 'rgba(255,255,255,0.87)', 'rgba(0,0,0,0.93)');
+    const textColor = getTextColorForBg(courseTypeColor, 'rgba(255,255,255,0.87)', 'rgba(0,0,0,0.93)');
 
     const roles = viewPath(['currentUser', 'roles'], this.props) || {};
     const trainerOrAdmin = roles['TRAINER'] || roles['ADMIN'];
 
     return (
       <div className='animation-container' style={style}>
-        <div className='title-background' style={{background: 'linear-gradient(10deg, ' + color + ' 40%, ' + shadeRGBColor(color, 0.35) + ' 110%)'}}>
+        <div className='title-background' style={{background: 'linear-gradient(10deg, ' + courseTypeColor + ' 40%, ' + shadeRGBColor(courseTypeColor, 0.35) + ' 110%)'}}>
           <Grid container spacing={16} justify='center' style={{width: '100%', margin: '0px'}}>
             <Grid item xs={12} sm={10} md={8} style={{padding: '0px'}}>
               <div className='toolbar'>
@@ -405,12 +406,16 @@ class CourseDetails extends Component {
                         <ConfirmButton
                           iconButton
                           style={{color: textColor}}
-                          question='Möchtest du den Kurs wirklich löschen?'
+                          confirmStyle={{backgroundColor: red[500], color: 'white'}}
+                          yesValue='Kurs löschen'
+                          noValue='Abbrechen'
+                          variant='contained'
+                          confirmTitle='Kurs löschen'
+                          question={'Möchtest Du diesen ' + courseTypeName + ' Kurs wirklich löschen?'}
                           onClick={() => {
                             deleteCourse(courseId);
                             this.goBack();
                           }}
-                          variant='raised'
                           pending={courseDelete.pending}
                         >
                           <IconDeleteForever/>
@@ -423,14 +428,14 @@ class CourseDetails extends Component {
             </Grid>
           </Grid>
           <div className='title-course-type'>
-            {name}
+            {courseTypeName}
           </div>
         </div>
         <div
           className='course-type'
           onClick={this.openCourseTypeMenu}
           style={{color: textColor, cursor: trainerOrAdmin ? 'pointer' : undefined, ...titleElement}}>
-          {name}
+          {courseTypeName}
         </div>
         {/* Menü */}
         {trainerOrAdmin ? this.getCourseTypeMenu() : undefined}
@@ -530,9 +535,20 @@ class CourseDetails extends Component {
                   <Typography className='participationStatus' style={{color: participationStatus === 'SIGNED_IN' ? 'green' : 'orange'}}>
                     {participationStatus === 'SIGNED_IN' ? 'Du bist angemeldet' : 'Du bist auf der Warteliste'}
                   </Typography>
-                  <Button style={{backgroundColor: red[500], color: 'white'}} variant='contained' onClick={this.signInOut} disabled={hasChanges}>
+                  <ConfirmButton
+                    input
+                    inputLabel='Begründung'
+                    inputValidators={[Validators.notEmpty('Bitte gib eine kurze Begründung an')]}
+                    confirmTitle='Abmelden'
+                    question='Schade, dass Du Dich abmelden möchtest. Sag mir bitte kurz, warum.'
+                    style={{backgroundColor: red[500], color: 'white'}}
+                    variant='contained'
+                    onClick={reason => this.signInOut(reason)}
+                    yesValue='Jetzt abmelden'
+                    noValue='Angemeldet bleiben'
+                    disabled={hasChanges}>
                     Abmelden
-                  </Button>
+                  </ConfirmButton>
                 </OnlyIf>
 
                 <OnlyIf isTrue={participationStatus !== 'SIGNED_IN' && participationStatus !== 'ON_WAITLIST'}>

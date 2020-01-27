@@ -18,6 +18,7 @@ import ConfirmButton from './../ConfirmButton';
 import WeUseCookies from '../WeUseCookies';
 import {logout} from '../../model/logout';
 import './style.less';
+import {red} from '@material-ui/core/colors';
 
 class PageAppBar extends Component {
 
@@ -50,7 +51,11 @@ class PageAppBar extends Component {
             iconButton
             onClick={() => actions.logout(() => history.push('/'))}
             color='inherit'
-            confirmTitle='Ausloggen'
+            confirmStyle={{backgroundColor: red[500], color: 'white'}}
+            variant='contained'
+            confirmTitle='Abmelden'
+            yesValue='Abmelden'
+            noValue='Angemeldet bleiben'
             question='Möchtest Du Dich abmelden?'>
             <ExitToApp/>
           </ConfirmButton>
