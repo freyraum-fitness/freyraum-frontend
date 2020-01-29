@@ -10,7 +10,6 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import {red} from '@material-ui/core/colors';
 import {GridSwitchControl} from './../../components/GridFormControl';
 import LoadingIndicator from './../../components/LoadingIndicator';
 import {
@@ -23,7 +22,8 @@ import {
   updateSettings
 } from './../../model/profile';
 import {findBy, viewPath} from './../../utils/RamdaUtils';
-import {toLogoPage} from './../../utils/Routing';
+import {logout} from '../../model/logout';
+import {toLogoPage} from "../../utils/Routing";
 
 
 class Settings extends SimplePage {
@@ -41,7 +41,7 @@ class Settings extends SimplePage {
   };
 
   render() {
-    const {profile, history, location} = this.props;
+    const {profile, history, location, actions} = this.props;
     if (profile.pending || !this.props.user) {
       return (<LoadingIndicator/>);
     }
@@ -110,12 +110,44 @@ class Settings extends SimplePage {
           <Grid item xs={12} sm={8}>
             <Button
               fullWidth
-              variant='contained'
-              color='default'
+              variant='outlined'
+              color='primary'
               onClick={() => toLogoPage(location, history, '/password/change')}>
               Passwort ändern
             </Button>
           </Grid>
+
+          <Grid item xs={12} sm={8}>
+            <Button
+              fullWidth
+              variant='text'
+              color='default'
+              onClick={actions.logout}>
+              Logout
+            </Button>
+          </Grid>
+          {
+            /*
+
+            <Grid item xs={12} sm={8}>
+              <ConfirmButton
+                fullWidth
+                confirmTitle='Konto unwiderruflich löschen'
+                question={'Schade, dass du FreyRaum verlassen möchtest!'
+                  + ' Wenn Du Dein Konto löscht, werden alle Spuren von dir beseitigt'
+                  + ' und können von uns nicht wieder hergestellt werden.'
+                  + ' Möchste Du Dein Konto wirklich löschen?'
+                }
+                style={{backgroundColor: red[500], color: 'white'}}
+                variant='contained'
+                yesValue='Konto löschen'
+                noValue='Im FreyRaum bleiben'
+                onClick={actions.logout}>
+                Konto löschen
+              </ConfirmButton>
+            </Grid>
+            */
+          }
           {/*
           <Grid item xs={12} sm={8}>
             <Button
@@ -141,6 +173,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({
+    logout: logout,
     // profile
     fetchOwnProfile: fetchOwnProfile,
     onProfileDetailsChange: onProfileDetailsChange,

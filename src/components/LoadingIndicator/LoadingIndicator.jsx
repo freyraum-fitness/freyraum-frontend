@@ -13,7 +13,7 @@ class LoadingIndicator extends Component {
         <div className='table' style={style}>
           <div className='cell'>
             <CircularProgress
-              color='secondary'
+              color='primary'
               mode='indeterminate'
               className={small ? 'indicatorSmall' : 'indicator'}/>
             {

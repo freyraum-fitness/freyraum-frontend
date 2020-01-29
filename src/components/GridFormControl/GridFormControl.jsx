@@ -107,6 +107,7 @@ export class GridSwitchControl extends ValidationControl {
         control={
           <Switch
             id={id}
+            color='primary'
             checked={value} // has to be value, because of ValidationControl
             onChange={event => onChange(id, event.target.checked)}
           />
