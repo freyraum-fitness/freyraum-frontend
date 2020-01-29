@@ -15,6 +15,8 @@ import {withRouter} from 'react-router-dom';
 
 import {red} from '@material-ui/core/colors';
 import {deepEqual} from "../../utils/RamdaUtils";
+import {Validators} from "../Validation";
+import ConfirmButton from "../ConfirmButton";
 
 export const TypeMapper = {
   UNKNOWN: {name: 'unbekannter Kurs', color: red['A200']}
@@ -77,17 +79,33 @@ class Course extends Component {
       onClose={this.closeMenu}>
       {
         participationStatus === 'SIGNED_IN' || participationStatus === 'ON_WAITLIST'
-          ? <MenuItem onClick={() => {
-            this.closeMenu();
-            signOut(courseId);
-          }}>
-            <span style={{marginLeft: '8px'}}>Abmelden</span>
+          ? <MenuItem>
+            <ConfirmButton
+              input
+              inputLabel='Begründung'
+              inputValidators={[Validators.notEmpty('Bitte gib eine kurze Begründung an')]}
+              confirmTitle='Abmelden'
+              question='Schade, dass Du Dich abmelden möchtest. Sag mir bitte kurz, warum.'
+              confirmStyle={{backgroundColor: red[500], color: 'white'}}
+              style={{
+                color: red[500],
+                textTransform: 'none',
+                alignItems: 'flex-start',
+                padding: '0',
+                fontSize: '16px'
+              }}
+              variant='text'
+              onClick={reason => {this.closeMenu(); signOut(courseId, reason)}}
+              yesValue='Jetzt abmelden'
+              noValue='Angemeldet bleiben'>
+              <span style={{marginLeft: '8px'}}>Abmelden</span>
+            </ConfirmButton>
           </MenuItem>
           : <MenuItem onClick={() => {
             this.closeMenu();
             signIn(courseId);
           }}>
-            <span style={{marginLeft: '8px'}}>Teilnehmen</span>
+            <span style={{marginLeft: '8px', color: 'green'}}>Teilnehmen</span>
           </MenuItem>
       }
       <MenuItem onClick={() => {
