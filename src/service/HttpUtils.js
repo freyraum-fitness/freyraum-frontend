@@ -215,7 +215,7 @@ export const GET_IMAGE = url => {
       .then(async response => {
         const pictureData = await response.blob();
         const objectURL = URL.createObjectURL(pictureData);
-        writeToStorage(url, objectURL, 1);
+        writeToStorage(url, objectURL, 60);
         return objectURL;
       });
   }
