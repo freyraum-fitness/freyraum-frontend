@@ -1,6 +1,7 @@
 'use strict';
 import {Cookies} from 'react-cookie';
 import moment from 'moment';
+import {readFromStorage, writeToStorage} from "./storage";
 const baseURL = __API__;
 
 const cookies = new Cookies();
@@ -197,16 +198,28 @@ export const DELETE = url => fetchWithToken(url,
   })
   .then(response => response.json());
 
-export const GET_IMAGE = url => fetchWithToken(url,
-  {
-    method: 'GET',
-    headers: {
-      ...securityHeaders,
-      ...getAccessTokenHeader()
-    },
-    credentials: 'include'
-  })
-  .then(response => response.blob());
+export const GET_IMAGE = url => {
+  const objectURLFromStorage = readFromStorage(url);
+  if (objectURLFromStorage) {
+    return new Promise(resolve => resolve(objectURLFromStorage));
+  } else {
+    return fetchWithToken(url,
+      {
+        method: 'GET',
+        headers: {
+          ...securityHeaders,
+          ...getAccessTokenHeader()
+        },
+        credentials: 'include'
+      })
+      .then(async response => {
+        const pictureData = await response.blob();
+        const objectURL = URL.createObjectURL(pictureData);
+        writeToStorage(url, objectURL, 1);
+        return objectURL;
+      });
+  }
+}
 
 export const POST_IMAGE = (url, data) => fetchWithToken(url,
   {

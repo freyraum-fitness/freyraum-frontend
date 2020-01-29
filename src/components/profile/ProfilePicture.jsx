@@ -40,12 +40,10 @@ class ProfilePicture extends Component {
     } else if (!!id) {
       this.setState(assignPath([], {picture: null, userId: id, loading: true}, this.state));
       getProfilePicture(id, size)
-        .then(pictureData => {
-          const objectURL = URL.createObjectURL(pictureData);
-          this.setState(assignPath([],
-            {picture: objectURL, loading: false}, this.state));
+        .then(objectURL => {
+          this.setState(assignPath([], {picture: objectURL, loading: false}, this.state));
         })
-        .catch(() => {
+        .catch(err => {
           this.setState(assignPath([], {picture: null, loading: false}, this.state));
         });
     }
