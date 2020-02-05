@@ -95,7 +95,7 @@ module.exports = {
       flatten: true,
     }]),
     new webpack.DefinePlugin({
-      __API__: "'https://127.0.0.1:9443'",
+      __API__: "'/api'",
     }),
   ],
   devServer: {

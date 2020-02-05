@@ -15,4 +15,4 @@ RUN webpack
 
 CMD [ "/usr/local/bin/node", "./server.js" ]
 
-EXPOSE 4000
+EXPOSE 80

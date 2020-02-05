@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 
 const host = '0.0.0.0';
-const port = 4000;
+const port = 80;
 const app = express();
 
 const staticPath = path.join(__dirname, 'dest');
