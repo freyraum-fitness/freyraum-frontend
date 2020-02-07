@@ -14,7 +14,7 @@ class WelcomeGreetings extends React.Component {
   render() {
     const {className, width} = this.props;
     const suffix = isWidthDown('sm', width) ? 'xs' : 'md';
-    const img = 'url(' + __API__ + '/welcome_' + suffix + '.jpg)';
+    const img = 'url(/welcome_' + suffix + '.jpg)';
     return (
       <section className={className} style={{backgroundColor: '#fafafa'}}>
         <Grid container spacing={0} justify='center' style={{width: '100%', margin: '0px'}}>
