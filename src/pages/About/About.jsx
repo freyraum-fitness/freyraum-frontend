@@ -12,7 +12,7 @@ class About extends React.Component {
     const {width} = this.props;
     const suffix = isWidthDown('sm', width) ? 'xs' : 'md';
 
-    const img = 'url(' + __API__ + '/about_freya_' + suffix + '.jpg)';
+    const img = 'url(/about_freya_' + suffix + '.jpg)';
     return (
       <SimplePage>
         <Grid container spacing={0} justify='center' style={{width: '100%', margin: '0px'}}>
