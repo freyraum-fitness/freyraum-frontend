@@ -25,6 +25,8 @@ import WithDialog, {WithDateTimeDialog} from '../../components/WithDialog';
 import ImageSelector from '../../components/ImageSelector';
 import {OnlyIf, SignedIn} from '../../components/Auth';
 import {deepEqual, setPath} from '../../utils/RamdaUtils';
+import CKEditor from '@ckeditor/ckeditor5-react';
+import InlineEditor from '@ckeditor/ckeditor5-build-inline';
 
 const infinity = '\u221E';
 
@@ -92,12 +94,17 @@ class NewsDetails extends Component {
   };
 
   getText(editable, news, actions) {
-    return <WithDialog editable={editable} label='Text' value={news.text} multiline
-                       onChange={value => actions.changeDetails(['text'], value)}>
-      <Typography>
-        {news.text}
-      </Typography>
-    </WithDialog>;
+    console.warn("get", news, news.text);
+    return <CKEditor
+      key={news.id}
+      editor={InlineEditor}
+      disabled={!editable}
+      data={news.text}
+      onChange={ (event, editor) => {
+        const data = editor.getData();
+        actions.changeDetails(['text'], data);
+      } }
+    />;
   }
 
   getTeaser(editable, news, actions) {
@@ -253,7 +260,7 @@ class NewsDetails extends Component {
 
   render() {
     const news = this.getNewsDetails();
-    if (!news) {
+    if (!news || news.id === '') {
       return <LoadingIndicator/>;
     }
     const {actions, width} = this.props;

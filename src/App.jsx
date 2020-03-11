@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import compose from 'recompose/compose';
 import connect from 'react-redux/es/connect/connect';
 import {bindActionCreators} from 'redux';
-import {matchPath} from 'react-router';
 import Redirect from 'react-router-dom/Redirect';
 import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';

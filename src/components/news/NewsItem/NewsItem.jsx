@@ -26,7 +26,7 @@ class NewsItem extends Component {
   };
 
   render() {
-    const {news} = this.props;
+    const {id, title, teaser} = this.props.news;
     return (
       <div className='news-item-container'>
         <Card className='news-item-card'>
@@ -34,15 +34,15 @@ class NewsItem extends Component {
             <CardMedia
               component={'div'}
               style={{paddingTop: '70%'}}
-              image={__API__ + '/news/' + news.id + '/pictures/XS'}
-              title={news.title}
+              image={__API__ + '/news/' + id + '/pictures/XS'}
+              title={title}
             />
             <CardContent>
               <Typography gutterBottom variant='h5'>
-                {news.title}
+                {title}
               </Typography>
               <Typography>
-                {news.teaser}
+                {teaser}
               </Typography>
             </CardContent>
           </CardActionArea>
