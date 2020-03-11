@@ -46,9 +46,6 @@
     ]
   },
   "dependencies": {
-    "@ckeditor/ckeditor5-build-balloon": "^17.0.0",
-    "@ckeditor/ckeditor5-build-classic": "^17.0.0",
-    "@ckeditor/ckeditor5-build-inline": "^17.0.0",
     "@ckeditor/ckeditor5-react": "^2.1.0",
     "@date-io/moment": "0.0.2",
     "@devexpress/dx-react-core": "1.6.1",

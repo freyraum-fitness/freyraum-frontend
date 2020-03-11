@@ -26,7 +26,7 @@ import ImageSelector from '../../components/ImageSelector';
 import {OnlyIf, SignedIn} from '../../components/Auth';
 import {deepEqual, setPath} from '../../utils/RamdaUtils';
 import CKEditor from '@ckeditor/ckeditor5-react';
-import InlineEditor from '@ckeditor/ckeditor5-build-inline';
+import * as InlineEditor from '../../editor/ckeditor';
 
 const infinity = '\u221E';
 
