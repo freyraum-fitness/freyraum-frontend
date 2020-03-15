@@ -94,7 +94,6 @@ class NewsDetails extends Component {
   };
 
   getText(editable, news, actions) {
-    console.warn("get", news, news.text);
     return <CKEditor
       key={news.id}
       editor={InlineEditor}

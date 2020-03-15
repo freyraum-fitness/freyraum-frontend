@@ -65,6 +65,8 @@ import OnlyIf from "../../components/Auth/OnlyIf";
 import Fuse from 'fuse.js';
 import {red} from '@material-ui/core/colors';
 import {Validators} from "../../components/Validation";
+import CKEditor from '@ckeditor/ckeditor5-react';
+import * as InlineEditor from '../../editor/ckeditor';
 
 'use strict';
 
@@ -358,7 +360,13 @@ class CourseDetails extends Component {
 
     const courseId = viewPath(['courseDetails', 'course', 'id'], this.props);
     const {
-      start, courseType, minutes, attendees = [], maxParticipants, participationStatus
+      start,
+      courseType,
+      minutes,
+      attendees = [],
+      maxParticipants,
+      participationStatus,
+      text
     } = course;
     if (pending) {
       return <LoadingIndicator/>;
@@ -566,6 +574,20 @@ class CourseDetails extends Component {
                 {trainerOrAdmin ? this.getAddUserButton() : undefined}
                 {trainerOrAdmin ? this.getAddUserMenu() : undefined}
               </Grid>
+            </Grid>
+
+            <Grid item xs={12} sm={10} md={8}
+                  style={editable ? {border: '1px lightgray solid', borderRadius: '4px'} : {}}>
+              <CKEditor
+                key={course.id}
+                editor={InlineEditor}
+                disabled={!editable}
+                data={course.text}
+                onChange={ (event, editor) => {
+                  const data = editor.getData();
+                  actions.onCourseDetailsChange('text', data);
+                } }
+              />
             </Grid>
           </Grid>
         </div>
