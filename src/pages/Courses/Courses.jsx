@@ -4,6 +4,9 @@ import compose from 'recompose/compose';
 import connect from 'react-redux/es/connect/connect';
 import {bindActionCreators} from 'redux';
 import SimplePage from './../SimplePage';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListSubheader from '@material-ui/core/ListSubheader';
@@ -98,6 +101,22 @@ class Courses extends Component {
   };
 
   getCourses = data => {
+    if (data.length === 0) {
+      return <Card style={{marginTop: '32px'}}>
+        <CardContent>
+          <Typography>
+            Leider können wir derzeit keine Kurse im FreyRaum anbieten.
+          </Typography>
+          <Typography>
+            Hoffentlich verbessert sich die Lage bald.
+          </Typography>
+          <Typography>
+            Bis dahin haltet Euch gerne mit den Workouts für zu Hause fit und bleibt gesund.
+          </Typography>
+        </CardContent>
+      </Card>
+    }
+
     const {actions} = this.props;
     data.sort(compareCourseByStartDate);
 
