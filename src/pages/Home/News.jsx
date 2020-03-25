@@ -42,10 +42,10 @@ class News extends React.Component {
           </SignedIn>
         </div>
 
-        <Grid container spacing={0} justify="center" style={{width: '100%', margin: '0px'}}>
+        <Grid container spacing={0} justify="space-around" style={{width: '100%', margin: '0px'}}>
           {
             newsData.map(newsItem =>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={8} md={5}>
                 <NewsItem key={newsItem.id} news={newsItem}/>
               </Grid>
             )
