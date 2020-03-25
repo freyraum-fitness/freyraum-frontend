@@ -5,6 +5,7 @@ import connect from 'react-redux/es/connect/connect';
 import {withRouter} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
+import Grid from '@material-ui/core/Grid';
 import AddComment from '@material-ui/icons/AddComment';
 import Slider from '../../components/Slider';
 import {deepEqual} from '../../utils/RamdaUtils';
@@ -25,6 +26,9 @@ class News extends React.Component {
     const {className, news, history, location} = this.props;
     const newsData = news.data;
     newsData.sort(compareNewsByValidityFrom);
+
+    console.warn("foor", news);
+
     return (
       <section className={className}>
         <div className='title-h-scroll'>
@@ -37,9 +41,16 @@ class News extends React.Component {
             </IconButton>
           </SignedIn>
         </div>
-        <Slider>
-          {newsData.map(newsItem => <NewsItem key={newsItem.id} news={newsItem}/>)}
-        </Slider>
+
+        <Grid container spacing={0} justify="center" style={{width: '100%', margin: '0px'}}>
+          {
+            newsData.map(newsItem =>
+              <Grid item xs={12}>
+                <NewsItem key={newsItem.id} news={newsItem}/>
+              </Grid>
+            )
+          }
+        </Grid>
       </section>
     )
   }

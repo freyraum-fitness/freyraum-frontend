@@ -47,6 +47,7 @@ class Home extends Component {
           <NotSignedIn>
             <WelcomeGreetings className='section'/>
           </NotSignedIn>
+
           <News/>
 
           <NotSignedIn>

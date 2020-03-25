@@ -4,11 +4,13 @@ import compose from 'recompose/compose';
 import {withRouter} from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
+import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import moment from 'moment';
 import './style.less';
 
 class NewsItem extends Component {
@@ -26,11 +28,16 @@ class NewsItem extends Component {
   };
 
   render() {
-    const {id, title, teaser} = this.props.news;
+    const {id, title, teaser, validity} = this.props.news;
+    const date = moment(validity.from).format("DD.MM.YYYY");
     return (
       <div className='news-item-container'>
         <Card className='news-item-card'>
           <CardActionArea onClick={this.showNewsDetails}>
+            <CardHeader
+              title={title}
+              subheader={date}>
+            </CardHeader>
             <CardMedia
               component={'div'}
               style={{paddingTop: '70%'}}
@@ -38,17 +45,14 @@ class NewsItem extends Component {
               title={title}
             />
             <CardContent>
-              <Typography gutterBottom variant='h5'>
-                {title}
-              </Typography>
               <Typography>
                 {teaser}
               </Typography>
             </CardContent>
           </CardActionArea>
-          <CardActions>
+          <CardActions style={{justifyContent: 'flex-end'}}>
             <Button color='primary' onClick={this.showNewsDetails}>
-              mehr
+              lese hier mehr dazu
             </Button>
           </CardActions>
         </Card>

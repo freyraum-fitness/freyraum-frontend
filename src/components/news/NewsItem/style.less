@@ -2,23 +2,14 @@
 .news-item-container {
   display: inline-block;
   white-space: normal;
-  padding: 4px 8px;
-  height: calc(100% - 8px);
-  min-width: 250px;
-  max-width: 250px;
-  @media (min-width: 600px) {
-    min-width: 275px;
-    max-width: 275px;
-  }
-  @media (min-width: 960px) {
-    min-width: 325px;
-    max-width: 325px;
-  }
+  width: 100%;
+  margin: 16px 0;
 }
 
 .news-item-card {
   height: 100%;
   display: flex;
+  border-radius: 0 !important;
   flex-direction: column;
   justify-content: space-between;
 }
