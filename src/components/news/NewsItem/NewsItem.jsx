@@ -52,7 +52,7 @@ class NewsItem extends Component {
           </CardActionArea>
           <CardActions style={{justifyContent: 'flex-end'}}>
             <Button color='primary' onClick={this.showNewsDetails}>
-              lese hier mehr dazu
+              lies hier mehr dazu
             </Button>
           </CardActions>
         </Card>
