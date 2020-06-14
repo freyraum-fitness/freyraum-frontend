@@ -1,6 +1,7 @@
 FROM node:9-alpine
 MAINTAINER Stefan Hauschildt <stefan.h@uschildt.de>
 
+RUN npm config set unsafe-perm true
 RUN npm install webpack -g
 
 WORKDIR /tmp
