@@ -45,7 +45,7 @@ class News extends React.Component {
         <Grid container spacing={0} justify="space-around" style={{width: '100%', margin: '0px'}}>
           {
             newsData.map(newsItem =>
-              <Grid item xs={12} sm={8} md={5}>
+              <Grid item xs={12} sm={8} md={4} lg={3}>
                 <NewsItem key={newsItem.id} news={newsItem}/>
               </Grid>
             )
