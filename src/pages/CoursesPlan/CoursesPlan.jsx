@@ -281,8 +281,7 @@ class CoursesPlan extends Component {
         <div style={{position: 'relative'}}>
           <Grid container spacing={0} justify='center' style={{width: '100%', margin: '0px'}}>
             <CoursesPlanIntro currentUser={currentUser} location={location} history={history}/>
-            <CoursesPlanOverview/>
-            <CoursesPlanAgenda/>
+            <img src="/2021-09_Kursplan.jpg" alt="FreyRaum - Aktueller Kursplan" style={{ width: '100%' }} />
           </Grid>
         </div>
       </SimplePage>

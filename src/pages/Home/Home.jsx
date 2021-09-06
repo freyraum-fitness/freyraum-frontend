@@ -51,11 +51,10 @@ class Home extends Component {
           <News/>
 
           <NotSignedIn>
-            <section className='section'>
-              <Grid container spacing={0} justify='center' style={{width: '100%', margin: '0px'}}>
+            <section className='section' style={{ display: 'flex', justifyContent: 'center' }}>
+              <Grid container spacing={0} justify='center' style={{width: '100%', maxWidth: 1200, margin: '0px'}}>
                 <CoursesPlanIntro currentUser={currentUser} location={location} history={history}/>
-                <CoursesPlanOverview/>
-                <CoursesPlanAgenda/>
+                <img src="/2021-09_Kursplan.jpg" alt="FreyRaum - Aktueller Kursplan" style={{ width: '100%' }} />
               </Grid>
             </section>
           </NotSignedIn>
